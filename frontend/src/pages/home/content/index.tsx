@@ -1,21 +1,17 @@
 import {
-  Heading,
   Box,
   Image,
   Card,
-  Text,
   CardBody,
   Flex,
   Input,
   Center,
   Button,
-  Stack,
 } from "@chakra-ui/react";
 
-import { FaHeart } from "react-icons/fa";
-import { LiaCommentSolid } from "react-icons/lia";
 import { BiSolidImageAdd } from "react-icons/bi";
 import postData from "../../../mocks/post.json";
+import Contents from "../../../components/Contents";
 
 interface PostData {
   profile_name: string;
@@ -70,49 +66,15 @@ export default function MainContent() {
       </Box>
       {/* content */}
       {postData.map((post, index) => (
-        <Box key={index} m={4}>
-          <Card
-            direction={{ base: "column", sm: "row" }}
-            overflow="hidden"
-            variant="outline"
-            bg="mainBg.200"
-            borderColor="mainBg.200"
-            border="px"
-            color="grey.200"
-          >
-            <Image
-              borderRadius="100%"
-              objectFit="cover"
-              h={14}
-              w={14}
-              marginLeft={4}
-              marginTop={4}
-              maxW={{ base: "100%", sm: "200px" }}
-              src={post.profile_picture}
-              alt="Caffe Latte"
-            />
-
-            <Stack>
-              <CardBody>
-                <Box>
-                  <Heading size="md">{post.profile_name}</Heading>
-                  <Text pt="1" color="gray.400">
-                    @{post.username}
-                  </Text>
-                </Box>
-                <Text py="2">{post.content}</Text>
-                <Flex pt="2">
-                  <FaHeart />
-                  <Text fontSize="10" ml="1" mr="2">
-                    {post.count_like}
-                  </Text>
-                  <LiaCommentSolid cursor="pointer" />
-                  <Text fontSize="10">{post.count_replies}</Text>
-                </Flex>
-              </CardBody>
-            </Stack>
-          </Card>
-        </Box>
+        <Contents
+          key={index}
+          profile_picture={post.profile_picture}
+          profile_name={post.profile_name}
+          username={post.username}
+          content={post.content}
+          count_like={post.count_like}
+          count_replies={post.count_replies}
+        />
       ))}
     </>
   );
