@@ -4,6 +4,7 @@ import {
   CardBody,
   Flex,
   Heading,
+  Icon,
   Image,
   Stack,
   Text,
@@ -11,24 +12,31 @@ import {
 
 import { FaHeart } from "react-icons/fa";
 import { LiaCommentSolid } from "react-icons/lia";
+import { Ithreads } from "../interface/IThreads";
+import { useState } from "react";
 
-export interface ContentSpaceProps {
-  profile_picture: string;
-  profile_name: string;
-  username: string;
-  content: string;
-  count_like: number;
-  count_replies: number;
-}
-export default function Contents(props: ContentSpaceProps) {
+export default function Contents(props: Ithreads) {
   const {
     profile_picture,
     profile_name,
     username,
     content,
+    image_content,
     count_like,
     count_replies,
   } = props;
+
+  const [liked, setLiked] = useState(false);
+  const [replies, setReplies] = useState(false);
+
+  const switchLike = () => {
+    setLiked(!liked);
+  };
+
+  const switchReplies = () => {
+    setReplies(!replies);
+  };
+
   return (
     <Box m={4}>
       <Card
@@ -61,8 +69,15 @@ export default function Contents(props: ContentSpaceProps) {
               </Text>
             </Box>
             <Text py="2">{content}</Text>
+            <Image src={image_content} borderRadius={10} />
             <Flex pt="2">
-              <FaHeart />
+              <Icon
+                as={FaHeart}
+                cursor="pointer"
+                onClick={switchLike}
+                color={liked ? "red.500" : "inherit"}
+              />
+
               <Text fontSize="10" ml="1" mr="2">
                 {count_like}
               </Text>

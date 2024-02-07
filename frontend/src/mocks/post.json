@@ -5,6 +5,7 @@
       "username": "jhondoe",
       "count_post": "3h",
       "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "",
       "count_like" : 10,
       "count_replies": 123  
     },
@@ -14,6 +15,7 @@
       "username": "bezewma",
       "count_post": "6h",
       "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "",
       "count_like" : 112,
       "count_replies": 193  
     },
@@ -23,6 +25,7 @@
       "username": "pogba12",
       "count_post": "6h",
       "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "https://img.freepik.com/free-photo/young-man-looking-up_155003-10420.jpg?w=740&t=st=1707186762~exp=1707187362~hmac=c2c08ab69d11900d2a1ee9baf1a48e0402a45058e878a29b45cbf1dfbc012a62",
       "count_like" : 112,
       "count_replies": 193  
     },
@@ -32,6 +35,7 @@
       "username": "brahim77",
       "count_post": "6h",
       "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "",
       "count_like" : 152,
       "count_replies": 193  
     },
@@ -41,6 +45,7 @@
       "username": "ggmu32",
       "count_post": "6h",
       "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "",
       "count_like" : 62,
       "count_replies": 193  
     }

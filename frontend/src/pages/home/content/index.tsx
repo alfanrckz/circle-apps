@@ -7,21 +7,12 @@ import {
   Input,
   Center,
   Button,
+  Icon,
 } from "@chakra-ui/react";
 
 import { BiSolidImageAdd } from "react-icons/bi";
 import postData from "../../../mocks/post.json";
 import Contents from "../../../components/Contents";
-
-interface PostData {
-  profile_name: string;
-  profile_picture: string;
-  username: string;
-  count_post: string;
-  content: string;
-  count_like: number;
-  count_replies: number;
-}
 
 export default function MainContent() {
   return (
@@ -55,11 +46,21 @@ export default function MainContent() {
                 border="none"
               />
               <Center>
-                <BiSolidImageAdd />
-                <Button colorScheme="green" ml={3} borderRadius="20%">
-                  post
-                </Button>
+                <label style={{ cursor: "pointer" }}>
+                  <input name="image" type="file" hidden />
+                  <Icon
+                    mr={"10px"}
+                    ml={"10px"}
+                    color={"green"}
+                    boxSize={8}
+                    as={BiSolidImageAdd}
+                  />
+                </label>
               </Center>
+
+              <Button colorScheme="green" ml={3} borderRadius="20%">
+                Post
+              </Button>
             </Flex>
           </CardBody>
         </Card>
@@ -72,6 +73,7 @@ export default function MainContent() {
           profile_name={post.profile_name}
           username={post.username}
           content={post.content}
+          image_content={post.image_content}
           count_like={post.count_like}
           count_replies={post.count_replies}
         />

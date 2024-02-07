@@ -28,7 +28,11 @@ export default function SideNavbar() {
                 <Link href="https://chakra-ui.com" isExternal>
                   <Center>
                     <IoMdHome />
-                    <Text bg="mainBg.900" pl={2}>
+                    <Text
+                      bg="mainBg.900"
+                      pl={2}
+                      _hover={{ textDecoration: "none" }}
+                    >
                       HOME
                     </Text>
                   </Center>
