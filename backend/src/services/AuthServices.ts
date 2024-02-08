@@ -30,7 +30,7 @@ export default new (class Authservice {
       console.log(password);
 
       const user = this.authRepository.create({
-        full_Name: reqBody.full_name,
+        fullName: reqBody.fullName,
         userName: reqBody.username,
         email: reqBody.email,
         password: password,
@@ -58,7 +58,7 @@ export default new (class Authservice {
         where: {
           email: reqBody.email,
         },
-        select: ["id", "full_Name", "email", "userName", "password"],
+        select: ["id", "fullName", "email", "userName", "password"],
       });
       if (!user) {
         throw new Error("Email / Password is wrong");
@@ -78,11 +78,38 @@ export default new (class Authservice {
         message: "Login Successfull",
         user: {
           id: user.id,
-          full_name: user.full_Name,
+          full_name: user.fullName,
           username: user.userName,
           email: user.email,
         },
         token: token,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async check(loginSession: any): Promise<any> {
+    try {
+      const user = await this.authRepository.findOne({
+        where: {
+          id: loginSession.user.id,
+        },
+        relations: ["followers", "followings"],
+      });
+
+      return {
+        message: "Token is valid!",
+        user: {
+          id: user.id,
+          fullName: user.fullName,
+          username: user.userName,
+          email: user.email,
+          picture: user.picture,
+          bio: user.bio,
+          follower: user.follower,
+          following: user.following,
+        },
       };
     } catch (error) {
       throw new Error(error.message);
