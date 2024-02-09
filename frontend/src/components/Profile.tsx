@@ -10,9 +10,9 @@ import {
   Grid,
   GridItem,
 } from "@chakra-ui/react";
-import { Footer } from "../../../components/Footer";
+import { Footer } from "./Footer";
 
-export default function ProfileNSuggest() {
+export default function Profile() {
   return (
     <Box>
       <Box m={4}>

@@ -9,8 +9,8 @@ import {
 
 export const Footer = () => {
   return (
-    <Card bgColor="gray.100">
-      <CardBody display={"flex"} alignItems={"center"} gap={2}>
+    <Card bg="#262626" mt="5">
+      <CardBody display={"flex"} alignItems={"center"} gap={2} color="#EDF2F7">
         <Text fontSize={"12px"} fontWeight={"bold"}>
           Developed by Alfansyuri Ziaulhaq
         </Text>

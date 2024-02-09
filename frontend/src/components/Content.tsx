@@ -11,10 +11,10 @@ import {
 } from "@chakra-ui/react";
 
 import { BiSolidImageAdd } from "react-icons/bi";
-import postData from "../../../mocks/post.json";
-import Contents from "../../../components/Contents";
+import postData from "../mocks/post.json";
+import Contents from "./ListContent";
 
-export default function MainContent() {
+export default function Content() {
   return (
     <>
       <Box m={4}>

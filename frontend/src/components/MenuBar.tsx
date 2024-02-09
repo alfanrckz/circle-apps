@@ -15,8 +15,9 @@ import { CgProfile } from "react-icons/cg";
 import { IoMdHome } from "react-icons/io";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { GoHeartFill } from "react-icons/go";
+import { CiLogout } from "react-icons/ci";
 
-export default function SideNavbar() {
+export default function MenuBar() {
   return (
     <>
       <Box pos="fixed">
@@ -87,6 +88,10 @@ export default function SideNavbar() {
           >
             Create Post
           </Button>
+        </Center>
+        <Center mt="290">
+          <CiLogout />
+          <Text cursor="pointer">Logout</Text>
         </Center>
       </Box>
     </>

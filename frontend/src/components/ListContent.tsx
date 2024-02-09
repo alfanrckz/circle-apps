@@ -15,7 +15,7 @@ import { LiaCommentSolid } from "react-icons/lia";
 import { Ithreads } from "../interface/IThreads";
 import { useState } from "react";
 
-export default function Contents(props: Ithreads) {
+export default function ListContents(props: Ithreads) {
   const {
     profile_picture,
     profile_name,

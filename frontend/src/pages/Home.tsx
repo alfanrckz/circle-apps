@@ -1,7 +1,7 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import MainContent from "./content";
-import ProfileSuggest from "./profile-suggest";
-import SideNavbar from "./sideNavbar";
+import MainContent from "../components/Content";
+import ProfileSuggest from "../components/Profile";
+import SideNavbar from "../components/MenuBar";
 
 export default function Home() {
   return (
