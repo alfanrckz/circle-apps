@@ -5,7 +5,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
 
-const theme = extendTheme({
+export const theme = extendTheme({
   styles: {
     global: {
       "html, body": {
