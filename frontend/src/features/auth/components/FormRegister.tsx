@@ -30,12 +30,7 @@ export const FormRegister = () => {
         name="password"
         onChange={handleChange}
       />
-      <Button
-        backgroundColor={"green"}
-        colorScheme="green"
-        color={"white"}
-        onClick={handleRegister}
-      >
+      <Button backgroundColor={"green"} colorScheme="green" color={"white"}>
         Create
       </Button>
     </FormControl>

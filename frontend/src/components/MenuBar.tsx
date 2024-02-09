@@ -23,26 +23,30 @@ export default function MenuBar() {
       <Box pos="fixed">
         <Box m={4}>
           <Heading color="green">Circle</Heading>
-          <UnorderedList my={4}>
-            <ListItem my={2} style={{ listStyleType: "none" }}>
+          <UnorderedList my={4} style={{ listStyleType: "none" }}>
+            <ListItem my={2}>
               <Flex>
-                <Link href="https://chakra-ui.com" isExternal>
+                <Link
+                  href="https://chakra-ui.com"
+                  isExternal
+                  _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                >
                   <Center>
                     <IoMdHome />
-                    <Text
-                      bg="mainBg.900"
-                      pl={2}
-                      _hover={{ textDecoration: "none" }}
-                    >
+                    <Text bg="mainBg.900" pl={2}>
                       HOME
                     </Text>
                   </Center>
                 </Link>
               </Flex>
             </ListItem>
-            <ListItem my={2} style={{ listStyleType: "none" }}>
+            <ListItem my={2}>
               <Flex>
-                <Link href="https://chakra-ui.com" isExternal>
+                <Link
+                  href="https://chakra-ui.com"
+                  isExternal
+                  _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                >
                   <Center>
                     <MdOutlinePersonSearch />
                     <Text bg="mainBg.900" pl={2}>
@@ -52,21 +56,29 @@ export default function MenuBar() {
                 </Link>
               </Flex>
             </ListItem>
-            <ListItem my={2} style={{ listStyleType: "none" }}>
+            <ListItem my={2}>
               <Flex>
-                <Link href="https://chakra-ui.com" isExternal>
+                <Link
+                  href="https://chakra-ui.com"
+                  isExternal
+                  _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                >
                   <Center>
                     <GoHeartFill />
-                    <Text _hover={{ color: "red.500" }} bg="mainBg.900" pl={2}>
+                    <Text bg="mainBg.900" pl={2}>
                       FOLLOWS
                     </Text>
                   </Center>
                 </Link>
               </Flex>
             </ListItem>
-            <ListItem style={{ listStyleType: "none" }} my={2}>
+            <ListItem my={2}>
               <Flex>
-                <Link href="" isExternal>
+                <Link
+                  href=""
+                  isExternal
+                  _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                >
                   <Center>
                     <CgProfile />
                     <Text bg="mainBg.900" pl={2}>

@@ -12,7 +12,7 @@ export const Register = () => {
       <FormRegister />
       <Box display={"flex"} gap={2}>
         <Text>Already have account?</Text>
-        <Link to={"/auth/login"}>
+        <Link>
           <Text color={"brand.green"} cursor={"pointer"}>
             Login
           </Text>
