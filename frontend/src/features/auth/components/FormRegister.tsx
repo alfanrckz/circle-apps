@@ -1,8 +1,9 @@
 import { Button, FormControl, Input, Text } from "@chakra-ui/react";
-import { useState } from "react";
+
+import { useRegister } from "../hook/useRegister";
 
 export const FormRegister = () => {
-  const [handleChange, setHandleChange] = useState();
+  const { handleChange, handleRegister } = useRegister();
   return (
     <FormControl
       isRequired
@@ -30,7 +31,12 @@ export const FormRegister = () => {
         name="password"
         onChange={handleChange}
       />
-      <Button backgroundColor={"green"} colorScheme="green" color={"white"}>
+      <Button
+        backgroundColor={"green"}
+        colorScheme="green"
+        color={"white"}
+        onClick={handleRegister}
+      >
         Create
       </Button>
     </FormControl>

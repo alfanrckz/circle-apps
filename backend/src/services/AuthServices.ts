@@ -30,8 +30,8 @@ export default new (class Authservice {
       console.log(password);
 
       const user = this.authRepository.create({
-        fullName: reqBody.fullName,
-        userName: reqBody.username,
+        fullName: reqBody.full_name,
+        username: reqBody.username,
         email: reqBody.email,
         password: password,
       });
@@ -58,7 +58,7 @@ export default new (class Authservice {
         where: {
           email: reqBody.email,
         },
-        select: ["id", "fullName", "email", "userName", "password"],
+        select: ["id", "fullName", "email", "username", "password"],
       });
       if (!user) {
         throw new Error("Email / Password is wrong");
@@ -79,7 +79,7 @@ export default new (class Authservice {
         user: {
           id: user.id,
           full_name: user.fullName,
-          username: user.userName,
+          username: user.username,
           email: user.email,
         },
         token: token,
@@ -102,8 +102,8 @@ export default new (class Authservice {
         message: "Token is valid!",
         user: {
           id: user.id,
-          fullName: user.fullName,
-          username: user.userName,
+          full_name: user.fullName,
+          username: user.username,
           email: user.email,
           picture: user.picture,
           bio: user.bio,
