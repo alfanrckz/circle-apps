@@ -8,4 +8,5 @@ export const createThreadSchema = joi.object({
 export const updateThreadSchema = joi.object({
   content: joi.string().required(),
   image: joi.string().optional(),
+  updated_at: joi.date().default(Date.now()),
 });

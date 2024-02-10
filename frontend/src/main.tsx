@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
   styles: {
@@ -15,11 +15,19 @@ export const theme = extendTheme({
     },
   },
   colors: {
+    background: {
+      pressed: {
+        base: { default: "#1D1D1D", _dark: "blue.300" },
+        subtle: { default: "#1D1D1D", _dark: "blue.700" },
+      },
+    },
     mainBg: {
       100: "#1D1D1D",
       // ...
       200: "#262626",
       300: "#15202B",
+      400: "#040404",
+      500: "#1e1e1e",
     },
   },
 });

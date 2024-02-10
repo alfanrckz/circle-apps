@@ -27,7 +27,10 @@ export class Threads {
   replies: Reply[];
 
   @Column({ default: () => "NOW()" })
-  created_at: string;
+  created_at: Date;
+
+  @Column({ default: () => "NOW()" })
+  updated_at: Date;
 
   @ManyToOne(() => User, (user) => user.id)
   user: User;

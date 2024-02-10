@@ -14,6 +14,10 @@ export default new (class ThreadsServices {
   private readonly threadRepository: Repository<Threads> =
     AppDataSource.getRepository(Threads);
 
+  async getThreads() {
+    return this.threadRepository.find();
+  }
+
   async createThread(data) {
     const isValid = validate(createThreadSchema, data);
     let valid;
@@ -59,6 +63,8 @@ export default new (class ThreadsServices {
           userName: true,
           picture: true,
         },
+        created_at: true,
+        updated_at: true,
       },
     });
   }
@@ -73,10 +79,12 @@ export default new (class ThreadsServices {
       valid = {
         content: isValid.content,
         image: upFile.secure_url,
+        updated_at: isValid.updated_at,
       };
     } else {
       valid = {
         content: isValid.content,
+        updated_at: isValid.updated_at,
       };
     }
     const response = await this.threadRepository.update(id, valid);
