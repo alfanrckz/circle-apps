@@ -4,6 +4,9 @@ import App from "./App";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./stores/rootReducer";
 
 export const theme = extendTheme({
   styles: {
@@ -32,11 +35,17 @@ export const theme = extendTheme({
   },
 });
 
+const store = configureStore({
+  reducer: rootReducer,
+});
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <Router>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </Router>
     </ChakraProvider>
   </React.StrictMode>

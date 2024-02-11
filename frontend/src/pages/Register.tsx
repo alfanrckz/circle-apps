@@ -1,5 +1,6 @@
-import { Box, Heading, Link, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { FormRegister } from "../features/auth/components/FormRegister";
+import { Link } from "react-router-dom";
 
 export const Register = () => {
   return (
@@ -9,12 +10,11 @@ export const Register = () => {
       justifyContent={"center"}
       alignItems={"center"}
       marginTop={"60px"}
-      ml={550}
     >
       <FormRegister />
       <Box display={"flex"} gap={2}>
         <Text>Already have account?</Text>
-        <Link>
+        <Link to={"/login"}>
           <Text color={"brand.green"} cursor={"pointer"}>
             Login
           </Text>

@@ -1,6 +1,6 @@
 import { Button, FormControl, Input, Text } from "@chakra-ui/react";
 
-import { useRegister } from "../hook/useRegister";
+import { useRegister } from "../hooks/useRegister";
 
 export const FormRegister = () => {
   const { handleChange, handleRegister } = useRegister();

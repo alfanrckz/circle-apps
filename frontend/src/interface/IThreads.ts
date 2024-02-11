@@ -1,4 +1,5 @@
 export interface Ithreads {
+  id: number;
   profile_picture: string;
   profile_name: string;
   username: string;

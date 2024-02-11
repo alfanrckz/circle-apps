@@ -1,16 +1,40 @@
-import {
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Input,
-} from "@chakra-ui/react";
+import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
+import { useLogin } from "../hooks/useLogin";
 
 export const FormLogin = () => {
+  const { handleChange, handleLogin } = useLogin();
   return (
-    <FormControl>
-      <FormLabel>Email address</FormLabel>
-      <Input type="email" />
-      <FormHelperText>We'll never share your email.</FormHelperText>
+    <FormControl
+      isRequired
+      display={"flex"}
+      flexDirection={"column"}
+      gap={3}
+      width={"300px"}
+    >
+      <Text color={"brand.green"} fontSize={"2xl"} fontWeight={"bold"}>
+        Connect
+      </Text>
+      <Text fontSize={"2xl"} fontWeight={"bold"}>
+        Login Connect
+      </Text>
+      <Input placeholder="Email" name="email" onChange={handleChange} />
+      <Input
+        type="password"
+        placeholder="Password"
+        name="password"
+        onChange={handleChange}
+      />
+      <Box display="flex" justifyContent={"flex-end"}>
+        <Text>Forgot password?</Text>
+      </Box>
+      <Button
+        backgroundColor={"green"}
+        colorScheme="green"
+        color={"white"}
+        onClick={handleLogin}
+      >
+        Login
+      </Button>
     </FormControl>
   );
 };
