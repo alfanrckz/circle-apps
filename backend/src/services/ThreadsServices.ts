@@ -60,7 +60,7 @@ export default new (class ThreadsServices {
         user: {
           id: true,
           fullName: true,
-          userName: true,
+          username: true,
           picture: true,
         },
         created_at: true,

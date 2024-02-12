@@ -6,6 +6,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import { Threads } from "./Threads";
+import { Follow } from "./Follow";
 
 @Entity()
 export class User {
@@ -36,9 +37,9 @@ export class User {
   @OneToMany(() => Threads, (thread) => thread.user)
   threads: Threads[];
 
-  @ManyToOne(() => User, (user) => user.id)
-  follower: User[];
+  @OneToMany(() => Follow, (follow) => follow.follower)
+  follower: Follow[];
 
-  @ManyToOne(() => User, (user) => user.id)
-  following: User[];
+  @OneToMany(() => Follow, (follow) => follow.follower)
+  following: Follow[];
 }

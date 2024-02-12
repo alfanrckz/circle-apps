@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Authservice from "../services/AuthServices";
+
 export default new (class AuthController {
   async register(req: Request, res: Response) {
     try {

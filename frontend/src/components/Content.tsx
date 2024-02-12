@@ -12,7 +12,7 @@ import {
 
 import { BiSolidImageAdd } from "react-icons/bi";
 import postData from "../mocks/post.json";
-import Contents from "./ListContent";
+import ListContents from "./ListContent";
 
 export default function Content() {
   return (
@@ -67,7 +67,7 @@ export default function Content() {
       </Box>
       {/* content */}
       {postData.map((post, index) => (
-        <Contents
+        <ListContents
           key={index}
           profile_picture={post.profile_picture}
           profile_name={post.profile_name}

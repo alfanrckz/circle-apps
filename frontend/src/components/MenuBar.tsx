@@ -18,6 +18,12 @@ import { GoHeartFill } from "react-icons/go";
 import { CiLogout } from "react-icons/ci";
 
 export default function MenuBar() {
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
+    window.location.href = "/login";
+  };
+
   return (
     <>
       <Box pos="fixed">
@@ -101,7 +107,7 @@ export default function MenuBar() {
             Create Post
           </Button>
         </Center>
-        <Center mt="290">
+        <Center mt="290" onClick={handleLogout}>
           <CiLogout />
           <Text cursor="pointer">Logout</Text>
         </Center>

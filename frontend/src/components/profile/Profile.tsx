@@ -10,9 +10,26 @@ import {
   Grid,
   GridItem,
 } from "@chakra-ui/react";
-import { Footer } from "./Footer";
+import { Footer } from "../Footer";
+import { useEffect, useState } from "react";
+import { API } from "../../libs/api";
 
 export default function Profile() {
+  const [userProfile, setUserProfile] = useState();
+
+  const currentUserProfile = async () => {
+    try {
+      const response = await API.get("/user/current");
+      // setUserProfile(response.data);
+      console.log(response);
+    } catch (error) {
+      console.log("Error get profile", error);
+    }
+  };
+
+  useEffect(() => {
+    currentUserProfile();
+  }, []);
   return (
     <Box>
       <Box m={4}>
@@ -58,9 +75,7 @@ export default function Profile() {
                 </Button>
               </Box>
             </Box>
-            <Heading size="sm" mt={2}>
-              This is Name
-            </Heading>
+            <Heading size="sm" mt={2}></Heading>
             <Text fontSize="xs" color={"gray.400"}>
               @username
             </Text>
