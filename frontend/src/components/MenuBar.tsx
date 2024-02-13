@@ -33,15 +33,17 @@ export default function MenuBar() {
             <ListItem my={2}>
               <Flex>
                 <Link
-                  href="https://chakra-ui.com"
+                  href="#"
                   isExternal
                   _hover={{ textDecoration: "none", fontWeight: "bold" }}
                 >
                   <Center>
                     <IoMdHome />
-                    <Text bg="mainBg.900" pl={2}>
-                      HOME
-                    </Text>
+                    <Link href="/">
+                      <Text bg="mainBg.900" pl={2}>
+                        HOME
+                      </Text>
+                    </Link>
                   </Center>
                 </Link>
               </Flex>
@@ -49,7 +51,7 @@ export default function MenuBar() {
             <ListItem my={2}>
               <Flex>
                 <Link
-                  href="https://chakra-ui.com"
+                  href="#"
                   isExternal
                   _hover={{ textDecoration: "none", fontWeight: "bold" }}
                 >
@@ -65,15 +67,17 @@ export default function MenuBar() {
             <ListItem my={2}>
               <Flex>
                 <Link
-                  href="https://chakra-ui.com"
+                  href="#"
                   isExternal
                   _hover={{ textDecoration: "none", fontWeight: "bold" }}
                 >
                   <Center>
                     <GoHeartFill />
-                    <Text bg="mainBg.900" pl={2}>
-                      FOLLOWS
-                    </Text>
+                    <Link href="/follow">
+                      <Text bg="mainBg.900" pl={2}>
+                        FOLLOWS
+                      </Text>
+                    </Link>
                   </Center>
                 </Link>
               </Flex>
@@ -81,7 +85,7 @@ export default function MenuBar() {
             <ListItem my={2}>
               <Flex>
                 <Link
-                  href=""
+                  href="#"
                   isExternal
                   _hover={{ textDecoration: "none", fontWeight: "bold" }}
                 >

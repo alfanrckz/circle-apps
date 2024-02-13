@@ -1,10 +1,9 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import MainContent from "../components/Content";
+
 import ProfileSuggest from "../components/profile/Profile";
 import SideNavbar from "../components/MenuBar";
-import { Outlet } from "react-router-dom";
 
-export default function Home() {
+export default function Follow() {
   return (
     <div>
       <Grid h="100%" templateColumns="repeat(10, 1fr)">
@@ -22,7 +21,7 @@ export default function Home() {
           bg="mainBg.100"
           colSpan={{ base: 10, md: 5 }}
         >
-          <Outlet />
+          <Follow />
         </GridItem>
         <GridItem
           colSpan={{ base: 0, md: 3 }}
