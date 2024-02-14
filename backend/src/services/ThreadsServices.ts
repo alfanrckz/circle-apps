@@ -20,10 +20,12 @@ export default new (class ThreadsServices {
 
   async createThread(data) {
     const isValid = validate(createThreadSchema, data);
+
     let valid;
     if (data.image) {
       cloudinary.upload();
       const upFile = await cloudinary.destination(isValid.image);
+      console.log("ini upfile", upFile);
 
       valid = {
         content: isValid.content,
@@ -33,15 +35,15 @@ export default new (class ThreadsServices {
     } else {
       valid = {
         content: isValid.content,
-
         user: isValid.user,
       };
     }
+    console.log({ message: "ini servise", valid });
 
     const response = await this.threadRepository.save(valid);
     return {
       message: "Your Thread is created",
-      data: valid,
+      data: response,
     };
   }
 
