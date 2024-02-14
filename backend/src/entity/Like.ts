@@ -8,15 +8,28 @@ import {
 } from "typeorm";
 import { Threads } from "./Threads";
 import { User } from "./User";
+import { Reply } from "./Reply";
 
 @Entity()
 export class Like {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Threads, (thread) => thread.id)
-  thread_id: Threads;
+  @ManyToOne(() => Threads, (thread) => thread.likes, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
+  thread: Threads;
 
-  @OneToMany(() => User, (user) => user.id)
-  user_id: User;
+  @ManyToOne(() => Reply, (reply) => reply.likes, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
+  reply: Reply;
+
+  @ManyToOne(() => User, (user) => user.likes, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
+  user: User;
 }

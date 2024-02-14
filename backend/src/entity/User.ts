@@ -7,6 +7,8 @@ import {
 } from "typeorm";
 import { Threads } from "./Threads";
 import { Follow } from "./Follow";
+import { Like } from "./Like";
+import { Reply } from "./Reply";
 
 @Entity()
 export class User {
@@ -34,12 +36,21 @@ export class User {
   @Column({ nullable: true })
   bio: string;
 
-  @OneToMany(() => Threads, (thread) => thread.user)
-  threads: Threads[];
-
   @OneToMany(() => Follow, (follow) => follow.follower)
   follower: Follow[];
 
-  @OneToMany(() => Follow, (follow) => follow.follower)
+  @OneToMany(() => Follow, (follow) => follow.following)
   following: Follow[];
+
+  @OneToMany(() => Threads, (thread) => thread.user)
+  threads: Threads[];
+
+  @OneToMany(() => Like, (like) => like.user)
+  likes: Like[];
+
+  @OneToMany(() => Reply, (reply) => reply.user)
+  replies: Reply[];
+
+  @Column({ default: () => "NOW()" })
+  create_at: Date;
 }

@@ -6,20 +6,34 @@ import {
   ManyToOne,
 } from "typeorm";
 import { User } from "./User";
+import { Threads } from "./Threads";
+import { Like } from "./Like";
 
 @Entity()
 export class Reply {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   content: string;
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
-  @Column()
-  likes: number;
+  @ManyToOne(() => Threads, (thread) => thread.replies, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
+  thread: Threads;
+
+  @ManyToOne(() => Reply, (reply) => reply.replies, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
+  reply: Reply;
+
+  @OneToMany(() => Like, (like) => like.reply)
+  likes: Like[];
 
   @Column()
   replies: number;

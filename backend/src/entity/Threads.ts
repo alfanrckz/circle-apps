@@ -14,17 +14,23 @@ export class Threads {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   content: string;
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
-  @OneToMany(() => Like, (like) => like.id)
+  @OneToMany(() => Like, (like) => like.thread)
   likes: Like[];
 
-  @OneToMany(() => Reply, (reply) => reply.id)
+  @OneToMany(() => Reply, (reply) => reply.reply)
   replies: Reply[];
+
+  @ManyToOne(() => User, (user) => user.id, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
+  author: User;
 
   @Column({ default: () => "NOW()" })
   created_at: Date;
