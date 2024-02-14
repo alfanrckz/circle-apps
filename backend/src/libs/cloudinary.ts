@@ -13,7 +13,7 @@ export default new (class CloudinaryConfig {
 
   async destination(image: string) {
     try {
-      return await cloudinary.uploader.upload(`src/uploads ${image}`);
+      return await cloudinary.uploader.upload(`src/uploads/${image}`);
     } catch (error) {
       throw error;
     }
