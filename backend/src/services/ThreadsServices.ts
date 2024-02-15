@@ -15,7 +15,26 @@ export default new (class ThreadsServices {
     AppDataSource.getRepository(Threads);
 
   async getThreads() {
-    return this.threadRepository.find();
+    return this.threadRepository.find({
+      relations: {
+        author: true,
+        likes: true,
+        replies: true,
+      },
+      select: {
+        author: {
+          fullName: true,
+          username: true,
+          picture: true,
+        },
+        likes: {
+          id: true,
+        },
+        replies: {
+          id: true,
+        },
+      },
+    });
   }
 
   async createThread(data) {
@@ -72,9 +91,11 @@ export default new (class ThreadsServices {
   }
 
   async updateThread(data, id) {
+    console.log(data);
+
     const isValid = validate(updateThreadSchema, data);
     let valid;
-    if (data.image) {
+    if (data.image && data.content) {
       cloudinary.upload();
       const upFile = await cloudinary.destination(isValid.image);
 
@@ -83,13 +104,28 @@ export default new (class ThreadsServices {
         image: upFile.secure_url,
         updated_at: isValid.updated_at,
       };
-    } else {
+    } else if (!data.image && data.content) {
       valid = {
         content: isValid.content,
         updated_at: isValid.updated_at,
       };
+    } else if (data.image && data.content) {
+      cloudinary.upload();
+      const upFile = await cloudinary.destination(isValid.image);
+
+      valid = {
+        image: upFile.secure_url,
+        updated_at: isValid.updated_at,
+      };
+    } else {
+      throw new ResponseError(400, "content or image is required");
     }
-    const response = await this.threadRepository.update(id, valid);
+
+    console.log("ini service", valid);
+    console.log(id);
+
+    await this.threadRepository.update({ id: id.id }, valid);
+
     return {
       message: "Your Thread is update",
       data: valid,
