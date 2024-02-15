@@ -1,18 +1,27 @@
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import ThreadsServices from "../services/ThreadsServices";
 
-export default new (class ThreadsController {
-  async getThreads(req: Request, res: Response) {
+export default new (class ThreadController {
+  async create(req: Request, res: Response) {
     try {
-     const response = await
-   
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
-  }
+      let data;
+      if (!req.file) {
+        data = {
+          content: req.body.content,
+          user: req.body.user,
+        };
+      } else {
+        data = {
+          content: req.body.content,
+          image: req.file.filename,
+          user: req.body.user,
+        };
+      }
 
-  async findOne(req: Request, res: Response) {
-    try {
-    } catch (error) {}
+      const response = await ThreadsServices.createThread(data);
+      res.status(201).json(response);
+    } catch (error) {
+      res.status(error.status).json(error.message);
+    }
   }
 })();
