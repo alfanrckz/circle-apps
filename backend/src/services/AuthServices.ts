@@ -4,6 +4,9 @@ import * as jwt from "jsonwebtoken";
 import { User } from "../entity/User";
 import { AppDataSource } from "../data-source";
 import { loginSchema, registerSchema } from "../utils/validator/auth";
+import { Request } from "express";
+import ResponseError from "../error/responseError";
+import { validate } from "../utils/validator/validation";
 
 export default new (class Authservice {
   private readonly authRepository: Repository<User> =
@@ -48,45 +51,38 @@ export default new (class Authservice {
     }
   }
 
-  async login(reqBody: any): Promise<any> {
-    try {
-      const { error } = loginSchema.validate(reqBody);
-      if (error) {
-        throw new Error(error.details[0].message);
-      }
-      const user = await this.authRepository.findOne({
-        where: {
-          email: reqBody.email,
-        },
-        select: ["id", "fullName", "email", "username", "password"],
-      });
-      if (!user) {
-        throw new Error("Email / Password is wrong");
-      }
-      const isPasswordValid = await bcrypt.compare(
-        reqBody.password,
-        user.password
-      );
+  async login(reqBody: Request) {
+    const isValid = validate(loginSchema, reqBody);
 
-      if (!isPasswordValid) {
-        throw new Error("Email / password is wrong!");
+    const chkUser = await this.authRepository.findOne({
+      where: { username: isValid.username },
+      select: {
+        id: true,
+        username: true,
+        password: true,
+      },
+    });
+    if (!chkUser) throw new ResponseError(401, "Username not registered yet!");
+
+    const isEqual = await bcrypt.compare(isValid.password, chkUser.password);
+    if (!isEqual)
+      throw new ResponseError(401, "Username or Password is not correct!");
+
+    const token = jwt.sign(
+      { id: chkUser.id, username: chkUser.username },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "7d",
       }
-
-      const token = jwt.sign({ user }, "success", { expiresIn: "1d" });
-
-      return {
-        message: "Login Successfull",
-        user: {
-          id: user.id,
-          full_name: user.fullName,
-          username: user.username,
-          email: user.email,
-        },
-        token: token,
-      };
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    );
+    return {
+      message: "Login success",
+      user: {
+        id: chkUser.id,
+        username: chkUser.username,
+      },
+      token: token,
+    };
   }
 
   async check(loginSession: any): Promise<any> {
