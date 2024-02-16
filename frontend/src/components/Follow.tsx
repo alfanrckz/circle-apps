@@ -1,30 +1,27 @@
-import {
-  Heading,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 
 export default function Follow() {
   return (
     <>
-      <Heading mb={2}>Follow</Heading>
-      <Tabs isFitted variant="enclosed">
-        <TabList mb="1em">
-          <Tab>Followers</Tab>
-          <Tab>Following</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <p>one!</p>
-          </TabPanel>
-          <TabPanel>
-            <p>two!</p>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <Box p={2} w={"100%"}>
+        <Heading fontSize="23px" gap={2} mb={6}>
+          Follow
+        </Heading>
+        <Flex justifyContent={"space-around"}>
+          <Text
+            _hover={{ cursor: "pointer", color: "gray" }}
+            fontWeight={"500"}
+          >
+            Followers
+          </Text>
+          <Text
+            _hover={{ cursor: "pointer", color: "gray" }}
+            fontWeight={"500"}
+          >
+            Following
+          </Text>
+        </Flex>
+      </Box>
     </>
   );
 }
