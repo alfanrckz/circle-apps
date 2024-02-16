@@ -32,27 +32,23 @@ export default function MenuBar() {
           <UnorderedList my={4} style={{ listStyleType: "none" }}>
             <ListItem my={2}>
               <Flex>
-                <Link
-                  href="#"
-                  isExternal
-                  _hover={{ textDecoration: "none", fontWeight: "bold" }}
-                >
-                  <Center>
-                    <IoMdHome />
-                    <Link href="/">
-                      <Text bg="mainBg.900" pl={2}>
-                        HOME
-                      </Text>
-                    </Link>
-                  </Center>
-                </Link>
+                <Center>
+                  <IoMdHome />
+                  <Link
+                    href="/"
+                    _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                  >
+                    <Text bg="mainBg.900" pl={2}>
+                      HOME
+                    </Text>
+                  </Link>
+                </Center>
               </Flex>
             </ListItem>
             <ListItem my={2}>
               <Flex>
                 <Link
-                  href="#"
-                  isExternal
+                  href="/search"
                   _hover={{ textDecoration: "none", fontWeight: "bold" }}
                 >
                   <Center>
@@ -66,20 +62,17 @@ export default function MenuBar() {
             </ListItem>
             <ListItem my={2}>
               <Flex>
-                <Link
-                  href="#"
-                  isExternal
-                  _hover={{ textDecoration: "none", fontWeight: "bold" }}
-                >
-                  <Center>
-                    <GoHeartFill />
-                    <Link href="/follow">
-                      <Text bg="mainBg.900" pl={2}>
-                        FOLLOWS
-                      </Text>
-                    </Link>
-                  </Center>
-                </Link>
+                <Center>
+                  <GoHeartFill />
+                  <Link
+                    href="/follow"
+                    _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                  >
+                    <Text bg="mainBg.900" pl={2}>
+                      FOLLOWS
+                    </Text>
+                  </Link>
+                </Center>
               </Flex>
             </ListItem>
             <ListItem my={2}>
