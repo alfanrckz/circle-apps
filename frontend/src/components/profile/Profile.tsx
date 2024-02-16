@@ -11,25 +11,24 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 import { Footer } from "../Footer";
-import { useEffect, useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../stores/types/rootState";
 import { API } from "../../libs/api";
 
 export default function Profile() {
-  const [userProfile, setUserProfile] = useState();
+  const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.auth);
+  const token = document.cookie.replace("C.id=", "");
 
-  const currentUserProfile = async () => {
-    try {
-      const response = await API.get("/user/current");
-      // setUserProfile(response.data);
-      console.log(response);
-    } catch (error) {
-      console.log("Error get profile", error);
-    }
-  };
+  async function getProfile() {
+    const res = await API.get("/user/current", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 
-  useEffect(() => {
-    currentUserProfile();
-  }, []);
   return (
     <Box>
       <Box m={4}>
@@ -45,8 +44,8 @@ export default function Profile() {
                 h={14}
                 w="100%"
                 // maxW={{ base: "100%", sm: "200px" }}
-                src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                alt="Caffe Latte"
+                src=""
+                alt="cover_photo"
               />
               <Center>
                 <Image
@@ -60,8 +59,8 @@ export default function Profile() {
                   w={14}
                   left={2}
                   maxW={{ base: "100%", sm: "200px" }}
-                  src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                  alt="Caffe Latte"
+                  src={auth.picture}
+                  alt="avatar"
                 />
               </Center>
               <Box pt={4}>
@@ -77,18 +76,17 @@ export default function Profile() {
             </Box>
             <Heading size="sm" mt={2}></Heading>
             <Text fontSize="xs" color={"gray.400"}>
-              @username
+              @{auth.username}
             </Text>
             <Text fontSize="sm" py={2}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Obcaecati, corporis!
+              {auth.bio}
             </Text>
             <Box>
               <Flex>
                 <Box>
                   <Flex>
                     <Text fontSize="sm" py={2} as="b">
-                      291
+                      {auth.followings_count}
                     </Text>
                     <Text fontSize="sm" py={2} pl={1}>
                       Following
@@ -98,7 +96,7 @@ export default function Profile() {
                 <Box>
                   <Flex pl={4}>
                     <Text fontSize="sm" py={2} as="b">
-                      100
+                      {auth.followers_count}
                     </Text>
                     <Text fontSize="sm" py={2} pl={1}>
                       Followers

@@ -72,7 +72,7 @@ export default new (class Authservice {
       { id: chkUser.id, username: chkUser.username },
       process.env.SECRET_KEY,
       {
-        expiresIn: "7d",
+        expiresIn: "1d",
       }
     );
     return {

@@ -1,7 +1,7 @@
+import { IThreadCard } from "@/interfaces/thread";
 import { createSlice } from "@reduxjs/toolkit";
-import { Ithreads } from "../../interface/IThreads";
 
-const initialThreadState: { threads: Ithreads[] } = { threads: [] };
+const initialThreadState: { threads: IThreadCard[] } = { threads: [] };
 
 export const threadSlice = createSlice({
   name: "thread",
@@ -15,11 +15,14 @@ export const threadSlice = createSlice({
       action: { payload: { id: number; isLiked: boolean } }
     ) => {
       const { id, isLiked } = action.payload;
+
       state.threads = state.threads.map((thread) => {
         if (thread.id === id) {
           return {
             ...thread,
-            count_like: isLiked ? thread.count_like - 1 : thread.count_like + 1,
+            likes_count: isLiked
+              ? thread.likes_count - 1
+              : thread.likes_count + 1,
             is_liked: !isLiked,
           };
         }

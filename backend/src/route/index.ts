@@ -9,14 +9,20 @@ const router = express.Router();
 //auth
 router.post("/register", AuthController.register);
 router.post("/login", AuthController.login);
+
 //user
 router.get("/user/current", UserController.getCurrent);
+
 //thread
+router.get("/thread", ThreadController.getAll);
+router.get("/thread/:id", ThreadController.get);
 router.post("/thread", uploadFile.upload("image"), ThreadController.create);
 router.patch(
-  "/thread/update/:id",
+  "/thread/:id",
   authMiddleware.auth,
+  uploadFile.upload("image"),
   ThreadController.update
 );
+router.delete("/thread/:id", authMiddleware.auth, ThreadController.delete);
 
 export default router;

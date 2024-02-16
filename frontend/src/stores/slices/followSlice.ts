@@ -1,5 +1,5 @@
+import { IFollow } from "@/interfaces/follow";
 import { createSlice } from "@reduxjs/toolkit";
-import { IFollow } from "../../interface/follow";
 
 const initialFollowState: { followState: string; follows: IFollow[] } = {
   followState: "followers",
@@ -21,12 +21,10 @@ export const followSlice = createSlice({
       action: { payload: { id: number; isFollowed: boolean } }
     ) => {
       const { id, isFollowed } = action.payload;
+
       state.follows = state.follows.map((follow) => {
         if (follow.id === id) {
-          return {
-            ...follow,
-            is_followed: !isFollowed,
-          };
+          return { ...follow, is_followed: !isFollowed };
         }
         return follow;
       });
