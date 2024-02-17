@@ -7,7 +7,7 @@ import {
   Text,
   Flex,
   Center,
-  Link,
+
   // ExternalLinkIcon,
 } from "@chakra-ui/react";
 
@@ -16,6 +16,7 @@ import { IoMdHome } from "react-icons/io";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { GoHeartFill } from "react-icons/go";
 import { CiLogout } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 export default function MenuBar() {
   const handleLogout = () => {
@@ -34,11 +35,12 @@ export default function MenuBar() {
               <Flex>
                 <Center>
                   <IoMdHome />
-                  <Link
-                    href="/"
-                    _hover={{ textDecoration: "none", fontWeight: "bold" }}
-                  >
-                    <Text bg="mainBg.900" pl={2}>
+                  <Link to={"/"}>
+                    <Text
+                      bg="mainBg.900"
+                      pl={2}
+                      _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                    >
                       HOME
                     </Text>
                   </Link>
@@ -47,13 +49,14 @@ export default function MenuBar() {
             </ListItem>
             <ListItem my={2}>
               <Flex>
-                <Link
-                  href="/search"
-                  _hover={{ textDecoration: "none", fontWeight: "bold" }}
-                >
+                <Link to="/search">
                   <Center>
                     <MdOutlinePersonSearch />
-                    <Text bg="mainBg.900" pl={2}>
+                    <Text
+                      bg="mainBg.900"
+                      pl={2}
+                      _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                    >
                       SEARCH
                     </Text>
                   </Center>
@@ -64,11 +67,12 @@ export default function MenuBar() {
               <Flex>
                 <Center>
                   <GoHeartFill />
-                  <Link
-                    href="/follow"
-                    _hover={{ textDecoration: "none", fontWeight: "bold" }}
-                  >
-                    <Text bg="mainBg.900" pl={2}>
+                  <Link to="/follow">
+                    <Text
+                      bg="mainBg.900"
+                      pl={2}
+                      _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                    >
                       FOLLOWS
                     </Text>
                   </Link>
@@ -77,18 +81,18 @@ export default function MenuBar() {
             </ListItem>
             <ListItem my={2}>
               <Flex>
-                <Link
-                  href="#"
-                  isExternal
-                  _hover={{ textDecoration: "none", fontWeight: "bold" }}
-                >
-                  <Center>
-                    <CgProfile />
-                    <Text bg="mainBg.900" pl={2}>
+                <Center>
+                  <CgProfile />
+                  <Link to="/detail-profile">
+                    <Text
+                      bg="mainBg.900"
+                      pl={2}
+                      _hover={{ textDecoration: "none", fontWeight: "bold" }}
+                    >
                       PROFILE
                     </Text>
-                  </Center>
-                </Link>
+                  </Link>
+                </Center>
               </Flex>
             </ListItem>
           </UnorderedList>
