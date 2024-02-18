@@ -55,9 +55,10 @@ export default new (class Authservice {
     const isValid = validate(loginSchema, reqBody);
 
     const chkUser = await this.authRepository.findOne({
-      where: { username: isValid.username },
+      where: { email: isValid.email },
       select: {
         id: true,
+        email: true,
         username: true,
         password: true,
       },
