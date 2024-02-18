@@ -1,8 +1,11 @@
 import { ChangeEvent, useState } from "react";
 import { IUserRegister } from "../../../interface/user";
 import { API } from "../../../libs/api";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export function useRegister() {
+  const navigate = useNavigate();
   const [form, setForm] = useState<IUserRegister>({
     email: "",
     username: "",
@@ -21,6 +24,7 @@ export function useRegister() {
     try {
       await API.post("/register", form);
       console.log("register done!!");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
