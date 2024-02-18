@@ -5,6 +5,8 @@ import { IUserLogin } from "../../../interface/user";
 import { API } from "../../../libs/api";
 import { AUTH_LOGIN } from "../../../stores/rootReducer";
 
+// const exp = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
 export function useLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,8 +27,11 @@ export function useLogin() {
     try {
       const response = await API.post("/login", form);
       dispatch(AUTH_LOGIN(response.data));
-      // console.log(response);
-
+      console.log(response);
+      localStorage.setItem("authData", JSON.stringify(response.data.user));
+      // document.cookie = `C.id=${
+      //   response.data.token
+      // };expires=${exp.toUTCString()}`;
       navigate("/");
     } catch (error) {
       console.log(error);
