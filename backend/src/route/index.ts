@@ -4,6 +4,7 @@ import UserController from "../controller/UserController";
 import ThreadController from "../controller/ThreadController";
 import authMiddleware from "../middleware/auth";
 import uploadFile from "../middleware/uploadFile";
+import FollowController from "../controller/FollowController";
 
 const router = express.Router();
 //auth
@@ -24,5 +25,10 @@ router.patch(
   ThreadController.update
 );
 router.delete("/thread/:id", authMiddleware.auth, ThreadController.delete);
+
+//follow
+router.post("/follow", authMiddleware.auth, FollowController.follow);
+router.get("/follow", authMiddleware.auth, FollowController.getFollow);
+router.delete("/unfollow", authMiddleware.auth, FollowController.unfollow);
 
 export default router;
