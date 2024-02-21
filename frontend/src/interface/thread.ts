@@ -13,7 +13,7 @@ export interface IThreadCard {
   // profile_name: string;
   // username: string;
   content?: string;
-  image_content?: string;
+  image?: string;
   count_like?: number;
   count_replies?: number;
   is_liked?: boolean;
