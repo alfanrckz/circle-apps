@@ -35,8 +35,8 @@ export class Reply {
   @OneToMany(() => Like, (like) => like.reply)
   likes: Like[];
 
-  @Column()
-  replies: number;
+  @OneToMany(() => Reply, (reply) => reply.reply)
+  replies: Reply[];
 
   @Column({ default: () => "NOW()" })
   created_at: string;

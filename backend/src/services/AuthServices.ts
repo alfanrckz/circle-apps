@@ -60,6 +60,7 @@ export default new (class Authservice {
         id: true,
         email: true,
         username: true,
+        fullName: true,
         password: true,
       },
     });
@@ -80,7 +81,9 @@ export default new (class Authservice {
       message: "Login success",
       user: {
         id: chkUser.id,
+        fullName: chkUser.fullName,
         username: chkUser.username,
+        email: chkUser.email,
       },
       token: token,
     };
@@ -92,20 +95,20 @@ export default new (class Authservice {
         where: {
           id: loginSession.user.id,
         },
-        relations: ["followers", "followings"],
+        relations: ["follower", "following"],
       });
 
       return {
         message: "Token is valid!",
         user: {
           id: user.id,
-          full_name: user.fullName,
+          fullName: user.fullName,
           username: user.username,
           email: user.email,
           picture: user.picture,
           bio: user.bio,
-          follower: user.follower,
-          following: user.following,
+          follower: user.follower.length,
+          following: user.following.length,
         },
       };
     } catch (error) {
