@@ -2,13 +2,13 @@ import { IUser } from "./user";
 
 export interface IThreadPost {
   content: string;
-  image: Blob | MediaSource | string;
+  image: string | File | undefined;
 }
 
 export interface IThreadCard {
   id?: number;
   user?: IUser;
-  posted_at?: string;
+  created_at?: string;
   // profile_picture: string;
   // profile_name: string;
   // username: string;

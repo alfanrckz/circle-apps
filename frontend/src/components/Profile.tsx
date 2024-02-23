@@ -18,6 +18,8 @@ import { AUTH_CHECK } from "../stores/rootReducer";
 
 export default function Profile() {
   const auth = useSelector((state: RootState) => state.auth);
+  console.log(auth);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function Profile() {
       const parsedAuthData = JSON.parse(storeAuthData);
       dispatch(AUTH_CHECK({ user: parsedAuthData }));
     }
-  }, [dispatch]);
+  }, [dispatch, auth]);
 
   return (
     <Box>
@@ -43,7 +45,7 @@ export default function Profile() {
                 h={14}
                 w="100%"
                 // maxW={{ base: "100%", sm: "200px" }}
-                src=""
+                src="https://i.ibb.co/xmP2pS6/Profile.png"
                 alt="cover_photo"
               />
               <Center>
@@ -58,7 +60,7 @@ export default function Profile() {
                   w={14}
                   left={2}
                   maxW={{ base: "100%", sm: "200px" }}
-                  src={auth.picture}
+                  src={auth.picture ? auth.picture : "/placeholder-profile.jpg"}
                   alt="avatar"
                 />
               </Center>
@@ -73,11 +75,14 @@ export default function Profile() {
                 </Button>
               </Box>
             </Box>
-            <Heading size="sm" mt={2}></Heading>
+            <Heading size="sm" mt={2} textTransform={"capitalize"}>
+              ✨{auth.fullName}✨
+            </Heading>
             <Text fontSize="xs" color={"gray.400"}>
               @{auth.username}
             </Text>
             <Text fontSize="sm" py={2}>
+              Siksa Kubur Berat Broo
               {auth.bio}
             </Text>
             <Box>
@@ -85,7 +90,7 @@ export default function Profile() {
                 <Box>
                   <Flex>
                     <Text fontSize="sm" py={2} as="b">
-                      {auth.followings_count}
+                      {auth.followings_count ?? 0}
                     </Text>
                     <Text fontSize="sm" py={2} pl={1}>
                       Following
@@ -95,7 +100,7 @@ export default function Profile() {
                 <Box>
                   <Flex pl={4}>
                     <Text fontSize="sm" py={2} as="b">
-                      {auth.followers_count}
+                      {auth.followers_count ?? 0}
                     </Text>
                     <Text fontSize="sm" py={2} pl={1}>
                       Followers

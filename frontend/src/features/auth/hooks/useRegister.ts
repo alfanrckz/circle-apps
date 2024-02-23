@@ -1,8 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { IUserRegister } from "../../../interface/user";
 import { API } from "../../../libs/api";
-import { useDispatch } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
+import useToast from "../../../hooks/useToast";
 
 export function useRegister() {
   const navigate = useNavigate();
@@ -20,10 +21,13 @@ export function useRegister() {
     });
   }
 
+  const toast = useToast();
+
   async function handleRegister() {
     try {
-      await API.post("/register", form);
+      const response = await API.post("/register", form);
       console.log("register done!!");
+      if (response) toast("Register success", "Register success", "success");
       navigate("/login");
     } catch (error) {
       console.log(error);

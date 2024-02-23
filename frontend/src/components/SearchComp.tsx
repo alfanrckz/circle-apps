@@ -12,8 +12,8 @@ const SearchComp = () => {
           />
           <Input
             focusBorderColor="lime"
-            placeholder="Here is a sample placeholder"
-            borderRadius="20px" // Atur border-radius di sini
+            placeholder="look for people around you"
+            borderRadius="20px"
           />
         </InputGroup>
       </Stack>

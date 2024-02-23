@@ -13,7 +13,7 @@ export default function Login() {
       <FormLogin />
       <Box display={"flex"} gap={2}>
         <Text>Don't have an account yet?</Text>
-        <Link to={"/auth/register"}>
+        <Link to={"/register"}>
           <Text color={"brand.green"} cursor={"pointer"}>
             Create account
           </Text>

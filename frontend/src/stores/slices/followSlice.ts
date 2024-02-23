@@ -1,4 +1,4 @@
-import { IFollow } from "@/interfaces/follow";
+import { IFollow } from "../../interface/follow";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialFollowState: { followState: string; follows: IFollow[] } = {

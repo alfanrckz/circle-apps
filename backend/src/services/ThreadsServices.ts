@@ -16,13 +16,16 @@ export default new (class ThreadsServices {
 
   async getThreads() {
     return this.threadRepository.find({
+      order: {
+        id: "DESC",
+      },
       relations: {
-        author: true,
+        user: true,
         likes: true,
         replies: true,
       },
       select: {
-        author: {
+        user: {
           fullName: true,
           username: true,
           picture: true,

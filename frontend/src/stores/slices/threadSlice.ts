@@ -1,4 +1,4 @@
-import { IThreadCard } from "@/interfaces/thread";
+import { IThreadCard } from "../../interface/thread";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialThreadState: { threads: IThreadCard[] } = { threads: [] };
@@ -21,8 +21,8 @@ export const threadSlice = createSlice({
           return {
             ...thread,
             likes_count: isLiked
-              ? thread.likes_count - 1
-              : thread.likes_count + 1,
+              ? thread.count_like - 1
+              : thread.count_like + 1,
             is_liked: !isLiked,
           };
         }

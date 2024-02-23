@@ -26,18 +26,12 @@ export class Threads {
   @OneToMany(() => Reply, (reply) => reply.reply)
   replies: Reply[];
 
-  @ManyToOne(() => User, (user) => user.id, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-  })
-  author: User;
-
   @Column({ default: () => "NOW()" })
   created_at: Date;
 
   @Column({ default: () => "NOW()" })
   updated_at: Date;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.threads)
   user: User;
 }

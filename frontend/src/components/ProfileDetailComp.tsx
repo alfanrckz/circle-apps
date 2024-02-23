@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Chakra imports
 import {
   Avatar,
@@ -10,13 +10,26 @@ import {
   Icon,
   Image,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { AiOutlineHeart } from "react-icons/ai";
 import { MdOutlineInsertComment } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../stores/types/rootState";
+import { AUTH_CHECK } from "../stores/rootReducer";
 
 const ProfileDetailComp: React.FC = () => {
+  const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storeAuthData = localStorage.getItem("authData");
+    if (storeAuthData) {
+      const parsedAuthData = JSON.parse(storeAuthData);
+      dispatch(AUTH_CHECK({ user: parsedAuthData }));
+    }
+  }, [dispatch, auth]);
+
   const [likes, setLikes] = useState<number>(0);
   const [liked, setLiked] = useState<boolean>(false);
 
@@ -31,8 +44,8 @@ const ProfileDetailComp: React.FC = () => {
 
   return (
     <>
-      <Box mx={2} h={"100vh"} color={"white"} mt={10}>
-        <Card mx={1} mb={2} p="5px" h="310px" bg={"mainBg.200"} color={"white"}>
+      <Box h={"100vh"} color={"white"} mt={10}>
+        <Card mx={2} mb={2} p="5px" h="310px" bg={"mainBg.200"} color={"white"}>
           <Text fontWeight="500" my={2} mx={4}>
             My Profile
           </Text>
@@ -46,13 +59,25 @@ const ProfileDetailComp: React.FC = () => {
             />
             <Flex justify="space-between" w="full" p={3}>
               <Image
-                src="https://bit.ly/ryan-florence"
+                src={auth.picture ? auth.picture : "/placeholder-profile.jpg"}
                 border="5px solid red"
                 width="68px"
                 height="68px"
                 mt="-38px"
                 borderRadius="50%"
               />
+              <Text textAlign={"center"}>
+                {" "}
+                0<Text>Post</Text>
+              </Text>
+              <Text textAlign={"center"}>
+                {auth.followers_count ?? 0}
+                <Text>Follower</Text>
+              </Text>
+              <Text textAlign={"center"}>
+                {auth.followings_count ?? 0}
+                <Text>Following</Text>
+              </Text>
               <NavLink to={"/edit-profile"}>
                 <Button
                   boxSize={"fit-content"}
@@ -68,35 +93,22 @@ const ProfileDetailComp: React.FC = () => {
                 </Button>
               </NavLink>
             </Flex>
-            <Box mb={2} textAlign={"left"} w={"100%"}>
-              <Text textAlign={"left"} fontWeight="700">
-                Bujang
+            <Box ml={10} mb={1} textAlign={"left"} w={"100%"}>
+              <Text
+                textAlign={"left"}
+                fontWeight="700"
+                textTransform={"capitalize"}
+              >
+                {auth.fullName}
               </Text>
               <Text textAlign={"left"} fontSize="10px" fontWeight={"500"}>
-                @Bujang
+                @{auth.username}
               </Text>
               <Text textAlign={"left"} fontSize="12px" fontWeight="600">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Siksa kubur berat broooo
+                {auth.bio}
               </Text>
             </Box>
-            <Flex gap={2} w="100%" px="20px">
-              <Flex gap={1}>
-                <Text fontWeight="600" fontSize="14px">
-                  1
-                </Text>
-                <Text fontSize="14px" textAlign="center">
-                  Following
-                </Text>
-              </Flex>
-              <Flex gap={1}>
-                <Text fontWeight="400" fontSize="14px">
-                  666
-                </Text>
-                <Text fontSize="14px" textAlign="center">
-                  Follower
-                </Text>
-              </Flex>
-            </Flex>
           </Flex>
         </Card>
 
@@ -126,7 +138,7 @@ const ProfileDetailComp: React.FC = () => {
               </NavLink>
 
               <Flex gap={5}>
-                <Button bg="white" onClick={handlelike}>
+                <Button onClick={handlelike}>
                   <AiOutlineHeart size={25} color={liked ? "red" : "gray"} />
                   <Text ml={2} color="gray">
                     {likes}

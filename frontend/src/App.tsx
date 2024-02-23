@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Follow from "./components/Follow";
 import Content from "./components/Content";
 import Search from "./pages/Search";
+import ProfileDetail from "./pages/ProfileDetail";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route element={<Content />} path="/" />
           <Route element={<Follow />} path="/follow" />
           <Route element={<Search />} path="/search" />
+          <Route element={<ProfileDetail />} path="/detail-profile" />
         </Route>
         <Route element={<Register />} path="/register" />
         <Route element={<Login />} path="/login" />

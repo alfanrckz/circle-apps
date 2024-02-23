@@ -21,13 +21,17 @@ export function useThreads() {
 
   async function handlePost(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("content", form.content);
+      formData.append("image", form.image as File);
+      await API.post("/thread", formData);
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log("Thread added successfully", response);
 
-    const formData = new FormData();
-    formData.append("content", form.content);
-
-    const response = await API.post("/thread", form.content);
-    console.log("Thread added successfully", response);
-    getThreads;
+    getThreads();
   }
 
   useEffect(() => {

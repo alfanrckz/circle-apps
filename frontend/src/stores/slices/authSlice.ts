@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialAuthState: IUser = {
   id: 0,
   email: "",
-  full_name: "",
+  fullName: "",
   username: "",
   bio: "",
   picture: "",
@@ -21,9 +21,9 @@ export const authSlice = createSlice({
       const {
         id,
         email,
-        full_name,
+        fullName,
         username,
-        description,
+        bio,
         picture,
         followers_count,
         followings_count,
@@ -36,9 +36,9 @@ export const authSlice = createSlice({
 
       state.id = id;
       state.email = email;
-      state.full_name = full_name;
+      state.fullName = fullName;
       state.username = username;
-      state.bio = description;
+      state.bio = bio;
       state.picture = picture;
       state.followers_count = followers_count;
       state.followings_count = followings_count;
@@ -47,7 +47,7 @@ export const authSlice = createSlice({
       const {
         id,
         email,
-        full_name,
+        fullName,
         username,
         bio,
         picture,
@@ -57,7 +57,7 @@ export const authSlice = createSlice({
 
       state.id = id;
       state.email = email;
-      state.full_name = full_name;
+      state.fullName = fullName;
       state.username = username;
       state.bio = bio;
       state.picture = picture;

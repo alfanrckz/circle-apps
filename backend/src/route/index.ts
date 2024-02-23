@@ -19,7 +19,12 @@ router.get("/user/current", UserController.getCurrent);
 //thread
 router.get("/thread", ThreadController.getAll);
 router.get("/thread/:id", ThreadController.get);
-router.post("/thread", uploadFile.upload("image"), ThreadController.create);
+router.post(
+  "/thread",
+  authMiddleware.auth,
+  uploadFile.upload("image"),
+  ThreadController.create
+);
 router.patch(
   "/thread/:id",
   authMiddleware.auth,
@@ -35,7 +40,7 @@ router.delete("/unfollow", authMiddleware.auth, FollowController.unfollow);
 
 //like
 router.get("/like", LikeController.findAll);
-router.post("/like", authMiddleware.auth, LikeController.create);
+router.post("/unlike", authMiddleware.auth, LikeController.create);
 
 //reply
 router.post("/replies", authMiddleware.auth, ReplyController.create);

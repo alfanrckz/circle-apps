@@ -17,11 +17,17 @@ import { MdOutlinePersonSearch } from "react-icons/md";
 import { GoHeartFill } from "react-icons/go";
 import { CiLogout } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AUTH_LOGOUT } from "../stores/rootReducer";
 
 export default function MenuBar() {
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("id");
+    localStorage.removeItem("authData");
+    dispatch(AUTH_LOGOUT());
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("id");
+    // document.cookie = "C.id=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
     window.location.href = "/login";
   };
 

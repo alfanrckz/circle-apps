@@ -23,21 +23,28 @@ export default new (class ThreadController {
   async create(req: Request, res: Response) {
     try {
       let data;
+
+      const loginSession = res.locals.session;
       if (!req.file) {
         data = {
           content: req.body.content,
-          user: req.body.user,
+          user: loginSession,
         };
       } else {
+        console.log(loginSession);
         data = {
           content: req.body.content,
           image: req.file.filename,
-          user: req.body.user,
+          user: loginSession.id,
         };
       }
+      console.log(data);
 
       const response = await ThreadsServices.createThread(data);
-      res.status(201).json(response);
+      res.status(201).json({
+        message: "post success",
+        data: response,
+      });
     } catch (error) {
       res.status(error.status).json(error.message);
     }

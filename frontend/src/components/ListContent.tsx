@@ -12,20 +12,17 @@ import {
 
 import { FaHeart } from "react-icons/fa";
 import { LiaCommentSolid } from "react-icons/lia";
-import { Ithreads } from "../interface/IThreads";
 import { useState } from "react";
+import { IThreadCard } from "../interface/thread";
+import { useNavigate } from "react-router-dom";
+import { useThreadCard } from "../features/thread/hooks/useThreadCard";
+import { formatDistanceToNow, parseISO } from "date-fns";
 
-export default function ListContents(props: Ithreads) {
-  const {
-    profile_picture,
-    profile_name,
-    username,
-    content,
-    image_content,
-    count_like,
-    count_replies,
-  } = props;
+export default function ListContents(props: IThreadCard) {
+  // console.log("ini props", props);
 
+  const navigate = useNavigate();
+  const { handlePostLike } = useThreadCard();
   const [liked, setLiked] = useState(false);
   const [replies, setReplies] = useState(false);
 
@@ -33,12 +30,8 @@ export default function ListContents(props: Ithreads) {
     setLiked(!liked);
   };
 
-  const switchReplies = () => {
-    setReplies(!replies);
-  };
-
   return (
-    <Box m={4}>
+    <Box m={4} key={props.id}>
       <Card
         direction={{ base: "column", sm: "row" }}
         overflow="hidden"
@@ -56,20 +49,31 @@ export default function ListContents(props: Ithreads) {
           marginLeft={4}
           marginTop={4}
           maxW={{ base: "100%", sm: "200px" }}
-          src={profile_picture}
+          src={props.user?.picture ?? "/placeholder-profile.jpg"}
           alt="Caffe Latte"
         />
 
         <Stack>
           <CardBody>
             <Box>
-              <Heading size="md">{profile_name}</Heading>
+              <Flex>
+                <Text textTransform={"capitalize"} size="md">
+                  {props.user?.fullName}
+                </Text>
+                <Text ml={2} color="gray.400">
+                  {props.created_at &&
+                    formatDistanceToNow(parseISO(props.created_at), {
+                      addSuffix: true,
+                      includeSeconds: true,
+                    })}
+                </Text>
+              </Flex>
               <Text pt="1" color="gray.400">
-                @{username}
+                @{props.user?.username}
               </Text>
             </Box>
-            <Text py="2">{content}</Text>
-            <Image src={image_content} borderRadius={10} />
+            <Text py="2">{props.content}</Text>
+            <Image src={props.image} borderRadius={10} />
             <Flex pt="2">
               <Icon
                 as={FaHeart}
@@ -79,10 +83,10 @@ export default function ListContents(props: Ithreads) {
               />
 
               <Text fontSize="10" ml="1" mr="2">
-                {count_like}
+                {props.count_like}
               </Text>
               <LiaCommentSolid cursor="pointer" />
-              <Text fontSize="10">{count_replies}</Text>
+              <Text fontSize="10">{props.count_replies}</Text>
             </Flex>
           </CardBody>
         </Stack>
