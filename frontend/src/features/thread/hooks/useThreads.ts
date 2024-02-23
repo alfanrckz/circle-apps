@@ -25,7 +25,11 @@ export function useThreads() {
       const formData = new FormData();
       formData.append("content", form.content);
       formData.append("image", form.image as File);
-      await API.post("/thread", formData);
+      await API.post("/thread", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
