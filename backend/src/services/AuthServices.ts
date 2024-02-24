@@ -33,7 +33,7 @@ export default new (class Authservice {
       console.log(password);
 
       const user = this.authRepository.create({
-        fullName: reqBody.full_name,
+        fullName: reqBody.fullName,
         username: reqBody.username,
         email: reqBody.email,
         password: password,

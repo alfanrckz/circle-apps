@@ -28,7 +28,7 @@ export default new (class ThreadController {
       if (!req.file) {
         data = {
           content: req.body.content,
-          user: loginSession,
+          user: loginSession.id,
         };
       } else {
         console.log(loginSession);

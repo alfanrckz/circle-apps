@@ -53,7 +53,7 @@ export const authSlice = createSlice({
         picture,
         followers_count,
         followings_count,
-      } = action.payload.user;
+      } = action.payload.user || {};
 
       state.id = id;
       state.email = email;
