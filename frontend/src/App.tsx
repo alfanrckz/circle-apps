@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import Main from "./layouts/Main";
 import { API, setAuthToken } from "./libs/api";
 import { AUTH_CHECK, AUTH_ERROR } from "./stores/rootReducer";
+import Search from "./pages/Search";
 
 export default function App() {
   const [isLoading, setIsloading] = useState<Boolean>(true);
@@ -22,52 +23,56 @@ export default function App() {
   //   try {
   //     setAuthToken(localStorage.token);
   //     const response = await API.get("/check");
-  //     console.log(response.data);
+  //     console.log(response);
   //     dispatch(AUTH_CHECK(response.data));
   //     setIsloading(false);
-  //     // Redirect to home after successful login check
-  //     navigate("/");
   //   } catch (err) {
   //     console.log(err);
   //     dispatch(AUTH_ERROR());
   //     setIsloading(false);
-  //     // Redirect to login page if authentication fails
-  //     // navigate("/login");
+  //     navigate("/login");
   //   }
   // }
 
-  async function authCheck() {
-    try {
-      setAuthToken(localStorage.token);
-      const response = await API.get("/check");
-      console.log(response.data);
-      dispatch(AUTH_CHECK(response.data));
-      setIsloading(false);
-    } catch (err) {
-      console.log(err);
-      dispatch(AUTH_ERROR());
-      setIsloading(false);
-    }
-  }
-
   useEffect(() => {
-    if (localStorage.token) {
-      authCheck();
-    } else {
-      setIsloading(false);
-    }
+    const fetchData = async () => {
+      if (localStorage.token) {
+        setAuthToken(localStorage.token);
+        try {
+          const response = await API.get("/check");
+          dispatch(AUTH_CHECK(response.data));
+        } catch (err) {
+          console.log(err);
+          dispatch(AUTH_ERROR());
+          navigate("/login");
+        } finally {
+          setIsloading(false);
+        }
+      } else {
+        setIsloading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   if (auth.id) {
+  //     authCheck();
+  //   } else {
+  //     setIsloading(false);
+  //   }
+  // }, []);
+
   function IsLogin() {
-    if (!auth.username) {
+    if (!auth.id) {
       return <Navigate to={"/login"} />;
     } else {
       return <Outlet />;
     }
   }
-
   function IsNotLogin() {
-    if (auth.username) {
+    if (auth.id) {
       return <Navigate to={"/"} />;
     } else {
       return <Outlet />;
@@ -97,6 +102,14 @@ export default function App() {
               }
               path="/follow"
             />
+            <Route
+              element={
+                <Main>
+                  <Search />
+                </Main>
+              }
+              path="/search"
+            />
 
             <Route
               element={
@@ -104,16 +117,17 @@ export default function App() {
                   <ProfileDetail />
                 </Main>
               }
-              path="/profile/:id"
+              path="/detail-profile"
             />
           </Route>
 
           <Route path="/" element={<IsNotLogin />}>
-            <Route element={<Login />} path="/login" />
-            <Route element={<Register />} path="/register" />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
         </Routes>
       )}
+
       {/* 
       <Routes>
         <Route element={<Main />}>
