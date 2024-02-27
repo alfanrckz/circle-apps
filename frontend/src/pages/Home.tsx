@@ -20,13 +20,6 @@ export default function Home() {
   const auth = useSelector((state: RootState) => state.auth);
   const { handleChange, handlePost, fileInputRef, handleButtonClick, threads } =
     useThreads();
-  // console.log(handleButtonClick);
-  // console.log("ini threadss", threads);
-  // console.log("ini handlepost", handlePost);
-
-  // const sortedThreads = threads
-  //   ?.slice()
-  //   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   return (
     <>
@@ -81,13 +74,18 @@ export default function Home() {
                 </Center>
 
                 <Button
-                  colorScheme="green"
+                  bg={"green"}
                   ml={3}
                   borderRadius="20%"
                   value={"Post"}
-                  onClick={handlePost}
+                  type="submit"
+                  _hover={{
+                    // fontWeight: "bold",
+                    bg: "green.900",
+                  }}
+                  onClick={(e: any) => handlePost(e)}
                 >
-                  submit
+                  Post
                 </Button>
               </Flex>
             </form>
