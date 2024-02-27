@@ -3,7 +3,6 @@ import {
   Card,
   CardBody,
   Flex,
-  Heading,
   Icon,
   Image,
   Stack,
@@ -14,17 +13,22 @@ import { FaHeart } from "react-icons/fa";
 import { LiaCommentSolid } from "react-icons/lia";
 import { useState } from "react";
 import { IThreadCard } from "../../../interface/thread";
-import { useNavigate } from "react-router-dom";
-import { useThreadCard } from "../../../features/thread/hooks/useThreadCard";
 import { formatDistanceToNow, parseISO } from "date-fns";
+import ReplyModal from "../../../components/ReplyModal";
 
 export default function ThreadCard(props: IThreadCard) {
   // console.log("ini props", props);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const navigate = useNavigate();
-  const { handlePostLike } = useThreadCard();
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   const [liked, setLiked] = useState(false);
-  const [replies, setReplies] = useState(false);
 
   const switchLike = () => {
     setLiked(!liked);
@@ -52,7 +56,6 @@ export default function ThreadCard(props: IThreadCard) {
           src={props.user?.picture ?? "/placeholder-profile.jpg"}
           alt="Caffe Latte"
         />
-
         <Stack>
           <CardBody>
             <Box>
@@ -85,7 +88,9 @@ export default function ThreadCard(props: IThreadCard) {
               <Text fontSize="10" ml="1" mr="2">
                 {props.count_like}
               </Text>
-              <LiaCommentSolid cursor="pointer" />
+
+              <LiaCommentSolid cursor="pointer" onClick={openModal} />
+              <ReplyModal isOpen={isOpen} onClose={closeModal} />
               <Text fontSize="10">{props.count_replies}</Text>
             </Flex>
           </CardBody>
