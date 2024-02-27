@@ -22,14 +22,18 @@ export default new (class AuthController {
     }
   }
 
-  async check(req: Request, res: Response) {
-    try {
-      const loginSession = res.locals.loginSession;
-      const response = await AuthServices.check(loginSession);
-
-      return res.status(200).json(response);
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
+  check(req: Request, res: Response) {
+    Authservice.check(req, res);
   }
+
+  // async check(req: Request, res: Response) {
+  //   try {
+  //     const loginSession = res.locals.loginSession;
+  //     const response = await AuthServices.check;
+
+  //     return res.status(200).json(response);
+  //   } catch (error) {
+  //     return res.status(500).json({ error: error.message });
+  //   }
+  // }
 })();

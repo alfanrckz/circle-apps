@@ -4,12 +4,12 @@ import * as jwt from "jsonwebtoken";
 import { User } from "../entity/User";
 import { AppDataSource } from "../data-source";
 import { loginSchema, registerSchema } from "../utils/validator/auth";
-import { Request } from "express";
+import { Request, Response } from "express";
 import ResponseError from "../error/responseError";
 import { validate } from "../utils/validator/validation";
 
 export default new (class Authservice {
-  private readonly authRepository: Repository<User> =
+  private readonly AuthRepository: Repository<User> =
     AppDataSource.getRepository(User);
 
   async register(reqBody: any): Promise<any> {
@@ -20,7 +20,7 @@ export default new (class Authservice {
         throw new Error("Email is already registered");
       }
 
-      const isEmailRegistered = await this.authRepository.count({
+      const isEmailRegistered = await this.AuthRepository.count({
         where: {
           email: reqBody.email,
         },
@@ -32,7 +32,7 @@ export default new (class Authservice {
       const password = await bcrypt.hash(reqBody.password, 10);
       console.log(password);
 
-      const user = this.authRepository.create({
+      const user = this.AuthRepository.create({
         fullName: reqBody.fullName,
         username: reqBody.username,
         email: reqBody.email,
@@ -40,7 +40,7 @@ export default new (class Authservice {
       });
       console.log(user);
 
-      const data = await this.authRepository.save(user);
+      const data = await this.AuthRepository.save(user);
       console.log(data);
       return {
         message: "Registered succesfull",
@@ -54,7 +54,7 @@ export default new (class Authservice {
   async login(reqBody: Request) {
     const isValid = validate(loginSchema, reqBody);
 
-    const chkUser = await this.authRepository.findOne({
+    const chkUser = await this.AuthRepository.findOne({
       where: { email: isValid.email },
       select: {
         id: true,
@@ -89,30 +89,45 @@ export default new (class Authservice {
     };
   }
 
-  async check(loginSession: any): Promise<any> {
+  // async check(loginSession: any): Promise<any> {
+  //   try {
+  //     const user = await this.AuthRepository.findOne({
+  //       where: {
+  //         id: loginSession.user.id,
+  //       },
+  //       relations: ["follower", "following"],
+  //     });
+
+  //     return {
+  //       message: "Token is valid!",
+  //       user: {
+  //         id: user.id,
+  //         fullName: user.fullName,
+  //         username: user.username,
+  //         email: user.email,
+  //         picture: user.picture,
+  //         bio: user.bio,
+  //         follower: user.follower.length,
+  //         following: user.following.length,
+  //       },
+  //     };
+  //   } catch (error) {
+  //     return res.status(500).json({ mesage: "apasih" });
+  //   }
+  // }
+
+  async check(req: Request, res: Response): Promise<Response | void> {
     try {
-      const user = await this.authRepository.findOne({
+      const userLogin = res.locals.loginSession;
+      const user = await this.AuthRepository.findOne({
         where: {
-          id: loginSession.user.id,
+          id: userLogin.obj.id,
         },
-        relations: ["follower", "following"],
       });
 
-      return {
-        message: "Token is valid!",
-        user: {
-          id: user.id,
-          fullName: user.fullName,
-          username: user.username,
-          email: user.email,
-          picture: user.picture,
-          bio: user.bio,
-          follower: user.follower.length,
-          following: user.following.length,
-        },
-      };
+      return res.status(200).json({ message: "Token is valid!", user });
     } catch (error) {
-      throw new Error(error.message);
+      return res.status(500).json({ message: error });
     }
   }
 })();

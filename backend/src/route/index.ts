@@ -15,10 +15,10 @@ router.post("/login", AuthController.login);
 router.get("/check", authMiddleware.auth, AuthController.check);
 
 //user
-router.get("/user/current", UserController.getCurrent);
+// router.get("/user/current", UserController.getCurrent);
 
 //thread
-router.get("/thread", ThreadController.getAll);
+router.get("/threads", ThreadController.getAll);
 router.get("/thread/:id", ThreadController.get);
 router.post(
   "/thread",
