@@ -15,7 +15,7 @@ export function useThreads() {
   });
 
   async function getThreads() {
-    const response = await API.get("/thread");
+    const response = await API.get("/threads");
     dispatch(GET_THREADS(response.data));
   }
 
@@ -34,7 +34,6 @@ export function useThreads() {
       console.log(error);
     }
     // console.log("Thread added successfully", response);
-
     getThreads();
   }
 
