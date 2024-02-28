@@ -14,9 +14,9 @@ export default new (class Authservice {
 
   async register(reqBody: any): Promise<any> {
     try {
-      const { error } = registerSchema.validate(reqBody);
+      console.log(reqBody);
+      const { value, error } = registerSchema.validate(reqBody);
       if (error) {
-        console.log(error);
         throw new Error("Email is already registered");
       }
 
@@ -33,9 +33,9 @@ export default new (class Authservice {
       console.log(password);
 
       const user = this.AuthRepository.create({
-        fullName: reqBody.fullName,
-        username: reqBody.username,
-        email: reqBody.email,
+        fullName: value.fullName,
+        username: value.username,
+        email: value.email,
         password: password,
       });
       console.log(user);
