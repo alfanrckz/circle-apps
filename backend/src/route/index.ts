@@ -15,7 +15,7 @@ router.post("/login", AuthController.login);
 router.get("/check", authMiddleware.auth, AuthController.check);
 
 //user
-// router.get("/user/current", UserController.getCurrent);
+router.get("/users", UserController.find);
 
 //thread
 router.get("/threads", ThreadController.getAll);
