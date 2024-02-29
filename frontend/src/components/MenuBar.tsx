@@ -24,27 +24,28 @@ export default function MenuBar() {
   const handleLogout = () => {
     localStorage.removeItem("authData");
     dispatch(AUTH_LOGOUT());
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("id");
-    // document.cookie = "C.id=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
     window.location.href = "/login";
   };
+
   return (
-    <Box pos="fixed">
+    <Box>
       <Box m={4}>
-        <Heading color="green">Circle</Heading>
+        <Heading color="green">Circle X</Heading>
         <UnorderedList my={4} style={{ listStyleType: "none" }}>
           <ListItem my={2}>
             <Flex>
               <Center>
-                <IoMdHome />
+                <Text fontSize={"2xl"}>
+                  <IoMdHome />
+                </Text>
                 <Link to={"/"}>
                   <Text
-                    bg="mainBg.900"
+                    // bg="mainBg.900"
                     pl={2}
                     _hover={{
                       textDecoration: "none",
                       fontWeight: "bold",
+                      color: "green.500",
                     }}
                   >
                     HOME
@@ -53,10 +54,13 @@ export default function MenuBar() {
               </Center>
             </Flex>
           </ListItem>
-          <ListItem my={2}>
+
+          <ListItem my={2} mt={5}>
             <Flex>
               <Center>
-                <MdOutlinePersonSearch />
+                <Text fontSize={"2xl"}>
+                  <MdOutlinePersonSearch />
+                </Text>
                 <Link to={"/search"}>
                   <Text
                     bg="mainBg.900"
@@ -64,6 +68,7 @@ export default function MenuBar() {
                     _hover={{
                       textDecoration: "none",
                       fontWeight: "bold",
+                      color: "green.500",
                     }}
                   >
                     SEARCH
@@ -72,10 +77,12 @@ export default function MenuBar() {
               </Center>
             </Flex>
           </ListItem>
-          <ListItem my={2}>
+          <ListItem my={2} mt={5}>
             <Flex>
               <Center>
-                <GoHeartFill />
+                <Text fontSize={"2xl"}>
+                  <GoHeartFill />
+                </Text>
                 <Link to={"/follow"}>
                   <Text
                     bg="mainBg.900"
@@ -83,6 +90,7 @@ export default function MenuBar() {
                     _hover={{
                       textDecoration: "none",
                       fontWeight: "bold",
+                      color: "green.500",
                     }}
                   >
                     FOLLOWS
@@ -91,10 +99,12 @@ export default function MenuBar() {
               </Center>
             </Flex>
           </ListItem>
-          <ListItem my={2}>
+          <ListItem my={2} mt={5}>
             <Flex>
               <Center>
-                <CgProfile />
+                <Text fontSize={"2xl"}>
+                  <CgProfile />
+                </Text>
                 <Link to={"/detail-profile"}>
                   <Text
                     bg="mainBg.900"
@@ -102,6 +112,7 @@ export default function MenuBar() {
                     _hover={{
                       textDecoration: "none",
                       fontWeight: "bold",
+                      color: "green.500",
                     }}
                   >
                     PROFILE
@@ -112,25 +123,27 @@ export default function MenuBar() {
           </ListItem>
         </UnorderedList>
       </Box>
-      <Center>
-        <Button
-          w={"100%"}
-          mx={4}
-          color={"white"}
-          bg={"green"}
-          variant={"solid"}
-          _hover={{
-            textDecoration: "none",
-            fontWeight: "bold",
-          }}
-        >
-          Create Post
-        </Button>
-      </Center>
+
+      <Button
+        rounded={"full"}
+        w={"90%"}
+        mx={4}
+        color={"white"}
+        bg={"green"}
+        variant={"solid"}
+        _hover={{
+          // fontWeight: "bold",
+          bg: "green.900",
+        }}
+      >
+        Create Post
+      </Button>
       <Spacer />
-      <Center mt={310} onClick={handleLogout}>
+      <Center mt={250} onClick={handleLogout}>
         <CiLogout />
-        <Text cursor="pointer">Logout</Text>
+        <Text cursor="pointer" _hover={{ fontWeight: "bold", color: "red" }}>
+          Logout
+        </Text>
       </Center>
     </Box>
   );
