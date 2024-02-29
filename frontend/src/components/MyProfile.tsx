@@ -24,8 +24,6 @@ import { AUTH_CHECK } from "../stores/rootReducer";
 
 export default function MyProfile() {
   const auth = useSelector((state: RootState) => state.auth);
-  console.log("ini auth broo", auth);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,7 +49,7 @@ export default function MyProfile() {
                 h={14}
                 w="100%"
                 // maxW={{ base: "100%", sm: "200px" }}
-                src="https://i.ibb.co/xmP2pS6/Profile.png"
+                src="https://png.pngtree.com/background/20220724/original/pngtree-ackground-hijau-keren-dan-kosong-abstract-untuk-wallpaper-template-desain-ppt-picture-image_1741397.jpg"
                 alt="cover_photo"
               />
               <Center>
@@ -82,21 +80,21 @@ export default function MyProfile() {
               </Box>
             </Box>
             <Heading size="sm" mt={2} textTransform={"capitalize"}>
-              ✨{auth.fullName}✨
+              ✨{auth?.fullName}✨
             </Heading>
             <Text fontSize="xs" color={"gray.400"}>
-              @{auth.username}
+              @{auth?.username}
             </Text>
             <Text fontSize="sm" py={2}>
               Siksa Kubur Berat Broo
-              {auth.bio}
+              {auth?.bio}
             </Text>
             <Box>
               <Flex>
                 <Box>
                   <Flex>
                     <Text fontSize="sm" py={2} as="b">
-                      {auth.followings_count ?? 0}
+                      {auth?.followings_count ?? 0}
                     </Text>
                     <Text fontSize="sm" py={2} pl={1}>
                       Following
@@ -106,7 +104,7 @@ export default function MyProfile() {
                 <Box>
                   <Flex pl={4}>
                     <Text fontSize="sm" py={2} as="b">
-                      {auth.followers_count ?? 0}
+                      {auth?.followers_count ?? 0}
                     </Text>
                     <Text fontSize="sm" py={2} pl={1}>
                       Followers
