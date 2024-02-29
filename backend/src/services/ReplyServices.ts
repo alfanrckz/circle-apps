@@ -92,7 +92,7 @@ export default new (class ReplyServices {
 
     const response = await this.replyRepository.save(valid);
     return {
-      message: "Your Thread is created",
+      message: "Your Reply is created",
       data: response,
     };
   }
