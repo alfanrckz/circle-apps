@@ -9,8 +9,8 @@ export function useRegister() {
   const navigate = useNavigate();
   const [form, setForm] = useState<IUserRegister>({
     email: "",
+    fullName: "",
     username: "",
-    full_name: "",
     password: "",
   });
 
@@ -25,8 +25,9 @@ export function useRegister() {
 
   async function handleRegister() {
     try {
+      console.log(form);
       const response = await API.post("/register", form);
-      console.log("register done!!");
+      console.log("register done!!", response);
       if (response) toast("Register success", "Register success", "success");
       navigate("/login");
     } catch (error) {
