@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from "react";
 // Chakra imports
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  Flex,
-  Heading,
-  Icon,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Card, Flex, Image, Text } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { AiOutlineHeart } from "react-icons/ai";
-import { MdOutlineInsertComment } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../stores/types/rootState";
 import { AUTH_CHECK } from "../stores/rootReducer";
 
+import ThreadCard from "../features/thread/components/ThreadCard";
+import { useThreads } from "../features/thread/hooks/useThreads";
+
 const ProfileDetailComp: React.FC = () => {
+  const { handleChange, handlePost, fileInputRef, handleButtonClick, threads } =
+    useThreads();
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
@@ -44,23 +37,31 @@ const ProfileDetailComp: React.FC = () => {
 
   return (
     <>
-      <Box h={"100vh"} color={"white"} mt={10}>
-        <Card mx={2} mb={2} p="5px" h="310px" bg={"mainBg.200"} color={"white"}>
+      <Box
+        color={"white"}
+        mt={4}
+        h={"100vh"}
+        overflowY={"auto"}
+        sx={{
+          "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
+          "&::-webkit-scrollbar-thumb": { bg: "green.500" },
+        }}
+      >
+        <Card mx={4} mb={2} p="5px" h="330px" bg={"mainBg.200"} color={"white"}>
           <Text fontWeight="500" my={2} mx={4}>
-            My Profile
+            Profile
           </Text>
           <Flex direction="column" alignItems="center" mx={2}>
             <Image
-              src="https://i.ibb.co/xmP2pS6/Profile.png"
+              src="https://png.pngtree.com/background/20220724/original/pngtree-ackground-hijau-keren-dan-kosong-abstract-untuk-wallpaper-template-desain-ppt-picture-image_1741397.jpg"
               // maxW='100%'
               w={"100%"}
-              h={"30%"}
-              borderRadius="20px"
+              h={"20%"}
+              borderRadius="10px"
             />
             <Flex justify="space-between" w="full" p={3}>
               <Image
                 src={auth.picture ? auth.picture : "/placeholder-profile.jpg"}
-                border="5px solid red"
                 width="68px"
                 height="68px"
                 mt="-38px"
@@ -112,46 +113,74 @@ const ProfileDetailComp: React.FC = () => {
           </Flex>
         </Card>
 
-        <Card p={2} w={"100%"} bg={"mainBg.200"} color={"white"}>
-          <Flex gap={4}>
-            <Avatar name="gatot" src="https://bit.ly/sage-adebayo" />
-            <Box>
-              <Flex alignItems="center" gap={1}>
-                <Heading size="m">Bujang</Heading>
-                <Text>@bujang</Text>
+        {threads
+          ?.filter((item) => item.user?.username === auth.username)
+          .map((item) => {
+            return (
+              <ThreadCard
+                key={item.id}
+                id={item.id}
+                user={item?.user}
+                content={item.content}
+                created_at={item.created_at}
+                image={item.image}
+                count_like={item.count_like}
+                count_replies={item.count_replies}
+                is_liked={item.is_liked}
+              />
+            );
+          })}
+
+        {/* <Card
+          direction={{ base: "column", sm: "row" }}
+          overflow="hidden"
+          variant="outline"
+          bg="mainBg.200"
+          borderColor="mainBg.200"
+          border="5px"
+          color="grey.200"
+          mx={2}
+          mb={2}
+          p="5px"
+        >
+          <Image
+            borderRadius="100%"
+            objectFit="cover"
+            h={14}
+            w={14}
+            marginLeft={4}
+            marginTop={4}
+            maxW={{ base: "100%", sm: "200px" }}
+            alt="picture"
+          />
+          <Stack>
+            <CardBody>
+              <Box>
+                <Flex>
+                  <Text textTransform={"capitalize"} size="md"></Text>
+                  <Text ml={2} color="gray.400"></Text>
+                </Flex>
+                <Text pt="1" color="gray.400"></Text>
+              </Box>
+              <Text py="2"></Text>
+              <Image borderRadius={10} />
+              <Flex pt="2">
                 <Icon
-                  boxSize={1.5}
-                  mt={1}
-                  viewBox="0 0 200 200"
-                  color="gray.500"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
-                  />
-                </Icon>
-                <Text color="gray">1h</Text>
+                  as={FaHeart}
+                  cursor="pointer"
+                  // onClick={switchLike}
+                  color={liked ? "red.500" : "inherit"}
+                />
+
+                <Text fontSize="10" ml="1" mr="2"></Text>
+
+                <LiaCommentSolid cursor="pointer" />
+
+                <Text fontSize="10"></Text>
               </Flex>
-
-              <NavLink to={"/status"}>
-                <Text textAlign={"justify"}>PANTEK</Text>
-              </NavLink>
-
-              <Flex gap={5}>
-                <Button onClick={handlelike}>
-                  <AiOutlineHeart size={25} color={liked ? "red" : "gray"} />
-                  <Text ml={2} color="gray">
-                    {likes}
-                  </Text>
-                </Button>
-
-                <Button bg="white">
-                  <MdOutlineInsertComment size={25} color="gray" />
-                </Button>
-              </Flex>
-            </Box>
-          </Flex>
-        </Card>
+            </CardBody>
+          </Stack>
+        </Card> */}
       </Box>
     </>
   );
