@@ -11,18 +11,22 @@ export default new (class ReplyController {
 
   async create(req: Request, res: Response) {
     try {
+      const loginSession = res.locals.session;
+
       let data;
       if (!req.file) {
         data = {
           content: req.body.content,
-          user: req.body.user,
+          // user: req.body.user,
+          user: loginSession.id,
           thread: req.body.thread,
         };
       } else {
         data = {
           content: req.body.content,
           image: req.file.filename,
-          user: req.body.user,
+          // user: req.body.user,
+          user: loginSession.id,
           thread: req.body.thread,
         };
       }
