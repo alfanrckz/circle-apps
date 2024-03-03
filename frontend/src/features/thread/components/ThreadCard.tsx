@@ -9,29 +9,54 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaShare } from "react-icons/fa";
 import { LiaCommentSolid } from "react-icons/lia";
-import { useState } from "react";
 import { IThreadCard } from "../../../interface/thread";
 import { formatDistanceToNow, parseISO } from "date-fns";
-import ReplyModal from "../../../components/ReplyModal";
+import { useNavigate } from "react-router-dom";
+import { useThreadCard } from "../hooks/useThreadCard";
+import { useEffect, useState } from "react";
+// import { RootState } from "../../../stores/types/rootState";
+// import { useDispatch, useSelector } from "react-redux";
+// import { SET_THREAD_LIKE } from "../../../stores/rootReducer";
 
 export default function ThreadCard(props: IThreadCard) {
+  // const [showReply, setShowReply] = useState(false);
+  // const [liked, setLiked] = useState<boolean>(props.is_liked || false);
+  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  const { handlePostLike } = useThreadCard();
   // console.log("ini props", props);
-  const [isOpen, setIsOpen] = useState(false);
 
-  const openModal = () => {
-    setIsOpen(true);
-  };
+  // const likedThreads = useSelector(
+  //   (state: RootState) => state.thread.likedThreads
+  // );
 
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+  // const handleLikeClick = () => {
+  //   if (props.id) {
+  //     handlePostLike(props.id, !liked);
+  //     setLiked(!liked);
+  //   }
+  // };
 
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState<boolean>(() => {
+    // Membaca status like dari local storage saat komponen dimuat
+    const likedFromStorage = localStorage.getItem(`thread_${props.id}_liked`);
+    return likedFromStorage
+      ? JSON.parse(likedFromStorage)
+      : props.is_liked || false;
+  });
 
-  const switchLike = () => {
-    setLiked(!liked);
+  useEffect(() => {
+    // Menyimpan status like ke dalam local storage setelah perubahan
+    localStorage.setItem(`thread_${props.id}_liked`, JSON.stringify(liked));
+  }, [props.id, liked]);
+
+  const handleLikeClick = () => {
+    if (props.id) {
+      handlePostLike(props.id, !liked);
+      setLiked(!liked);
+    }
   };
 
   return (
@@ -48,15 +73,15 @@ export default function ThreadCard(props: IThreadCard) {
         <Image
           borderRadius="100%"
           objectFit="cover"
-          h={14}
-          w={14}
+          h={8}
+          w={8}
           marginLeft={4}
-          marginTop={4}
+          marginTop={6}
           maxW={{ base: "100%", sm: "200px" }}
           src={props.user?.picture ?? "/placeholder-profile.jpg"}
-          alt="Caffe Latte"
+          alt="picture"
         />
-        <Stack>
+        <Stack ml={-2}>
           <CardBody>
             <Box>
               <Flex>
@@ -71,7 +96,7 @@ export default function ThreadCard(props: IThreadCard) {
                     })}
                 </Text>
               </Flex>
-              <Text pt="1" color="gray.400">
+              <Text fontSize={12} mt={-1} color="gray.400">
                 @{props.user?.username}
               </Text>
             </Box>
@@ -81,17 +106,27 @@ export default function ThreadCard(props: IThreadCard) {
               <Icon
                 as={FaHeart}
                 cursor="pointer"
-                onClick={switchLike}
-                color={liked ? "red.500" : "inherit"}
+                // onClick={() =>
+                //   props.id && handlePostLike(props.id, props.is_liked)
+                // }
+                onClick={handleLikeClick}
+                color={liked ? "red.500" : "brand.grey"}
+                // color={props.is_liked ? "brand.grey" : "red.500"}
               />
 
               <Text fontSize="10" ml="1" mr="2">
                 {props.count_like}
               </Text>
 
-              <LiaCommentSolid cursor="pointer" onClick={openModal} />
-              <ReplyModal isOpen={isOpen} onClose={closeModal} />
-              <Text fontSize="10">{props.count_replies}</Text>
+              <LiaCommentSolid
+                cursor="pointer"
+                onClick={() => navigate(`/thread-detail/${props.id}`)}
+              />
+
+              <Text ml="2" fontSize="10">
+                {props.count_replies}
+              </Text>
+              <Icon as={FaShare} cursor="pointer" ml={3} />
             </Flex>
           </CardBody>
         </Stack>
