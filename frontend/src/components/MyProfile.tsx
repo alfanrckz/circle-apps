@@ -35,7 +35,15 @@ export default function MyProfile() {
   }, [auth, dispatch]);
 
   return (
-    <Box pos={"fixed"}>
+    <Box
+      pos={"fixed"}
+      h={"100vh"}
+      overflowY={"auto"}
+      sx={{
+        "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
+        "&::-webkit-scrollbar-thumb": { bg: "green.500" },
+      }}
+    >
       <Box m={4}>
         <Card bg="mainBg.200" borderRadius="lg">
           <Box m={4} color="gray.100">
