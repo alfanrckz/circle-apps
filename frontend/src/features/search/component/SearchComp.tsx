@@ -29,7 +29,7 @@ const SearchComp = () => {
   }, [searchQuery]);
 
   return (
-    <Box h={"100vh"} color={"white"} mt={4}>
+    <Box h={"97vh"} color={"white"} mt={4}>
       <Card mx={4} mb={2} p="5px" h="100%" bg={"mainBg.200"} color={"white"}>
         <Stack spacing={3} mt="6" px={5}>
           <InputGroup>

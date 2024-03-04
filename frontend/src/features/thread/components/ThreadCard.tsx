@@ -16,28 +16,11 @@ import { formatDistanceToNow, parseISO } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useThreadCard } from "../hooks/useThreadCard";
 import { useEffect, useState } from "react";
-// import { RootState } from "../../../stores/types/rootState";
-// import { useDispatch, useSelector } from "react-redux";
-// import { SET_THREAD_LIKE } from "../../../stores/rootReducer";
 
 export default function ThreadCard(props: IThreadCard) {
-  // const [showReply, setShowReply] = useState(false);
-  // const [liked, setLiked] = useState<boolean>(props.is_liked || false);
   const navigate = useNavigate();
   // const dispatch = useDispatch();
   const { handlePostLike } = useThreadCard();
-  // console.log("ini props", props);
-
-  // const likedThreads = useSelector(
-  //   (state: RootState) => state.thread.likedThreads
-  // );
-
-  // const handleLikeClick = () => {
-  //   if (props.id) {
-  //     handlePostLike(props.id, !liked);
-  //     setLiked(!liked);
-  //   }
-  // };
 
   const [liked, setLiked] = useState<boolean>(() => {
     // Membaca status like dari local storage saat komponen dimuat
@@ -46,6 +29,8 @@ export default function ThreadCard(props: IThreadCard) {
       ? JSON.parse(likedFromStorage)
       : props.is_liked || false;
   });
+
+  const [likeCount, setLikeCount] = useState<number>(props.count_like ?? 1);
 
   useEffect(() => {
     // Menyimpan status like ke dalam local storage setelah perubahan
@@ -56,6 +41,7 @@ export default function ThreadCard(props: IThreadCard) {
     if (props.id) {
       handlePostLike(props.id, !liked);
       setLiked(!liked);
+      setLikeCount((prevCount) => (liked ? prevCount - 1 : prevCount + 1));
     }
   };
 
@@ -115,7 +101,7 @@ export default function ThreadCard(props: IThreadCard) {
               />
 
               <Text fontSize="10" ml="1" mr="2">
-                {props.count_like}
+                {likeCount}
               </Text>
 
               <LiaCommentSolid

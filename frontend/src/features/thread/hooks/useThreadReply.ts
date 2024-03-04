@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../stores/types/rootState";
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "../../../stores/types/rootState";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { IThreadPost } from "../../../interface/thread";
 import { API } from "../../../libs/api";
 import { useParams } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 export function useThreadReply() {
   // const dispatch = useDispatch();
   // const threads = useSelector((state: RootState) => state.thread.threads);
+  // const [replies, setReplies] = useState<IThreadCard[]>();
   const { id } = useParams();
   const [formReply, setFormReply] = useState<IThreadPost>({
     content: "",

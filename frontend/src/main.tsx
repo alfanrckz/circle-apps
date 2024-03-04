@@ -7,6 +7,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./stores/rootReducer";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const theme = extendTheme({
   styles: {
@@ -35,18 +36,22 @@ export const theme = extendTheme({
   },
 });
 
+const queryClient = new QueryClient();
+
 const store = configureStore({
   reducer: rootReducer,
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <Router>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </Router>
-    </ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <Router>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </Router>
+      </ChakraProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

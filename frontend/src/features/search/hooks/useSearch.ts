@@ -34,12 +34,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../stores/types/rootState";
 import { API } from "../../../libs/api";
 import { GET_USERS } from "../../../stores/rootReducer";
-import { useEffect, useState } from "react"; // Perlu mengimpor useEffect
+import { useEffect, useState } from "react";
 
 export function useSearch() {
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.user.user);
-  console.log(users);
+  // console.log(users);
 
   const [filteredUsers, setFilteredUsers] = useState(users);
 
@@ -49,7 +49,7 @@ export function useSearch() {
       try {
         const response = await API.get("/users");
         dispatch(GET_USERS(response.data));
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.log(error);
       }

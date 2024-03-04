@@ -1,4 +1,3 @@
-import React from "react";
 import ProfileDetailComp from "../components/ProfileDetailComp";
 
 const ProfileDetail = () => {

@@ -29,9 +29,10 @@ export default function Main({ children }: { children: ReactNode }) {
         >
           <MenuBar />
         </GridItem>
+
         <GridItem
           w="100%"
-          h="100%"
+          h="97vh"
           bg="mainBg.100"
           colSpan={{ base: 10, md: 5 }}
         >

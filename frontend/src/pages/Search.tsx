@@ -1,4 +1,4 @@
-import SearchComp from "../components/SearchComp";
+import SearchComp from "../features/search/component/SearchComp";
 
 const Search = () => {
   return (

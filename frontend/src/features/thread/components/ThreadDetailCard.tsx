@@ -154,7 +154,7 @@ export const ThreadDetailCard = () => {
           </CardBody>
         </Card>
       </Box>
-      <Box>
+      <Box mt={5}>
         {getReplies?.length === 0 ? (
           <Text color={"red"}>No Comment yet</Text>
         ) : (

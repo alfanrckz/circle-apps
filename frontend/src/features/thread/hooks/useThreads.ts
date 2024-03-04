@@ -1,13 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../stores/types/rootState";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import { IThreadPost } from "../../../interface/thread";
+import { IThreadCard, IThreadPost } from "../../../interface/thread";
 import { API } from "../../../libs/api";
 import { GET_THREADS } from "../../../stores/rootReducer";
+import { useParams } from "react-router-dom";
 
 export function useThreads() {
   const dispatch = useDispatch();
   const threads = useSelector((state: RootState) => state.thread.threads);
+  const [thread, setThread] = useState<IThreadCard>();
+  const { id } = useParams();
 
   const [form, setForm] = useState<IThreadPost>({
     content: "",
@@ -17,6 +20,11 @@ export function useThreads() {
   async function getThreads() {
     const response = await API.get("/threads");
     dispatch(GET_THREADS(response.data));
+  }
+
+  async function getThread() {
+    const response = await API.get(`/thread/${Number(id)}`);
+    setThread(response.data);
   }
 
   async function handlePost(e: FormEvent<HTMLFormElement>) {
@@ -29,6 +37,10 @@ export function useThreads() {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+      });
+      setForm({
+        content: "",
+        image: "",
       });
     } catch (error) {
       console.log(error);
@@ -57,9 +69,18 @@ export function useThreads() {
   }
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   function handleButtonClick() {
     fileInputRef.current?.click();
   }
-  return { handleChange, handlePost, fileInputRef, handleButtonClick, threads };
+  return {
+    handleChange,
+    handlePost,
+    fileInputRef,
+    handleButtonClick,
+    threads,
+    getThread,
+    thread,
+    getThreads,
+    form,
+  };
 }

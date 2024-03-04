@@ -1,5 +1,4 @@
 import { Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom";
-import "./App.css";
 import Home from "./pages/Home";
 import { Register } from "./pages/Register";
 import Login from "./pages/Login";
@@ -12,6 +11,7 @@ import Main from "./layouts/Main";
 import { API, setAuthToken } from "./libs/api";
 import { AUTH_CHECK, AUTH_ERROR } from "./stores/rootReducer";
 import Search from "./pages/Search";
+import { ThreadDetail } from "./pages/ThreadDetail";
 
 export default function App() {
   const [isLoading, setIsloading] = useState<Boolean>(true);
@@ -19,60 +19,38 @@ export default function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // async function authCheck() {
-  //   try {
-  //     setAuthToken(localStorage.token);
-  //     const response = await API.get("/check");
-  //     console.log(response);
-  //     dispatch(AUTH_CHECK(response.data));
-  //     setIsloading(false);
-  //   } catch (err) {
-  //     console.log(err);
-  //     dispatch(AUTH_ERROR());
-  //     setIsloading(false);
-  //     navigate("/login");
-  //   }
-  // }
+  async function authCheck() {
+    try {
+      setAuthToken(localStorage.token);
+      const response = await API.get("/check");
+      console.log(response);
+      dispatch(AUTH_CHECK(response.data));
+      setIsloading(false);
+    } catch (err) {
+      console.log(err);
+      dispatch(AUTH_ERROR());
+      setIsloading(false);
+      navigate("/login");
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (localStorage.token) {
-        setAuthToken(localStorage.token);
-        try {
-          const response = await API.get("/check");
-          dispatch(AUTH_CHECK(response.data));
-        } catch (err) {
-          console.log(err);
-          dispatch(AUTH_ERROR());
-          navigate("/login");
-        } finally {
-          setIsloading(false);
-        }
-      } else {
-        setIsloading(false);
-      }
-    };
-
-    fetchData();
+    if (auth.id) {
+      authCheck();
+    } else {
+      setIsloading(false);
+    }
   }, []);
 
-  // useEffect(() => {
-  //   if (auth.id) {
-  //     authCheck();
-  //   } else {
-  //     setIsloading(false);
-  //   }
-  // }, []);
-
   function IsLogin() {
-    if (!auth.id) {
+    if (!localStorage.token) {
       return <Navigate to={"/login"} />;
     } else {
       return <Outlet />;
     }
   }
   function IsNotLogin() {
-    if (auth.id) {
+    if (localStorage.token) {
       return <Navigate to={"/"} />;
     } else {
       return <Outlet />;
@@ -118,6 +96,14 @@ export default function App() {
                 </Main>
               }
               path="/detail-profile"
+            />
+            <Route
+              element={
+                <Main>
+                  <ThreadDetail />
+                </Main>
+              }
+              path="/thread-detail/:id"
             />
           </Route>
 

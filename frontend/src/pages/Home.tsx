@@ -14,15 +14,20 @@ import { useSelector } from "react-redux";
 import { RootState } from "../stores/types/rootState";
 import { useThreads } from "../features/thread/hooks/useThreads";
 import ThreadCard from "../features/thread/components/ThreadCard";
-// import { any } from "joi";
 
 export default function Home() {
   const auth = useSelector((state: RootState) => state.auth);
-  const { handleChange, handlePost, fileInputRef, handleButtonClick, threads } =
-    useThreads();
+  const {
+    handleChange,
+    handlePost,
+    fileInputRef,
+    handleButtonClick,
+    threads,
+    form,
+  } = useThreads();
 
   return (
-    <>
+    <Box>
       <Box m={4}>
         <Card
           direction={{ base: "column", sm: "row" }}
@@ -52,6 +57,7 @@ export default function Home() {
                   marginX="auto"
                   border="none"
                   name="content"
+                  value={form.content}
                   onChange={handleChange}
                 />
                 <Center>
@@ -93,21 +99,30 @@ export default function Home() {
         </Card>
       </Box>
       {/* content */}
-      {threads?.map((item) => {
-        return (
-          <ThreadCard
-            key={item.id}
-            id={item.id}
-            user={item?.user}
-            content={item.content}
-            created_at={item.created_at}
-            image={item.image}
-            count_like={item.count_like}
-            count_replies={item.count_replies}
-            is_liked={item.is_liked}
-          />
-        );
-      })}
-    </>
+      <Box
+        h={"80vh"}
+        overflowY={"auto"}
+        sx={{
+          "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
+          "&::-webkit-scrollbar-thumb": { bg: "green.500" },
+        }}
+      >
+        {threads?.map((item: any) => {
+          return (
+            <ThreadCard
+              key={item.id}
+              id={item.id}
+              user={item?.user}
+              content={item.content}
+              created_at={item.created_at}
+              image={item.image}
+              count_like={item.count_like}
+              count_replies={item.count_replies}
+              is_liked={item.is_liked}
+            />
+          );
+        })}
+      </Box>
+    </Box>
   );
 }

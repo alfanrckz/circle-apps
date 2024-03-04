@@ -10,8 +10,7 @@ import ThreadCard from "../features/thread/components/ThreadCard";
 import { useThreads } from "../features/thread/hooks/useThreads";
 
 const ProfileDetailComp: React.FC = () => {
-  const { handleChange, handlePost, fileInputRef, handleButtonClick, threads } =
-    useThreads();
+  const { threads } = useThreads();
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
@@ -40,7 +39,7 @@ const ProfileDetailComp: React.FC = () => {
       <Box
         color={"white"}
         mt={4}
-        h={"100vh"}
+        h={"97vh"}
         overflowY={"auto"}
         sx={{
           "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
