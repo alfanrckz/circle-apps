@@ -18,6 +18,7 @@ import { useThreadCard } from "../hooks/useThreadCard";
 import { useEffect, useState } from "react";
 
 export default function ThreadCard(props: IThreadCard) {
+  console.log(props);
   const navigate = useNavigate();
   // const dispatch = useDispatch();
   const { handlePostLike } = useThreadCard();
@@ -30,8 +31,6 @@ export default function ThreadCard(props: IThreadCard) {
       : props.is_liked || false;
   });
 
-  const [likeCount, setLikeCount] = useState<number>(props.count_like ?? 1);
-
   useEffect(() => {
     // Menyimpan status like ke dalam local storage setelah perubahan
     localStorage.setItem(`thread_${props.id}_liked`, JSON.stringify(liked));
@@ -41,7 +40,6 @@ export default function ThreadCard(props: IThreadCard) {
     if (props.id) {
       handlePostLike(props.id, !liked);
       setLiked(!liked);
-      setLikeCount((prevCount) => (liked ? prevCount - 1 : prevCount + 1));
     }
   };
 
@@ -101,7 +99,7 @@ export default function ThreadCard(props: IThreadCard) {
               />
 
               <Text fontSize="10" ml="1" mr="2">
-                {likeCount}
+                {props.likes?.length}
               </Text>
 
               <LiaCommentSolid
@@ -109,8 +107,8 @@ export default function ThreadCard(props: IThreadCard) {
                 onClick={() => navigate(`/thread-detail/${props.id}`)}
               />
 
-              <Text ml="2" fontSize="10">
-                {props.count_replies}
+              <Text ml="1" fontSize="10">
+                {props.replies?.length} Replies
               </Text>
               <Icon as={FaShare} cursor="pointer" ml={3} />
             </Flex>
