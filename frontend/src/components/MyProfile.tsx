@@ -94,7 +94,8 @@ export default function MyProfile() {
               @{auth?.username}
             </Text>
             <Text fontSize="sm" py={2}>
-              Siksa Kubur Berat Broo
+              Siksa kubur berat broooo maka perbuatlah kebaikan di dunia
+              walaupun engkau sedang di banned👍
               {auth?.bio}
             </Text>
             <Box>
@@ -150,56 +151,6 @@ export default function MyProfile() {
                   Grock
                 </Text>
                 <Text fontSize="xs">@leminerale</Text>
-              </GridItem>
-              <GridItem colSpan={1}>
-                <Center>
-                  <Button borderRadius="50px">Follow</Button>
-                </Center>
-              </GridItem>
-            </Grid>
-            <Grid templateColumns="repeat(5, 1fr)" py={2} mx={3}>
-              <GridItem colSpan={1}>
-                <Image
-                  my={2}
-                  borderRadius="100%"
-                  objectFit="cover"
-                  h={10}
-                  w={10}
-                  maxW={{ base: "100%", sm: "200px" }}
-                  src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                  alt="Caffe Latte"
-                />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Text fontSize="xs" as="b" textAlign={["left", "center"]}>
-                  Zilong
-                </Text>
-                <Text fontSize="xs">@Zilong</Text>
-              </GridItem>
-              <GridItem colSpan={1}>
-                <Center>
-                  <Button borderRadius="50px">Follow</Button>
-                </Center>
-              </GridItem>
-            </Grid>
-            <Grid templateColumns="repeat(5, 1fr)" py={2} mx={3}>
-              <GridItem colSpan={1}>
-                <Image
-                  my={2}
-                  borderRadius="100%"
-                  objectFit="cover"
-                  h={10}
-                  w={10}
-                  maxW={{ base: "100%", sm: "200px" }}
-                  src="https://img.freepik.com/free-photo/confident-attractive-caucasian-guy-beige-pullon-smiling-broadly-while-standing-against-gray_176420-44508.jpg?w=740&t=st=1707272374~exp=1707272974~hmac=73cb9e234c24023a413b73e93e90cfbbdd56fcaab979c020d586ea086f1977b3"
-                  alt="Caffe Latte"
-                />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Text fontSize="xs" as="b" textAlign={["left", "center"]}>
-                  Luo Yi
-                </Text>
-                <Text fontSize="xs">@luoyi</Text>
               </GridItem>
               <GridItem colSpan={1}>
                 <Center>
