@@ -133,7 +133,8 @@ export default function MenuBar() {
         variant={"solid"}
         _hover={{
           // fontWeight: "bold",
-          bg: "green.900",
+          // bg: "green.900",
+          borderColor: "white",
         }}
       >
         Create Post
