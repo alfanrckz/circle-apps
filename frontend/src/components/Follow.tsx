@@ -6,11 +6,15 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
 } from "@chakra-ui/react";
 
 export default function Follow() {
   return (
     <Box h={"97vh"} color={"white"} mt={4}>
+      <Text ml={4} fontWeight={"bold"} fontSize={"2xl"} my={2}>
+        Follow
+      </Text>
       <Card mx={4} mb={2} p="5px" h="100%" bg={"mainBg.200"} color={"white"}>
         <Tabs
           px={5}
