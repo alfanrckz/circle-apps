@@ -5,6 +5,7 @@ import { IThreadPost } from "../../../interface/thread";
 import { API } from "../../../libs/api";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+// import { threadId } from "worker_threads";
 
 export function useThreadReply() {
   // const dispatch = useDispatch();
@@ -19,12 +20,11 @@ export function useThreadReply() {
   const { data: getReplies, refetch } = useQuery({
     queryKey: ["replies"],
     queryFn: async () =>
-      await API.get(`/replies?thread_id=${Number(id)}`)
-
+      await API.get(`/reply?threadId=${id}`)
         .then((res) => res.data)
+
         .catch((error) => error.message),
   });
-  console.log("ini getreplies", getReplies);
 
   async function handlePostReply(e: FormEvent<HTMLFormElement>) {
     try {
@@ -32,7 +32,7 @@ export function useThreadReply() {
       const formData = new FormData();
       formData.append("content", formReply.content);
       formData.append("image", formReply.image as File);
-      formData.append("thread_id", id as string);
+      formData.append("thread", id as string);
       formData.append("user", id as string);
       await API.post("/replies", formData, {
         headers: {
@@ -49,10 +49,6 @@ export function useThreadReply() {
       throw error;
     }
   }
-
-  // useEffect(() => {
-  //   getReplies();
-  // }, []);
 
   function handleChangeReply(e: ChangeEvent<HTMLInputElement>) {
     const { name, value, files } = e.target;
