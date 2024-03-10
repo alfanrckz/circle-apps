@@ -15,33 +15,38 @@ import { useThreads } from "../hooks/useThreads";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { BiSolidImageAdd } from "react-icons/bi";
-// import { useThreadDetail } from "../hooks/useThreadDetail";
-// import { useThreadReply } from "../hooks/useThreadReply";
 import { useEffect } from "react";
 import { useThreadReply } from "../hooks/useThreadReply";
+import { formatDistanceToNow, parseISO } from "date-fns";
 
 export const ThreadDetailCard = () => {
   const navigate = useNavigate();
   const { getThread, thread } = useThreads();
-  // const { thread, handlePost, handleChange, replies } = useThreadDetail();
-
-  // const authData: any = localStorage.getItem("authData");
-
   const {
     getReplies,
+    fileInputRefReply,
     handlePostReply,
     handleChangeReply,
     handleButtonClickReply,
-    fileInputRefReply,
     formReply,
   } = useThreadReply();
 
   useEffect(() => {
     getThread();
-  }, []);
+  }, [getReplies]);
+
+  // console.log("getReplies terbaru", getReplies);
 
   return (
-    <Box h={"100vh"}>
+    <Box
+      h={"100vh"}
+      overflowY={"auto"}
+      overflowX="hidden"
+      sx={{
+        "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
+        "&::-webkit-scrollbar-thumb": { bg: "green.500" },
+      }}
+    >
       <Box ml={5} display={"flex"} mt={5}>
         <Text
           mt={7}
@@ -57,13 +62,7 @@ export const ThreadDetailCard = () => {
         </Text>
       </Box>
 
-      <Box
-        overflowY={"auto"}
-        sx={{
-          "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
-          "&::-webkit-scrollbar-thumb": { bg: "green.500" },
-        }}
-      >
+      <Box>
         <ThreadCard
           key={thread?.id}
           id={thread?.id}
@@ -71,8 +70,8 @@ export const ThreadDetailCard = () => {
           content={thread?.content}
           created_at={thread?.created_at}
           image={thread?.image}
-          count_like={thread?.count_like}
-          count_replies={thread?.count_replies}
+          likes={thread?.likes}
+          replies={thread?.replies}
           is_liked={thread?.is_liked}
         />
       </Box>
@@ -82,7 +81,7 @@ export const ThreadDetailCard = () => {
         <Card
           h={70}
           direction={{ base: "column", sm: "row" }}
-          overflow="hidden"
+          overflowX="hidden"
           variant="outline"
           bg="mainBg.200"
           borderColor="main.Bg.200"
@@ -111,7 +110,6 @@ export const ThreadDetailCard = () => {
                   name="content"
                   onChange={handleChangeReply}
                   value={formReply.content}
-                  // onChange={handleChange}
                 />
                 <Center>
                   <label style={{ cursor: "pointer" }}>
@@ -142,10 +140,9 @@ export const ThreadDetailCard = () => {
                   type="submit"
                   colorScheme="green"
                   _hover={{
-                    // fontWeight: "bold",
-                    bg: "green.900",
+                    // bg: "green.900",
+                    borderColor: "white",
                   }}
-                  // onClick={(e: any) => handlePost(e)}
                 >
                   Reply
                 </Button>
@@ -153,46 +150,60 @@ export const ThreadDetailCard = () => {
             </form>
           </CardBody>
         </Card>
-      </Box>
-      <Box mt={5}>
-        {getReplies?.length === 0 ? (
-          <Text color={"red"}>No Comment yet</Text>
-        ) : (
-          getReplies &&
-          Array.isArray(getReplies) &&
-          getReplies.map((data: any) => {
-            return (
+
+        <Box ml={4} mt={5} h={"100vh"}>
+          {getReplies?.length === 0 ? (
+            <Text
+              display={"flex"}
+              justifyContent={"center"}
+              fontWeight={"bold"}
+            >
+              No Comment yet..
+            </Text>
+          ) : (
+            getReplies &&
+            Array.isArray(getReplies) &&
+            getReplies.map((reply) => (
               <Box
+                key={reply.id}
                 display={"flex"}
                 width="500px"
                 borderBottom={"1px solid white"}
                 padding={"20px 0px"}
                 bg={"transparent"}
                 color={"white"}
-                key={data.id}
               >
                 <Image
-                  src={data?.user?.profile_picture}
-                  width={"50px"}
-                  height={"50px"}
+                  src={
+                    reply?.user?.profile_picture ?? "/placeholder-profile.jpg"
+                  }
+                  width={"30px"}
+                  height={"30px"}
                   objectFit={"cover"}
                   borderRadius={"50%"}
                   marginRight={"20px"}
                 />
                 <Box>
                   <Box display={"flex"}>
-                    <Text>{data?.user?.full_name}</Text>
-                    <Text ms={2} color="grey">
-                      @{data?.user?.username}
+                    <Text textTransform={"capitalize"}>
+                      {reply?.user?.fullName}
+                    </Text>
+                    <Text ml={1} mt={1} fontSize={"sm"} color="grey">
+                      @{reply?.user?.username}
+                    </Text>
+                    <Text ml={3} color="grey">
+                      {reply.created_at &&
+                        formatDistanceToNow(parseISO(reply.created_at), {
+                          addSuffix: true,
+                          includeSeconds: true,
+                        })}
                     </Text>
                   </Box>
-
-                  {data?.content && <Text>{data?.content}</Text>}
-
-                  {data?.image && (
+                  {reply?.content && <Text>{reply?.content}</Text>}
+                  {reply?.image && (
                     <Image
                       mt={3}
-                      src={data?.image}
+                      src={reply?.image}
                       width={"400px"}
                       height={"300px"}
                       objectFit={"contain"}
@@ -201,9 +212,9 @@ export const ThreadDetailCard = () => {
                   )}
                 </Box>
               </Box>
-            );
-          })
-        )}
+            ))
+          )}
+        </Box>
       </Box>
     </Box>
   );
