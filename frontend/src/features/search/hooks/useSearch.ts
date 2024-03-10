@@ -45,7 +45,7 @@ export function useSearch() {
 
   useEffect(() => {
     // Gunakan useEffect untuk memuat data pengguna saat komponen dimuat
-    async function fetchData() {
+    async function getUsers() {
       try {
         const response = await API.get("/users");
         dispatch(GET_USERS(response.data));
@@ -54,7 +54,7 @@ export function useSearch() {
         console.log(error);
       }
     }
-    fetchData();
+    getUsers();
   }, []);
 
   useEffect(() => {}, []);
