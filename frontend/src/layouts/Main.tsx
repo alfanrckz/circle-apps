@@ -41,6 +41,7 @@ export default function Main({ children }: { children: ReactNode }) {
 
         <GridItem
           colSpan={{ base: 0, md: 3 }}
+          h={"100vh"}
           w="100%"
           bg="mainBg.100"
           display={{ base: "none", md: "block" }}
