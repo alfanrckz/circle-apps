@@ -8,6 +8,8 @@ import {
   Center,
   Button,
   Icon,
+  Heading,
+  Text,
 } from "@chakra-ui/react";
 import { BiSolidImageAdd } from "react-icons/bi";
 import { useSelector } from "react-redux";
@@ -29,6 +31,9 @@ export default function Home() {
   return (
     <Box>
       <Box m={4}>
+        <Text fontWeight={"bold"} fontSize={"2xl"} my={2}>
+          Home
+        </Text>
         <Card
           direction={{ base: "column", sm: "row" }}
           overflow="hidden"
@@ -81,13 +86,15 @@ export default function Home() {
 
                 <Button
                   bg={"green"}
+                  color={"white"}
                   ml={3}
-                  borderRadius="20%"
+                  borderRadius="10%"
                   value={"Post"}
                   type="submit"
                   _hover={{
                     // fontWeight: "bold",
-                    bg: "green.900",
+                    // bg: "green.900",
+                    borderColor: "white",
                   }}
                   onClick={(e: any) => handlePost(e)}
                 >
@@ -110,14 +117,14 @@ export default function Home() {
         {threads?.map((item: any) => {
           return (
             <ThreadCard
-              key={item.id}
+              // key={item.id}
               id={item.id}
               user={item?.user}
               content={item.content}
               created_at={item.created_at}
               image={item.image}
-              count_like={item.count_like}
-              count_replies={item.count_replies}
+              likes={item.likes}
+              replies={item.replies}
               is_liked={item.is_liked}
             />
           );
