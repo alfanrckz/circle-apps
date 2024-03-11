@@ -23,7 +23,7 @@ export class Threads {
   @OneToMany(() => Like, (like) => like.thread)
   likes: Like[];
 
-  @OneToMany(() => Reply, (reply) => reply.reply)
+  @OneToMany(() => Reply, (reply) => reply.thread)
   replies: Reply[];
 
   @Column({ default: () => "NOW()" })
