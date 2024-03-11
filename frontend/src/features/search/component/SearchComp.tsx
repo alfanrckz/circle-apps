@@ -30,6 +30,9 @@ const SearchComp = () => {
 
   return (
     <Box h={"97vh"} color={"white"} mt={4}>
+      <Text ml={2} fontWeight={"bold"} fontSize={"2xl"} my={2}>
+        Search
+      </Text>
       <Card mx={4} mb={2} p="5px" h="100%" bg={"mainBg.200"} color={"white"}>
         <Stack spacing={3} mt="6" px={5}>
           <InputGroup>
@@ -39,8 +42,8 @@ const SearchComp = () => {
             />
             <Input
               focusBorderColor="lime"
-              placeholder="look for people around you"
-              borderRadius="20px"
+              placeholder="look for people around you.."
+              borderRadius="10px"
               // value={searchQuery}
               onChange={handleSearchInputChange}
             />
@@ -67,7 +70,9 @@ const SearchComp = () => {
                 />
                 <Box marginTop={2} ml={2}>
                   <Text textTransform={"capitalize"}>{user.fullName}</Text>
-                  <Text>@{user.username}</Text>
+                  <Text mt={-1} color={"gray.400"}>
+                    @{user.username}
+                  </Text>
                 </Box>
                 <Spacer />{" "}
                 <Box>
