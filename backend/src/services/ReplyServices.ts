@@ -5,6 +5,7 @@ import { Request, Response } from "express";
 import { replySchema } from "../utils/validator/reply";
 import { validate } from "../utils/validator/validation";
 import cloudinary from "../libs/cloudinary";
+import { threadId } from "worker_threads";
 
 export default new (class ReplyServices {
   private readonly replyRepository: Repository<Reply> =
@@ -73,7 +74,6 @@ export default new (class ReplyServices {
     if (data.image) {
       cloudinary.upload();
       const upFile = await cloudinary.destination(isValid.image);
-      console.log("ini upfile", upFile);
 
       valid = {
         content: isValid.content,
@@ -88,12 +88,34 @@ export default new (class ReplyServices {
         thread: isValid.thread,
       };
     }
-    console.log({ message: "ini servise", valid });
+    // console.log({ message: "ini servise", valid });
 
     const response = await this.replyRepository.save(valid);
     return {
       message: "Your Reply is created",
       data: response,
     };
+  }
+
+  async findReplyByThread(threadId: number): Promise<any> {
+    try {
+      const response = await this.replyRepository.find({
+        where: {
+          thread: {
+            id: threadId,
+          },
+        },
+        order: {
+          id: "DESC",
+        },
+        relations: {
+          user: true,
+        },
+      });
+
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 })();
