@@ -41,10 +41,18 @@ router.delete("/unfollow", authMiddleware.auth, FollowController.unfollow);
 
 //like
 router.get("/like", LikeController.findAll);
-router.post("/unlike", authMiddleware.auth, LikeController.create);
+router.post("/like", authMiddleware.auth, LikeController.create);
+// router.post("/like", authMiddleware.auth, LikeController.create);
+// router.delete("like/thread_id", authMiddleware.auth, LikeController.delete);
 
 //reply
-router.post("/replies", authMiddleware.auth, ReplyController.create);
-router.get("/replies", authMiddleware.auth, ReplyController.find);
+router.post(
+  "/replies",
+  authMiddleware.auth,
+  uploadFile.upload("image"),
+  ReplyController.create
+);
+router.get("/replies", ReplyController.find);
+router.get("/reply", ReplyController.findReplyByThread);
 
 export default router;
