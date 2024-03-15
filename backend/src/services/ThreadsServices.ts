@@ -74,21 +74,8 @@ export default new (class ThreadsServices {
       where: id,
       relations: {
         user: true,
-      },
-      select: {
-        id: true,
-        content: true,
-        image: true,
         likes: true,
         replies: true,
-        user: {
-          id: true,
-          fullName: true,
-          username: true,
-          picture: true,
-        },
-        created_at: true,
-        updated_at: true,
       },
     });
   }
