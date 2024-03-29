@@ -8,8 +8,22 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
+import { FollowCard } from "../features/follow/FollowCard";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../stores/types/rootState";
+import { API } from "../libs/api";
+import { GET_FOLLOWS } from "../stores/rootReducer";
+
 
 export default function Follow() {
+  const dispatch = useDispatch()
+  const followState = useSelector((state: RootState) => state.follow.followState);
+  const follows = useSelector((state: RootState) => state.follow.follows ) 
+
+  async function getFollowData() {
+    const response = await API.get(`/follows?type=${followState}`)
+    dispatch(GET_FOLLOWS(response.data))
+  }
   return (
     <Box h={"97vh"} color={"white"} mt={4}>
       <Text ml={4} fontWeight={"bold"} fontSize={"2xl"} my={2}>
@@ -36,7 +50,12 @@ export default function Follow() {
               "&::-webkit-scrollbar-thumb": { bg: "green.500" },
             }}
           >
-            <TabPanel></TabPanel>
+            <TabPanel>
+              {follow.map(follow, index) => (
+
+              <FollowCard />
+              )}
+            </TabPanel>
             <TabPanel></TabPanel>
           </TabPanels>
         </Tabs>
