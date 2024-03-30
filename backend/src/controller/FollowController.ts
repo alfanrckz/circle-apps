@@ -15,7 +15,7 @@ export default new (class FollowController {
   async follow(req: Request, res: Response) {
     try {
       const userId = res.locals.session.id;
-      const response = await FollowServices.follow(res, userId, req.body);
+      const response = await FollowServices.follow(userId, req.body);
       res.status(200).json(response);
     } catch (error) {
       res.status(500).json({ message: error.message });
