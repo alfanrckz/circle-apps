@@ -29,11 +29,44 @@ export default new (class FollowServices {
     };
   }
 
-  async follow(follower, following) {
-    await this.followRepository.save({ following, follower });
-    return {
-      message: "Unfollow Success",
-    };
+  async follow(userId, reqBody: any) {
+    try {
+      const checkid = await AppDataSource.getRepository(User).findOne({
+        where: { id: Equal(reqBody.following) },
+      });
+
+      console.log("checkid :", checkid);
+
+      if (!checkid) {
+        throw new Error("User not found");
+      }
+
+      const isFollow = await this.followRepository.count({
+        where: {
+          follower: Equal (reqBody.following),
+          following: Equal (userId)
+        },
+      });
+
+      console.log("isFollow :", isFollow);
+
+      if (isFollow > 0) {
+        throw new Error("You already follow this user");
+        // return res.status(500).json({ message: "You already follow this user" });
+        // console.log("You already follow this user");
+        // return
+      }
+
+      await this.followRepository.save({
+        following: userId, 
+        follower: reqBody.following
+      });
+      return {
+        message: "Follow Success",
+      };
+    } catch (error) {
+      throw error;
+    }
   }
 
   async unfollow(following, follower) {
