@@ -14,6 +14,7 @@ import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
 import { GoHeartFill } from "react-icons/go";
 import { IoMdHome } from "react-icons/io";
+import { BsThreads } from "react-icons/bs";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { AUTH_LOGOUT } from "../stores/rootReducer";
@@ -30,7 +31,12 @@ export default function MenuBar() {
   return (
     <Box>
       <Box m={4}>
-        <Heading color="green">Circle X</Heading>
+        <Flex gap={3}>
+          <Heading color="green">Circle </Heading>
+          <Heading color="green" mt={1}>
+            <BsThreads />
+          </Heading>
+        </Flex>
         <UnorderedList my={4} style={{ listStyleType: "none" }}>
           <ListItem my={2}>
             <Flex>
