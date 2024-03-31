@@ -5,8 +5,8 @@ export interface IUser {
   username?: string;
   picture?: string;
   bio?: string;
-  followers_count?: number;
-  followings_count?: number;
+  followers_count?: [];
+  followings_count?: [];
 }
 
 export interface IUserRegister {

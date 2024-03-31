@@ -2,9 +2,9 @@ export interface IFollow {
   id: number;
   user_id: number;
   username: string;
-  full_name: string;
+  fullName: string;
   email: string;
   picture: string;
   description: string;
-  is_followed: boolean;
+  isFollowing: boolean;
 }

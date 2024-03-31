@@ -14,7 +14,7 @@ export interface IThreadCard {
   // username: string;
   content?: string;
   image?: string;
-  likes?: any[];
-  replies?: any[];
-  is_liked?: boolean;
+  likes?: any[] | undefined;
+  replies?: any[] | undefined;
+  is_liked?: boolean ;
 }
