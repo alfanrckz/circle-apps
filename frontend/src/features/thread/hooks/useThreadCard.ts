@@ -1,17 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../stores/types/rootState";
 import { API } from "../../../libs/api";
-import { SET_THREAD_LIKE } from "../../../stores/rootReducer";
+// import { SET_THREAD_LIKE } from "../../../stores/rootReducer";
 
 
 export function useThreadCard() {
   const dispatch = useDispatch();
   const threads = useSelector((state: RootState) => state.thread.threads);
 
-  async function handlePostLike(id: number, is_liked: boolean) {
+  async function handlePostLike(id:number) {
     try {
       const response = await API.post(
-        "/like",
+        "/like/thread",
         { thread: id },
         {
           headers: {
@@ -21,12 +21,7 @@ export function useThreadCard() {
       );
 
       console.log("SUCCESS", response.data);
-
-      // else {
-      //   const response = await API.post(`/like/${id}`);
-      //   console.log("BERHASIL menghapus LIKE", response.data);
-      // }
-      dispatch(SET_THREAD_LIKE({ id, is_liked: is_liked }));
+      // dispatch(SET_THREAD_LIKE({ id, is_liked: is_liked }));
     } catch (error) {
       console.log("failed updating like!", error);
     }
