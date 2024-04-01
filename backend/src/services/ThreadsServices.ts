@@ -19,11 +19,7 @@ export default new (class ThreadsServices {
       order: {
         id: "DESC",
       },
-      relations: {
-        user: true,
-        likes: true,
-        replies: true,
-      },
+      relations: ["likes", "likes.user", "replies", "user"],
       select: {
         user: {
           fullName: true,
@@ -32,7 +28,11 @@ export default new (class ThreadsServices {
         },
         likes: {
           id: true,
+          user: {
+            id: true,
+          },
         },
+
         replies: {
           id: true,
         },
