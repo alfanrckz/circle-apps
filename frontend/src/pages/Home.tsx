@@ -107,7 +107,7 @@ export default function Home() {
       </Box>
       {/* content */}
       <Box
-        h={"80vh"}
+        h={"70vh"}
         overflowY={"auto"}
         sx={{
           "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
@@ -117,7 +117,7 @@ export default function Home() {
         {threads?.map((item: any) => {
           return (
             <ThreadCard
-              // key={item.id}
+              key={item.id}
               id={item.id}
               user={item?.user}
               content={item.content}

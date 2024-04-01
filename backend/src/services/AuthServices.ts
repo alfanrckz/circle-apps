@@ -1,5 +1,5 @@
 import * as bcrypt from "bcrypt";
-import { Repository } from "typeorm";
+import { Equal, Repository } from "typeorm";
 import * as jwt from "jsonwebtoken";
 import { User } from "../entity/User";
 import { AppDataSource } from "../data-source";
@@ -7,6 +7,7 @@ import { loginSchema, registerSchema } from "../utils/validator/auth";
 import { Request, Response } from "express";
 import ResponseError from "../error/responseError";
 import { validate } from "../utils/validator/validation";
+import { Follow } from "../entity/Follow";
 
 export default new (class Authservice {
   private readonly AuthRepository: Repository<User> =
@@ -14,7 +15,7 @@ export default new (class Authservice {
 
   async register(reqBody: any): Promise<any> {
     try {
-      console.log(reqBody);
+      // console.log(reqBody);
       const { value, error } = registerSchema.validate(reqBody);
       if (error) {
         throw new Error("Email is already registered");
@@ -30,7 +31,7 @@ export default new (class Authservice {
       }
 
       const password = await bcrypt.hash(reqBody.password, 10);
-      console.log(password);
+      // console.log(password);
 
       const user = this.AuthRepository.create({
         fullName: value.fullName,
@@ -38,10 +39,10 @@ export default new (class Authservice {
         email: value.email,
         password: password,
       });
-      console.log(user);
+      // console.log(user);
 
       const data = await this.AuthRepository.save(user);
-      console.log(data);
+      // console.log(data);
       return {
         message: "Registered succesfull",
         user: user,
@@ -89,45 +90,55 @@ export default new (class Authservice {
     };
   }
 
-  // async check(loginSession: any): Promise<any> {
-  //   try {
-  //     const user = await this.AuthRepository.findOne({
-  //       where: {
-  //         id: loginSession.user.id,
-  //       },
-  //       relations: ["follower", "following"],
-  //     });
-
-  //     return {
-  //       message: "Token is valid!",
-  //       user: {
-  //         id: user.id,
-  //         fullName: user.fullName,
-  //         username: user.username,
-  //         email: user.email,
-  //         picture: user.picture,
-  //         bio: user.bio,
-  //         follower: user.follower.length,
-  //         following: user.following.length,
-  //       },
-  //     };
-  //   } catch (error) {
-  //     return res.status(500).json({ mesage: "apasih" });
-  //   }
-  // }
 
   async check(req: Request, res: Response): Promise<Response | void> {
     try {
-      const userLogin = res.locals.loginSession;
+      const userLogin = res.locals.session.id;
+      // console.log(userLogin)
       const user = await this.AuthRepository.findOne({
         where: {
-          id: userLogin.obj.id,
+          id: userLogin,
         },
+        relations: {
+          follower: true,
+          following: true,
+        }
       });
+      // console.log(user)
 
-      return res.status(200).json({ message: "Token is valid!", user });
+      const follower = await AppDataSource.getRepository(Follow).find({
+        where: {
+          follower: Equal(userLogin),
+        },
+        relations:{
+          following: true
+        }
+      })
+      const following = await AppDataSource.getRepository(Follow).find({
+        where: {
+          following: Equal(userLogin),
+        },
+        relations:{
+          follower: true
+        }
+      })
+
+      const data = {
+        id: user.id,
+        fullName: user.fullName,
+        username: user.username,
+        email: user.email,
+        picture: user.picture,
+        bio: user.bio,
+        followers_count: follower,
+        followings_count: following
+      } 
+
+      return res.status(200).json({ message: "Token is valid!", data
+    });
     } catch (error) {
       return res.status(500).json({ message: error });
     }
   }
+  
 })();

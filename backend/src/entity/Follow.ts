@@ -17,7 +17,4 @@ export class Follow {
     onDelete: "CASCADE",
   })
   following: User;
-
-  @OneToOne(() => User, (user) => user.id)
-  user: User;
 }

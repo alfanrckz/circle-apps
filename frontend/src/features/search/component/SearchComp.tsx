@@ -13,10 +13,14 @@ import {
 } from "@chakra-ui/react";
 import { FaUser } from "react-icons/fa";
 import { useSearch } from "../hooks/useSearch";
+import { useFollow } from "../../follow/hooks/useFollow";
+import { IFollow } from "../../../interface/follow";
 
-const SearchComp = () => {
-  const { filteredUsers, searchUsers } = useSearch();
+const SearchComp = (props: IFollow) => {
+  const { filteredUsers, searchUsers, users } = useSearch();
   const [searchQuery, setSearchQuery] = useState("");
+  const [isFollowMap, setIsFollowMap] = useState<{[key: string]: boolean}>({});
+  const { follow, unfollow } = useFollow();
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -25,8 +29,29 @@ const SearchComp = () => {
   };
 
   useEffect(() => {
-    if (!searchQuery) return setSearchQuery("");
+    if (!searchQuery) setSearchQuery("");
   }, [searchQuery]);
+
+  // Update isFollowMap when users change
+  useEffect(() => {
+    const newIsFollowMap: {[key: string]: boolean} = {};
+    users.forEach(user => {
+      newIsFollowMap[user.id] = isFollowMap[user.id] || false;
+    });
+    setIsFollowMap(newIsFollowMap);
+  }, [users]);
+
+  const handleFollowToggle = (userId: number) => {
+    const newIsFollowMap = {...isFollowMap};
+    newIsFollowMap[userId] = !newIsFollowMap[userId];
+    setIsFollowMap(newIsFollowMap);
+
+    if (newIsFollowMap[userId]) {
+      follow(userId);
+    } else {
+      unfollow(userId);
+    }
+  };
 
   return (
     <Box h={"97vh"} color={"white"} mt={4}>
@@ -76,13 +101,15 @@ const SearchComp = () => {
                 </Box>
                 <Spacer />{" "}
                 <Box>
-                  <Button
-                    border={"1px"}
-                    backgroundColor={"mainBg.200"}
-                    colorScheme="green"
-                  >
-                    Follow
-                  </Button>
+                  {!isFollowMap[user.id] ? (
+                    <Button onClick={() => handleFollowToggle(user.id)}>
+                      Follow
+                    </Button>
+                  ) : (
+                    <Button onClick={() => handleFollowToggle(user.id)}>
+                      Unfollow
+                    </Button>
+                  )}
                 </Box>
               </Box>
             ))}

@@ -6,5 +6,5 @@ export interface IFollow {
   email: string;
   picture: string;
   description: string;
-  isFollowing: boolean;
+  follow?: any[];
 }

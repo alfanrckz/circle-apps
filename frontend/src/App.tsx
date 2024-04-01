@@ -13,18 +13,19 @@ import { AUTH_CHECK, AUTH_ERROR } from "./stores/rootReducer";
 import Search from "./pages/Search";
 import { ThreadDetail } from "./pages/ThreadDetail";
 
+
 export default function App() {
   const [isLoading, setIsloading] = useState<Boolean>(true);
   const auth = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  async function authCheck() {
+   async function authCheck() {
     try {
       setAuthToken(localStorage.token);
       const response = await API.get("/check");
-      console.log(response);
-      dispatch(AUTH_CHECK(response.data));
+      console.log("authcheckkkkk",response.data.data);
+      dispatch(AUTH_CHECK(response.data.data));
       setIsloading(false);
     } catch (err) {
       console.log(err);

@@ -8,22 +8,39 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import { FollowCard } from "../features/follow/FollowCard";
+import { FollowCard } from "../features/follow/component/FollowCard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../stores/types/rootState";
 import { API } from "../libs/api";
-import { GET_FOLLOWS } from "../stores/rootReducer";
-
+import { useEffect } from "react";
+import { GET_FOLLOW } from "../stores/slices/followSlice";
 
 export default function Follow() {
-  const dispatch = useDispatch()
-  const followState = useSelector((state: RootState) => state.follow.followState);
-  const follows = useSelector((state: RootState) => state.follow.follows ) 
+  const dispatch = useDispatch();
+  const follower = useSelector((state: RootState) => state.follow.follower);
+  const following = useSelector((state: RootState) => state.follow.following);
+  const profile = useSelector((state: RootState) => state.profile);
+  // console.log("following",following);
+  // console.log("follower",follower);
+  // console.log(profile)
+  // console.log("ini follow", follows);
 
   async function getFollowData() {
-    const response = await API.get(`/follows?type=${followState}`)
-    dispatch(GET_FOLLOWS(response.data))
+    const response = await API.get("/follow", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log(response.data);
+    dispatch(GET_FOLLOW(response.data));
   }
+
+  useEffect(() => {
+    getFollowData();
+  }, []);
+
+  if(profile.id === 0) return null
+
   return (
     <Box h={"97vh"} color={"white"} mt={4}>
       <Text ml={4} fontWeight={"bold"} fontSize={"2xl"} my={2}>
@@ -51,12 +68,37 @@ export default function Follow() {
             }}
           >
             <TabPanel>
-              {follow.map(follow, index) => (
-
-              <FollowCard />
-              )}
+              {follower &&
+                follower.map((follow, index) => (
+                  <FollowCard
+                    key={index}
+                    id={follow.id}
+                    user_id={follow.user_id}
+                    fullName={follow.fullName}
+                    username={follow.username}
+                    email={follow.email}
+                    picture={follow.picture}
+                    description={follow.description}
+                    follow={profile.followings_count}
+                  />
+                ))}
             </TabPanel>
-            <TabPanel></TabPanel>
+            <TabPanel>
+              {following &&
+                following.map((follow, index) => (
+                  <FollowCard
+                    key={index}
+                    id={follow.id}
+                    user_id={follow.user_id}
+                    fullName={follow.fullName}
+                    username={follow.username}
+                    email={follow.email}
+                    picture={follow.picture}
+                    description={follow.description}
+                    follow={profile.followings_count}
+                  />
+                ))}
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </Card>

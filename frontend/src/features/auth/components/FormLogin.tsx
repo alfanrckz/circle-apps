@@ -1,4 +1,5 @@
-import { Box, Button, FormControl, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, Input, Text } from "@chakra-ui/react";
+import { BsThreads } from "react-icons/bs";
 import { useLogin } from "../hooks/useLogin";
 
 export const FormLogin = () => {
@@ -12,11 +13,17 @@ export const FormLogin = () => {
         gap={3}
         width={"300px"}
       >
-        <Text color={"brand.green"} fontSize={"2xl"} fontWeight={"bold"}>
-          Connect
-        </Text>
-        <Text fontSize={"2xl"} fontWeight={"bold"}>
-          Login Connect
+        <Flex gap={1}>
+          <Text color={"green"} fontSize={"2xl"} fontWeight={"bold"}>
+            Circle
+          </Text>
+          <Text fontSize={20} color={"green"} mt={2}>
+            <BsThreads />
+          </Text>
+        </Flex>
+
+        <Text fontSize={"2xl"} fontWeight={"bold"} color={"green"}>
+          Login Circle
         </Text>
         <Input placeholder="Email" name="email" onChange={handleChange} />
         <Input

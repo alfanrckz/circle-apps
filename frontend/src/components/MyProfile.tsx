@@ -7,9 +7,8 @@ import {
   Text,
   Flex,
   Button,
-  Grid,
-  GridItem,
   CardBody,
+  Spacer,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../stores/types/rootState";
@@ -20,24 +19,38 @@ import {
   AiFillLinkedin,
 } from "react-icons/ai";
 import { useEffect } from "react";
-import { AUTH_CHECK } from "../stores/rootReducer";
+import { useSearch } from "../features/search/hooks/useSearch";
+import { API } from "../libs/api";
+import { GET_PROFILE } from "../stores/slices/profileSlice";
 
 export default function MyProfile() {
-  const auth = useSelector((state: RootState) => state.auth);
+const profile = useSelector((state: RootState) => state.profile);
+// console.log(profile)
   const dispatch = useDispatch();
+  const { filteredUsers, searchUsers } = useSearch();
 
   useEffect(() => {
-    const storeAuthData = localStorage.getItem("authData");
-    if (storeAuthData) {
-      const parsedAuthData = JSON.parse(storeAuthData);
-      dispatch(AUTH_CHECK({ user: parsedAuthData }));
-    }
-  }, [auth, dispatch]);
+    // const storeAuthData = localStorage.getItem("authData");
+    // if (storeAuthData) {
+    //   const parsedAuthData = JSON.parse(storeAuthData);
+    // }
+    check();
+  }, []);
+
+  async function check() {
+    const response = await API.get("/check", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    // console.log("cek", response.data);
+    dispatch(GET_PROFILE(response.data.data));
+  }
 
   return (
     <Box
       pos={"fixed"}
-      h={"100vh"}
+      h={"107vh"}
       overflowY={"auto"}
       sx={{
         "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
@@ -54,7 +67,7 @@ export default function MyProfile() {
                 borderColor="gray.200"
                 objectFit="cover"
                 borderRadius="md"
-                h={14}
+                h={20}
                 w="100%"
                 // maxW={{ base: "100%", sm: "200px" }}
                 src="https://png.pngtree.com/background/20220724/original/pngtree-ackground-hijau-keren-dan-kosong-abstract-untuk-wallpaper-template-desain-ppt-picture-image_1741397.jpg"
@@ -72,7 +85,7 @@ export default function MyProfile() {
                   w={14}
                   left={2}
                   maxW={{ base: "100%", sm: "200px" }}
-                  src={auth.picture ? auth.picture : "/placeholder-profile.jpg"}
+                  src={profile.picture ? profile.picture : "/placeholder-profile.jpg"}
                   alt="avatar"
                 />
               </Center>
@@ -88,22 +101,22 @@ export default function MyProfile() {
               </Box>
             </Box>
             <Heading size="sm" mt={2} textTransform={"capitalize"}>
-              ✨{auth?.fullName}✨
+              ✨{profile?.fullName}✨
             </Heading>
             <Text fontSize="xs" color={"gray.400"}>
-              @{auth?.username}
+              @{profile?.username}
             </Text>
             <Text fontSize="sm" py={2}>
               Siksa kubur berat broooo maka perbuatlah kebaikan di dunia
               walaupun engkau sedang di banned👍
-              {auth?.bio}
+              {profile?.bio}
             </Text>
             <Box>
               <Flex>
                 <Box>
                   <Flex>
                     <Text fontSize="sm" py={2} as="b">
-                      {auth?.followings_count ?? 0}
+                      {profile?.followings_count?.length}
                     </Text>
                     <Text fontSize="sm" py={2} pl={1}>
                       Following
@@ -113,7 +126,7 @@ export default function MyProfile() {
                 <Box>
                   <Flex pl={4}>
                     <Text fontSize="sm" py={2} as="b">
-                      {auth?.followers_count ?? 0}
+                      {profile?.followers_count?.length}
                     </Text>
                     <Text fontSize="sm" py={2} pl={1}>
                       Followers
@@ -127,38 +140,56 @@ export default function MyProfile() {
       </Box>
       {/* suggestion */}
       <Box m={4}>
-        <Card color="gray.100" bg="mainBg.200">
+        <Card
+          color="gray.100"
+          bg="mainBg.200"
+          h={"30vh"}
+          overflowY={"auto"}
+          sx={{
+            "&::-webkit-scrollbar": {
+              width: "5px",
+              borderRadius: "full",
+            },
+          }}
+        >
           <Heading size="sm" mt={3} ml={3}>
             Suggested for you
           </Heading>
           {/* Suggest */}
-          <Box mt={2} ml={1}>
-            <Grid templateColumns="repeat(5, 1fr)" py={2} mx={3}>
-              <GridItem colSpan={1}>
-                <Image
-                  my={2}
-                  borderRadius="100%"
-                  objectFit="cover"
-                  h={10}
-                  w={10}
-                  maxW={{ base: "100%", sm: "200px" }}
-                  src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                  alt="Caffe Latte"
-                />
-              </GridItem>
-              <GridItem colSpan={3}>
-                <Text fontSize="xs" as="b" textAlign={["left", "center"]}>
-                  Grock
+
+          {filteredUsers.map((user) => (
+            <Box key={user.id} display="flex" gap={2} position="relative">
+              <Image
+                borderRadius="100%"
+                objectFit="cover"
+                h={10}
+                w={10}
+                marginLeft={4}
+                marginTop={4}
+                maxW={{ base: "100%", sm: "200px" }}
+                src={user.picture ? user.picture : "/placeholder-profile.jpg"}
+                alt="picture"
+              />
+              <Box marginTop={2} ml={2}>
+                <Text textTransform={"capitalize"} fontWeight={"bold"}>
+                  {user.fullName}
                 </Text>
-                <Text fontSize="xs">@leminerale</Text>
-              </GridItem>
-              <GridItem colSpan={1}>
-                <Center>
-                  <Button borderRadius="50px">Follow</Button>
-                </Center>
-              </GridItem>
-            </Grid>
-          </Box>
+                <Text mt={-1} color={"gray.400"} fontSize={12}>
+                  @{user.username}
+                </Text>
+              </Box>
+              <Spacer />{" "}
+              <Box>
+                <Button
+                  border={"1px"}
+                  backgroundColor={"mainBg.200"}
+                  colorScheme="green"
+                >
+                  Follow
+                </Button>
+              </Box>
+            </Box>
+          ))}
         </Card>
 
         {/* footer */}

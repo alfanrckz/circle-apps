@@ -35,8 +35,8 @@ router.patch(
 router.delete("/thread/:id", authMiddleware.auth, ThreadController.delete);
 
 //follow
-router.post("/follow", authMiddleware.auth, FollowController.follow);
 router.get("/follow", authMiddleware.auth, FollowController.getFollow);
+router.post("/follow", authMiddleware.auth, FollowController.follow);
 router.delete("/unfollow", authMiddleware.auth, FollowController.unfollow);
 
 //like

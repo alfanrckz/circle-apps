@@ -8,43 +8,21 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-
-import { FaHeart, FaShare } from "react-icons/fa";
-import { LiaCommentSolid } from "react-icons/lia";
+import { FaShare } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
+import { BiCommentDetail } from "react-icons/bi";
 import { IThreadCard } from "../../../interface/thread";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useThreadCard } from "../hooks/useThreadCard";
-import { useEffect, useState } from "react";
 
 export default function ThreadCard(props: IThreadCard) {
-  console.log(props);
+  // console.log(props)
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
   const { handlePostLike } = useThreadCard();
 
-  const [liked, setLiked] = useState<boolean>(() => {
-    // Membaca status like dari local storage saat komponen dimuat
-    const likedFromStorage = localStorage.getItem(`thread_${props.id}_liked`);
-    return likedFromStorage
-      ? JSON.parse(likedFromStorage)
-      : props.is_liked || false;
-  });
-
-  useEffect(() => {
-    // Menyimpan status like ke dalam local storage setelah perubahan
-    localStorage.setItem(`thread_${props.id}_liked`, JSON.stringify(liked));
-  }, [props.id, liked]);
-
-  const handleLikeClick = () => {
-    if (props.id) {
-      handlePostLike(props.id, !liked);
-      setLiked(!liked);
-    }
-  };
-
   return (
-    <Box m={4} key={props.id}>
+    <Box m={4}>
       <Card
         direction={{ base: "column", sm: "row" }}
         overflow="hidden"
@@ -69,7 +47,11 @@ export default function ThreadCard(props: IThreadCard) {
           <CardBody>
             <Box>
               <Flex>
-                <Text textTransform={"capitalize"} size="md">
+                <Text
+                  textTransform={"capitalize"}
+                  size="md"
+                  fontWeight={"bold"}
+                >
                   {props.user?.fullName}
                 </Text>
                 <Text ml={2} color="gray.400">
@@ -87,30 +69,36 @@ export default function ThreadCard(props: IThreadCard) {
             <Text py="2">{props.content}</Text>
             <Image src={props.image} borderRadius={10} />
             <Flex pt="2">
-              <Icon
-                as={FaHeart}
-                cursor="pointer"
-                // onClick={() =>
-                //   props.id && handlePostLike(props.id, props.is_liked)
-                // }
-                onClick={handleLikeClick}
-                color={liked ? "red.500" : "brand.grey"}
-                // color={props.is_liked ? "brand.grey" : "red.500"}
-              />
+              <Text
+                fontSize={18}
+                ml={1}
+                mt={1}
+                // onClick={handleLikeClick}
+                // color={liked ? "red.500" : "brand.grey"}
+              >
+                <FaRegHeart
+                  color={props.is_liked ? " red.500 " : "brand.grey"}
+                  onClick={() =>
+                    props.id && handlePostLike(props.id, !!props.is_liked)
+                  }
+                  cursor={"pointer"}
+                />
+              </Text>
 
-              <Text fontSize="10" ml="1" mr="2">
+              <Text fontSize="12" ml="1" mr="2" mt={1}>
                 {props.likes?.length}
               </Text>
+              <Text fontSize={20} ml={1} mt={1}>
+                <BiCommentDetail
+                  cursor="pointer"
+                  onClick={() => navigate(`/thread-detail/${props.id}`)}
+                />
+              </Text>
 
-              <LiaCommentSolid
-                cursor="pointer"
-                onClick={() => navigate(`/thread-detail/${props.id}`)}
-              />
-
-              <Text ml="1" fontSize="10">
+              <Text ml="1" mt={1} fontSize="12">
                 {props.replies?.length} Replies
               </Text>
-              <Icon as={FaShare} cursor="pointer" ml={3} />
+              <Icon as={FaShare} cursor="pointer" ml={3} mt={1} />
             </Flex>
           </CardBody>
         </Stack>

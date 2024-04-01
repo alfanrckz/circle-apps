@@ -16,7 +16,7 @@ import { GoHeartFill } from "react-icons/go";
 import { IoMdHome } from "react-icons/io";
 import { BsThreads } from "react-icons/bs";
 import { MdOutlinePersonSearch } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AUTH_LOGOUT } from "../stores/rootReducer";
 import { useDispatch } from "react-redux";
 
@@ -32,7 +32,7 @@ export default function MenuBar() {
     <Box>
       <Box m={4}>
         <Flex gap={3}>
-          <Heading color="green">Circle </Heading>
+          <Heading color="green">Circle</Heading>
           <Heading color="green" mt={1}>
             <BsThreads />
           </Heading>
@@ -44,7 +44,17 @@ export default function MenuBar() {
                 <Text fontSize={"2xl"}>
                   <IoMdHome />
                 </Text>
-                <Link to={"/"}>
+                <NavLink
+                  to={"/"}
+                  style={({ isActive, isTransitioning }) => {
+                    return {
+                      fontWeight: isActive ? "bold" : "",
+                      color: isActive ? "green" : "",
+
+                      viewTransitionName: isTransitioning ? "slide" : "",
+                    };
+                  }}
+                >
                   <Text
                     // bg="mainBg.900"
                     pl={2}
@@ -56,7 +66,7 @@ export default function MenuBar() {
                   >
                     HOME
                   </Text>
-                </Link>
+                </NavLink>
               </Center>
             </Flex>
           </ListItem>
@@ -67,7 +77,17 @@ export default function MenuBar() {
                 <Text fontSize={"2xl"}>
                   <MdOutlinePersonSearch />
                 </Text>
-                <Link to={"/search"}>
+                <NavLink
+                  to={"/search"}
+                  style={({ isActive, isTransitioning }) => {
+                    return {
+                      fontWeight: isActive ? "bold" : "",
+                      color: isActive ? "green" : "",
+
+                      viewTransitionName: isTransitioning ? "slide" : "",
+                    };
+                  }}
+                >
                   <Text
                     bg="mainBg.900"
                     pl={2}
@@ -79,7 +99,7 @@ export default function MenuBar() {
                   >
                     SEARCH
                   </Text>
-                </Link>
+                </NavLink>
               </Center>
             </Flex>
           </ListItem>
@@ -89,7 +109,17 @@ export default function MenuBar() {
                 <Text fontSize={"2xl"}>
                   <GoHeartFill />
                 </Text>
-                <Link to={"/follow"}>
+                <NavLink
+                  to={"/follow"}
+                  style={({ isActive, isTransitioning }) => {
+                    return {
+                      fontWeight: isActive ? "bold" : "",
+                      color: isActive ? "green" : "",
+
+                      viewTransitionName: isTransitioning ? "slide" : "",
+                    };
+                  }}
+                >
                   <Text
                     bg="mainBg.900"
                     pl={2}
@@ -101,7 +131,7 @@ export default function MenuBar() {
                   >
                     FOLLOWS
                   </Text>
-                </Link>
+                </NavLink>
               </Center>
             </Flex>
           </ListItem>
@@ -111,7 +141,17 @@ export default function MenuBar() {
                 <Text fontSize={"2xl"}>
                   <CgProfile />
                 </Text>
-                <Link to={"/detail-profile"}>
+                <NavLink
+                  to={"/detail-profile"}
+                  style={({ isActive, isTransitioning }) => {
+                    return {
+                      fontWeight: isActive ? "bold" : "",
+                      color: isActive ? "green" : "",
+
+                      viewTransitionName: isTransitioning ? "slide" : "",
+                    };
+                  }}
+                >
                   <Text
                     bg="mainBg.900"
                     pl={2}
@@ -123,7 +163,7 @@ export default function MenuBar() {
                   >
                     PROFILE
                   </Text>
-                </Link>
+                </NavLink>
               </Center>
             </Flex>
           </ListItem>

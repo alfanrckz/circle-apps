@@ -15,6 +15,7 @@ export const theme = extendTheme({
       "html, body": {
         color: "gray.100",
         lineHeight: "tall",
+        fontFamily: "sans-serif",
       },
     },
   },

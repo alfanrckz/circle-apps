@@ -3,11 +3,12 @@ import { RootState } from "../../../stores/types/rootState";
 import { API } from "../../../libs/api";
 import { SET_THREAD_LIKE } from "../../../stores/rootReducer";
 
+
 export function useThreadCard() {
   const dispatch = useDispatch();
   const threads = useSelector((state: RootState) => state.thread.threads);
 
-  async function handlePostLike(id: number, isLiked: boolean) {
+  async function handlePostLike(id: number, is_liked: boolean) {
     try {
       const response = await API.post(
         "/like",
@@ -19,18 +20,17 @@ export function useThreadCard() {
         }
       );
 
-      console.log("BERHASIL MENMASUKKAN LIKE", response.data);
+      console.log("SUCCESS", response.data);
 
       // else {
       //   const response = await API.post(`/like/${id}`);
       //   console.log("BERHASIL menghapus LIKE", response.data);
       // }
-      dispatch(SET_THREAD_LIKE({ id, isLiked: isLiked }));
+      dispatch(SET_THREAD_LIKE({ id, is_liked: is_liked }));
     } catch (error) {
       console.log("failed updating like!", error);
     }
   }
-
   return {
     threads,
     handlePostLike,

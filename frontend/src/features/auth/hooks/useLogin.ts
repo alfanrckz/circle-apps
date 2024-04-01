@@ -6,7 +6,6 @@ import { API } from "../../../libs/api";
 import { AUTH_LOGIN } from "../../../stores/rootReducer";
 import useToast from "../../../hooks/useToast";
 
-// const exp = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
 export function useLogin() {
   const navigate = useNavigate();
@@ -30,11 +29,12 @@ export function useLogin() {
       const response = await API.post("/login", form);
       dispatch(AUTH_LOGIN(response.data));
       if (response) toast(" Login success", "Login success", "success");
-      console.log(response);
+      console.log(response.data);
       localStorage.setItem("authData", JSON.stringify(response.data.user));
       // document.cookie = `C.id=${
       //   response.data.token
       // };expires=${exp.toUTCString()}`;
+
       navigate("/");
     } catch (error) {
       if (error) toast(" Login error", "Login error", "error");

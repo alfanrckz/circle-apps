@@ -9,8 +9,8 @@ const initialAuthState: IUser = {
   username: "",
   bio: "",
   picture: "",
-  followers_count: 0,
-  followings_count: 0,
+  followers_count: [],
+  followings_count: [],
 };
 
 export const authSlice = createSlice({
@@ -43,25 +43,25 @@ export const authSlice = createSlice({
       state.followings_count = followings_count;
     },
     AUTH_CHECK: (state, action) => {
-      const {
-        id,
-        email,
-        fullName,
-        username,
-        bio,
-        picture,
-        followers_count,
-        followings_count,
-      } = action.payload.user;
+      // const {
+      //   id,
+      //   email,
+      //   fullName,
+      //   username,
+      //   bio,
+      //   picture,
+      //   followers_count,
+      //   followings_count,
+      // } = action.payload;
 
-      state.id = id;
-      state.email = email;
-      state.fullName = fullName;
-      state.username = username;
-      state.bio = bio;
-      state.picture = picture;
-      state.followers_count = followers_count;
-      state.followings_count = followings_count;
+      state.id = action.payload.id;
+      state.email = action.payload.email;
+      state.fullName = action.payload.fullName;
+      state.username = action.payload.username;
+      state.bio = action.payload.bio;
+      state.picture = action.payload.picture;
+      state.followers_count = action.payload.followers_count;
+      state.followings_count = action.payload.followings_count;
     },
     AUTH_ERROR: () => {
       localStorage.removeItem("token");

@@ -14,7 +14,7 @@ export default new (class LikeServices {
       const like = await this.likeRepository.find({
         relations: ["user", "thread"],
       });
-      console.log(like);
+      // console.log(like);
       return res.status(200).json({
         message: "Success",
         data: like,
@@ -32,10 +32,10 @@ export default new (class LikeServices {
       const data = req.body;
       const { error, value } = createLikeSchema.validate(data);
       if (error) return res.status(400).json(error.details[0].message);
-      console.log("value", value);
+      // console.log("value", value);
 
       const loginSession = res.locals.session;
-      console.log("loginSession", loginSession);
+      // console.log("loginSession", loginSession);
       const likeSelected = await this.likeRepository.findOne({
         where: {
           user: {
@@ -54,7 +54,7 @@ export default new (class LikeServices {
           message: "Like removed succesfully",
         });
       }
-      console.log(likeSelected);
+      // console.log(likeSelected);
 
       const like = this.likeRepository.create({
         thread: value.thread,
@@ -62,7 +62,7 @@ export default new (class LikeServices {
           id: loginSession.id,
         },
       });
-      console.log("objextLike", like);
+      // console.log("objextLike", like);
 
       const response = await this.likeRepository.save(like);
       return res.status(200).json({

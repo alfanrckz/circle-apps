@@ -11,11 +11,11 @@ export const FormRegister = () => {
       gap={"3"}
       width={"300px"}
     >
-      <Text color={"brand.green"} fontSize={"2xl"} fontWeight={"bold"}>
-        Connect
+      <Text color={"green"} fontSize={"2xl"} fontWeight={"bold"}>
+        Circle
       </Text>
-      <Text fontSize={"2xl"} fontWeight={"bold"}>
-        Create Account Connect
+      <Text fontSize={"2xl"} fontWeight={"bold"} color={"green"}>
+        Create Account Circle
       </Text>
       <Input placeholder="FullName" name="fullName" onChange={handleChange} />
       <Input placeholder="Username" name="username" onChange={handleChange} />

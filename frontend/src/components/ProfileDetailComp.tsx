@@ -11,7 +11,8 @@ import { useThreads } from "../features/thread/hooks/useThreads";
 
 const ProfileDetailComp: React.FC = () => {
   const { threads } = useThreads();
-  const auth = useSelector((state: RootState) => state.auth);
+  const profile = useSelector((state: RootState) => state.profile);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const ProfileDetailComp: React.FC = () => {
       const parsedAuthData = JSON.parse(storeAuthData);
       dispatch(AUTH_CHECK({ user: parsedAuthData }));
     }
-  }, [dispatch, auth]);
+  }, [dispatch, profile]);
 
   const [likes, setLikes] = useState<number>(0);
   const [liked, setLiked] = useState<boolean>(false);
@@ -55,12 +56,12 @@ const ProfileDetailComp: React.FC = () => {
               src="https://png.pngtree.com/background/20220724/original/pngtree-ackground-hijau-keren-dan-kosong-abstract-untuk-wallpaper-template-desain-ppt-picture-image_1741397.jpg"
               // maxW='100%'
               w={"100%"}
-              h={"20%"}
+              h={"30%"}
               borderRadius="10px"
             />
             <Flex justify="space-between" w="full" p={3}>
               <Image
-                src={auth.picture ? auth.picture : "/placeholder-profile.jpg"}
+                src={profile.picture ? profile.picture : "/placeholder-profile.jpg"}
                 width="68px"
                 height="68px"
                 mt="-38px"
@@ -68,21 +69,21 @@ const ProfileDetailComp: React.FC = () => {
               />
               <Text textAlign={"center"}>
                 {" "}
-                0<Text>Post</Text>
+                0<Text>Thread</Text>
               </Text>
               <Text textAlign={"center"}>
-                {auth.followers_count ?? 0}
+                {profile.followers_count?.length}
                 <Text>Follower</Text>
               </Text>
               <Text textAlign={"center"}>
-                {auth.followings_count ?? 0}
+                {profile.followings_count?.length}
                 <Text>Following</Text>
               </Text>
               <NavLink to={"/edit-profile"}>
                 <Button
                   boxSize={"fit-content"}
-                  fontSize={13}
-                  rounded={15}
+                  fontSize={15}
+                  rounded={5}
                   border="2px"
                   borderColor={"black"}
                   bg={"white"}
@@ -99,7 +100,7 @@ const ProfileDetailComp: React.FC = () => {
                 fontWeight="700"
                 textTransform={"capitalize"}
               >
-                ✨{auth.fullName}✨
+                ✨{profile.fullName}✨
               </Text>
               <Text
                 color={"gray.400"}
@@ -107,7 +108,7 @@ const ProfileDetailComp: React.FC = () => {
                 fontSize="12px"
                 fontWeight={"500"}
               >
-                @{auth.username}
+                @{profile.username}
               </Text>
               <Text
                 color={"gray.300"}
@@ -117,14 +118,14 @@ const ProfileDetailComp: React.FC = () => {
               >
                 Siksa kubur berat broooo maka perbuatlah kebaikan di dunia
                 walaupun engkau sedang di banned👍
-                {auth.bio}
+                {profile.bio}
               </Text>
             </Box>
           </Flex>
         </Card>
 
         {threads
-          ?.filter((item) => item.user?.username === auth.username)
+          ?.filter((item) => item.user?.username === profile.username)
           .map((item) => {
             return (
               <ThreadCard
