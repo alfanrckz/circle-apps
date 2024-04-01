@@ -25,15 +25,10 @@ import { GET_PROFILE } from "../stores/slices/profileSlice";
 
 export default function MyProfile() {
 const profile = useSelector((state: RootState) => state.profile);
-// console.log(profile)
   const dispatch = useDispatch();
   const { filteredUsers, searchUsers } = useSearch();
 
   useEffect(() => {
-    // const storeAuthData = localStorage.getItem("authData");
-    // if (storeAuthData) {
-    //   const parsedAuthData = JSON.parse(storeAuthData);
-    // }
     check();
   }, []);
 
@@ -43,7 +38,6 @@ const profile = useSelector((state: RootState) => state.profile);
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    // console.log("cek", response.data);
     dispatch(GET_PROFILE(response.data.data));
   }
 
