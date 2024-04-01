@@ -72,12 +72,33 @@ export default new (class ThreadsServices {
   async getThread(id) {
     return this.threadRepository.findOne({
       where: id,
-      relations: {
-        user: true,
-        likes: true,
-        replies: true,
-      },
-    });
+      relations: ["likes", "likes.user", "replies", "user", "replies.user", ],
+      select: {
+        user: {
+          fullName: true,
+          username: true,
+          picture: true,
+        },
+        likes: {
+          id: true,
+          user: {
+            id: true,
+          },
+        },
+
+        replies: {
+          id: true,
+          created_at: true,
+          content: true,
+          user: {
+            id: true,
+            fullName: true,
+            username: true,
+            picture: true,
+          },
+        },
+    
+    }});
   }
 
   async updateThread(data, id) {

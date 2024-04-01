@@ -19,7 +19,9 @@ import { IFollow } from "../../../interface/follow";
 const SearchComp = (props: IFollow) => {
   const { filteredUsers, searchUsers, users } = useSearch();
   const [searchQuery, setSearchQuery] = useState("");
-  const [isFollowMap, setIsFollowMap] = useState<{[key: string]: boolean}>({});
+  const [isFollowMap, setIsFollowMap] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const { follow, unfollow } = useFollow();
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,15 +36,15 @@ const SearchComp = (props: IFollow) => {
 
   // Update isFollowMap when users change
   useEffect(() => {
-    const newIsFollowMap: {[key: string]: boolean} = {};
-    users.forEach(user => {
+    const newIsFollowMap: { [key: string]: boolean } = {};
+    users.forEach((user) => {
       newIsFollowMap[user.id] = isFollowMap[user.id] || false;
     });
     setIsFollowMap(newIsFollowMap);
   }, [users]);
 
   const handleFollowToggle = (userId: number) => {
-    const newIsFollowMap = {...isFollowMap};
+    const newIsFollowMap = { ...isFollowMap };
     newIsFollowMap[userId] = !newIsFollowMap[userId];
     setIsFollowMap(newIsFollowMap);
 
@@ -88,25 +90,45 @@ const SearchComp = (props: IFollow) => {
                   h={10}
                   w={10}
                   marginLeft={4}
-                  marginTop={4}
+                  marginTop={3}
                   maxW={{ base: "100%", sm: "200px" }}
                   src={user.picture ? user.picture : "/placeholder-profile.jpg"}
                   alt="picture"
                 />
                 <Box marginTop={2} ml={2}>
-                  <Text textTransform={"capitalize"}>{user.fullName}</Text>
-                  <Text mt={-1} color={"gray.400"}>
+                  <Text textTransform={"capitalize"} fontWeight={"bold"}>
+                    {user.fullName}
+                  </Text>
+                  <Text mt={-1} color={"gray.400"} fontSize={13}>
                     @{user.username}
                   </Text>
                 </Box>
                 <Spacer />{" "}
-                <Box>
+                <Box mt={5} textAlign={"center"}>
                   {!isFollowMap[user.id] ? (
-                    <Button onClick={() => handleFollowToggle(user.id)}>
+                    <Button
+                      border={"1px"}
+                      borderColor="grey"
+                      bg="main.bg.100"
+                      fontSize={12}
+                      textColor={"white"}
+                      h={7}
+                      _hover={{ bg: "main.bg.100" }}
+                      onClick={() => handleFollowToggle(user.id)}
+                    >
                       Follow
                     </Button>
                   ) : (
-                    <Button onClick={() => handleFollowToggle(user.id)}>
+                    <Button
+                      border={"1px"}
+                      borderColor="white"
+                      bg="main.bg.100"
+                      fontSize={12}
+                      textColor={"white"}
+                      _hover={{ bg: "main.bg.100" }}
+                      h={7}
+                      onClick={() => handleFollowToggle(user.id)}
+                    >
                       Unfollow
                     </Button>
                   )}

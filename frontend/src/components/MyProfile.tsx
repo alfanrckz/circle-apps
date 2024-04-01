@@ -10,7 +10,7 @@ import {
   CardBody,
   Spacer,
 } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../stores/types/rootState";
 import {
   AiFillFacebook,
@@ -18,28 +18,44 @@ import {
   AiFillInstagram,
   AiFillLinkedin,
 } from "react-icons/ai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearch } from "../features/search/hooks/useSearch";
-import { API } from "../libs/api";
-import { GET_PROFILE } from "../stores/slices/profileSlice";
+import { useProfile } from "../features/profile/hooks/useProfile";
+import { useFollow } from "../features/follow/hooks/useFollow";
 
 export default function MyProfile() {
-const profile = useSelector((state: RootState) => state.profile);
-  const dispatch = useDispatch();
-  const { filteredUsers, searchUsers } = useSearch();
+  const profile = useSelector((state: RootState) => state.profile);
+  const [isFollowMap, setIsFollowMap] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+  const { follow, unfollow } = useFollow();
+  // const dispatch = useDispatch();
+  const { filteredUsers, users } = useSearch();
+  const { check } = useProfile();
+
+  useEffect(() => {
+    const newIsFollowMap: { [key: string]: boolean } = {};
+    users.forEach((user) => {
+      newIsFollowMap[user.id!] = isFollowMap[user.id!] || false;
+    });
+    setIsFollowMap(newIsFollowMap);
+  }, [users]);
 
   useEffect(() => {
     check();
   }, []);
 
-  async function check() {
-    const response = await API.get("/check", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    dispatch(GET_PROFILE(response.data.data));
-  }
+  const handleFollowToggle = (userId: number) => {
+    const newIsFollowMap = { ...isFollowMap };
+    newIsFollowMap[userId] = !newIsFollowMap[userId];
+    setIsFollowMap(newIsFollowMap);
+
+    if (newIsFollowMap[userId]) {
+      follow(userId);
+    } else {
+      unfollow(userId);
+    }
+  };
 
   return (
     <Box
@@ -60,7 +76,7 @@ const profile = useSelector((state: RootState) => state.profile);
                 zIndex={1}
                 borderColor="gray.200"
                 objectFit="cover"
-                borderRadius="md"
+                borderRadius="2xl"
                 h={20}
                 w="100%"
                 // maxW={{ base: "100%", sm: "200px" }}
@@ -79,7 +95,11 @@ const profile = useSelector((state: RootState) => state.profile);
                   w={14}
                   left={2}
                   maxW={{ base: "100%", sm: "200px" }}
-                  src={profile.picture ? profile.picture : "/placeholder-profile.jpg"}
+                  src={
+                    profile.picture
+                      ? profile.picture
+                      : "/placeholder-profile.jpg"
+                  }
                   alt="avatar"
                 />
               </Center>
@@ -156,31 +176,55 @@ const profile = useSelector((state: RootState) => state.profile);
               <Image
                 borderRadius="100%"
                 objectFit="cover"
-                h={10}
-                w={10}
+                h={8}
+                w={8}
                 marginLeft={4}
-                marginTop={4}
+                marginTop={2}
                 maxW={{ base: "100%", sm: "200px" }}
                 src={user.picture ? user.picture : "/placeholder-profile.jpg"}
                 alt="picture"
               />
               <Box marginTop={2} ml={2}>
-                <Text textTransform={"capitalize"} fontWeight={"bold"}>
+                <Text
+                  textTransform={"capitalize"}
+                  fontWeight={"bold"}
+                  fontSize={12}
+                >
                   {user.fullName}
                 </Text>
-                <Text mt={-1} color={"gray.400"} fontSize={12}>
+                <Text mt={-1} color={"gray.400"} fontSize={11}>
                   @{user.username}
                 </Text>
               </Box>
               <Spacer />{" "}
-              <Box>
-                <Button
-                  border={"1px"}
-                  backgroundColor={"mainBg.200"}
-                  colorScheme="green"
-                >
-                  Follow
-                </Button>
+              <Box mt={3} textAlign={"center"}>
+                {!isFollowMap[user.id!] ? (
+                  <Button
+                    border={"1px"}
+                    borderColor="grey"
+                    bg="main.bg.100"
+                    fontSize={12}
+                    textColor={"white"}
+                    h={7}
+                    _hover={{ bg: "main.bg.100" }}
+                    onClick={() => handleFollowToggle(user.id!)}
+                  >
+                    Follow
+                  </Button>
+                ) : (
+                  <Button
+                    border={"1px"}
+                    borderColor="white"
+                    bg="main.bg.100"
+                    fontSize={12}
+                    textColor={"white"}
+                    _hover={{ bg: "main.bg.100" }}
+                    h={7}
+                    onClick={() => handleFollowToggle(user.id!)}
+                  >
+                    Unfollow
+                  </Button>
+                )}
               </Box>
             </Box>
           ))}

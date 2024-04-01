@@ -41,7 +41,7 @@ router.delete("/unfollow", authMiddleware.auth, FollowController.unfollow);
 
 //like
 router.get("/like", LikeController.findAll);
-router.post("/like", authMiddleware.auth, LikeController.create);
+router.post("/like/thread", authMiddleware.auth, LikeController.create);
 // router.post("/like", authMiddleware.auth, LikeController.create);
 // router.delete("like/thread_id", authMiddleware.auth, LikeController.delete);
 

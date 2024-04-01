@@ -8,7 +8,6 @@ import {
   Center,
   Button,
   Icon,
-  Heading,
   Text,
 } from "@chakra-ui/react";
 import { BiSolidImageAdd } from "react-icons/bi";
@@ -18,7 +17,7 @@ import { useThreads } from "../features/thread/hooks/useThreads";
 import ThreadCard from "../features/thread/components/ThreadCard";
 
 export default function Home() {
-  const auth = useSelector((state: RootState) => state.auth);
+  const auth = useSelector((state: RootState) => state.profile);
   const {
     handleChange,
     handlePost,
@@ -28,6 +27,7 @@ export default function Home() {
     form,
   } = useThreads();
 
+  if(auth.id === 0) return null
   return (
     <Box>
       <Box m={4}>
@@ -125,7 +125,7 @@ export default function Home() {
               image={item.image}
               likes={item.likes}
               replies={item.replies}
-              is_liked={item.is_liked}
+              profile={auth.id}
             />
           );
         })}

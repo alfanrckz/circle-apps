@@ -20,10 +20,6 @@ export default function Follow() {
   const follower = useSelector((state: RootState) => state.follow.follower);
   const following = useSelector((state: RootState) => state.follow.following);
   const profile = useSelector((state: RootState) => state.profile);
-  // console.log("following",following);
-  // console.log("follower",follower);
-  // console.log(profile)
-  // console.log("ini follow", follows);
 
   async function getFollowData() {
     const response = await API.get("/follow", {

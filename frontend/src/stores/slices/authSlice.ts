@@ -43,16 +43,7 @@ export const authSlice = createSlice({
       state.followings_count = followings_count;
     },
     AUTH_CHECK: (state, action) => {
-      // const {
-      //   id,
-      //   email,
-      //   fullName,
-      //   username,
-      //   bio,
-      //   picture,
-      //   followers_count,
-      //   followings_count,
-      // } = action.payload;
+    
 
       state.id = action.payload.id;
       state.email = action.payload.email;

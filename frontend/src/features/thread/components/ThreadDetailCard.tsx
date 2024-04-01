@@ -65,14 +65,14 @@ export const ThreadDetailCard = () => {
       <Box>
         <ThreadCard
           key={thread?.id}
-          id={thread?.id}
-          user={thread?.user}
-          content={thread?.content}
-          created_at={thread?.created_at}
-          image={thread?.image}
-          likes={thread?.likes}
-          replies={thread?.replies}
-          is_liked={thread?.is_liked}
+          id={thread?.id!}
+          user={thread?.user!}
+          content={thread?.content!}
+          created_at={thread?.created_at!}
+          image={thread?.image!}
+          likes={thread?.likes!}
+          replies={thread?.replies!}
+          profile={thread?.profile!}
         />
       </Box>
 

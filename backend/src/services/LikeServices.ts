@@ -3,7 +3,6 @@ import { Like } from "../entity/Like";
 import { AppDataSource } from "../data-source";
 import { Request, Response } from "express";
 import { createLikeSchema } from "../utils/validator/like";
-import { threadId } from "worker_threads";
 
 export default new (class LikeServices {
   private readonly likeRepository: Repository<Like> =

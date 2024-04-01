@@ -7,23 +7,18 @@ export const FollowCard = (props: IFollow) => {
   const isTrue = props.follow?.some((value) => value.follower.id === props.id);
   const [isFollow, setIsFollow] = useState(isTrue);
   const { follow, unfollow } = useFollow();
-  // const [following, setFollowing] = useState<IUser[]>([]);
-  // const [follower, setFollower] = useState<IUser[]>([]);
-console.log(isTrue, isFollow)
-  // const dispatch = useDispatch();
-  console.log("ini props cokk",props.follow, props.id);
-  // console.log("ini isFollow ",isFollow);
-  
+
   return (
-    <Box display={"flex"} width="100%" padding={"20px 0px"}>
+    <Box display={"flex"} width="100%" padding={"5px 0px"} gap={3}>
       <Image
         src={props.picture ?? "placeholder-profile.jpg"}
-        width={"50px"}
-        height={"50px"}
-        objectFit={"cover"}
-        borderRadius={"50%"}
-        marginRight={"20px"}
+        borderRadius="100%"
+        objectFit="cover"
+        h={10}
+        w={10}
+        marginLeft={4}
         alt="user_profile_image"
+        maxW={{ base: "100%", sm: "200px" }}
       />
 
       <Box display={"flex"} width={"100%"}>
@@ -38,22 +33,36 @@ console.log(isTrue, isFollow)
           </Text>
           <Text></Text>
         </Box>
-        <Box flex={1} display="flex" justifyContent={"flex-end"}>
+        <Box flex={1} display="flex" justifyContent={"flex-end"} mt={1}>
           {!isFollow ? (
             <Button
+              border={"1px"}
+              borderColor="grey"
+              bg="main.bg.100"
+              fontSize={12}
+              textColor={"white"}
+              _hover={{ bg: "main.bg.100" }}
+              h={7}
               onClick={() => {
                 follow(props.id), setIsFollow((prev) => !prev);
               }}
             >
-              follow
+              Follow
             </Button>
           ) : (
             <Button
+              border={"1px"}
+              borderColor="grey"
+              bg="main.bg.100"
+              fontSize={12}
+              textColor={"white"}
+              _hover={{ bg: "main.bg.100" }}
+              h={7}
               onClick={() => {
                 unfollow(props.id), setIsFollow((prev) => !prev);
               }}
             >
-              unfollow
+              Unfollow
             </Button>
           )}
         </Box>

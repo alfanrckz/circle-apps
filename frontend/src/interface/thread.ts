@@ -6,15 +6,21 @@ export interface IThreadPost {
 }
 
 export interface IThreadCard {
-  id?: number;
-  user?: IUser;
-  created_at?: string;
-  // profile_picture: string;
-  // profile_name: string;
-  // username: string;
-  content?: string;
-  image?: string;
-  likes?: any[] | undefined;
-  replies?: any[] | undefined;
-  is_liked?: boolean ;
+  id: number;
+  user: IUser;
+  created_at: string;
+  content: string;
+  image: string ;
+  likes: ILike[];
+  replies: any[] | undefined;
+  profile?: number;
+
+
+}
+
+export interface ILike{
+  id: number,
+  user: {
+    id: number
+  }
 }

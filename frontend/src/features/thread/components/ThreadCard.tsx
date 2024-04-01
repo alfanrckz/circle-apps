@@ -15,12 +15,14 @@ import { IThreadCard } from "../../../interface/thread";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useThreadCard } from "../hooks/useThreadCard";
+import { useState } from "react";
 
 export default function ThreadCard(props: IThreadCard) {
-  // console.log(props)
   const navigate = useNavigate();
+  const isTrue = props.likes?.some((val) => val.user.id === props.profile);
   const { handlePostLike } = useThreadCard();
-
+  const [isLiked, setIsLike] = useState(isTrue);
+  const [likeCount, setLikeCount] = useState(props.likes?.length);
   return (
     <Box m={4}>
       <Card
@@ -76,17 +78,30 @@ export default function ThreadCard(props: IThreadCard) {
                 // onClick={handleLikeClick}
                 // color={liked ? "red.500" : "brand.grey"}
               >
-                <FaRegHeart
-                  color={props.is_liked ? " red.500 " : "brand.grey"}
-                  onClick={() =>
-                    props.id && handlePostLike(props.id, !!props.is_liked)
-                  }
-                  cursor={"pointer"}
-                />
+                {isLiked ? (
+                  <FaRegHeart
+                    color="red"
+                    cursor={"pointer"}
+                    onClick={() => {
+                      handlePostLike(props.id!);
+                      setLikeCount((prev) => prev! - 1);
+                      setIsLike(false);
+                    }}
+                  />
+                ) : (
+                  <FaRegHeart
+                    onClick={() => {
+                      handlePostLike(props.id!);
+                      setLikeCount((prev) => prev! + 1);
+                      setIsLike(true);
+                    }}
+                    cursor={"pointer"}
+                  />
+                )}
               </Text>
 
               <Text fontSize="12" ml="1" mr="2" mt={1}>
-                {props.likes?.length}
+                {likeCount}
               </Text>
               <Text fontSize={20} ml={1} mt={1}>
                 <BiCommentDetail
