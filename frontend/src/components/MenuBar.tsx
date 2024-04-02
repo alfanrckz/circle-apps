@@ -29,15 +29,15 @@ export default function MenuBar() {
   };
 
   return (
-    <Box>
-      <Box m={4}>
-        <Flex gap={3}>
+    <Box bg={"mainBg.200"} rounded={"lg"} ml={2}>
+      <Box h={"94vh"} m={4} pt={2}>
+        <Flex gap={3} ml={4}>
           <Heading color="green">Circle</Heading>
           <Heading color="green" mt={1}>
             <BsThreads />
           </Heading>
         </Flex>
-        <UnorderedList my={4} style={{ listStyleType: "none" }}>
+        <UnorderedList ml={7} my={4} style={{ listStyleType: "none" }}>
           <ListItem my={2}>
             <Flex>
               <Center>
@@ -168,30 +168,40 @@ export default function MenuBar() {
             </Flex>
           </ListItem>
         </UnorderedList>
+        <Button
+          mt={5}
+          rounded={"full"}
+          w={"90%"}
+          mx={4}
+          color={"white"}
+          bg={"green"}
+          variant={"solid"}
+          _hover={{
+
+            borderColor: "white",
+          }}
+        >
+          Create Post
+        </Button>
+        <Box
+          mt={240}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"} 
+          onClick={handleLogout}
+          cursor="pointer"
+          _hover={{ fontWeight: "bold", color: "red" }}
+        >
+          <Box ml={2}>
+            {" "}
+
+            <CiLogout />
+          </Box>
+          <Text>Logout</Text>
+        </Box>
       </Box>
 
-      <Button
-        rounded={"full"}
-        w={"90%"}
-        mx={4}
-        color={"white"}
-        bg={"green"}
-        variant={"solid"}
-        _hover={{
-          // fontWeight: "bold",
-          // bg: "green.900",
-          borderColor: "white",
-        }}
-      >
-        Create Post
-      </Button>
       <Spacer />
-      <Center mt={250} onClick={handleLogout}>
-        <CiLogout />
-        <Text cursor="pointer" _hover={{ fontWeight: "bold", color: "red" }}>
-          Logout
-        </Text>
-      </Center>
     </Box>
   );
 }
