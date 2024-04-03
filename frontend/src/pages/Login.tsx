@@ -1,5 +1,5 @@
-import { Box, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Box } from "@chakra-ui/react";
+import backgroundImage from "../assets/background.jpg"
 import { FormLogin } from "../features/auth/components/FormLogin";
 
 export default function Login() {
@@ -8,17 +8,13 @@ export default function Login() {
       display={"flex"}
       flexDirection={"column"}
       alignItems={"center"}
-      marginTop={"50px"}
+      justifyContent={"center"} 
+      backgroundImage={`url(${backgroundImage})`} 
+      backgroundSize="cover" 
+      backgroundPosition="center" 
+      minHeight="100vh"
     >
       <FormLogin />
-      <Box display={"flex"} gap={2}>
-        <Text>Don't have an account yet?</Text>
-        <Link to={"/register"}>
-          <Text color={"brand.green"} cursor={"pointer"}>
-            Create account
-          </Text>
-        </Link>
-      </Box>
     </Box>
   );
 }
