@@ -19,6 +19,7 @@ import { MdOutlinePersonSearch } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { AUTH_LOGOUT } from "../stores/rootReducer";
 import { useDispatch } from "react-redux";
+import PostModal from "./PostModal";
 
 export default function MenuBar() {
   const dispatch = useDispatch();
@@ -168,21 +169,7 @@ export default function MenuBar() {
             </Flex>
           </ListItem>
         </UnorderedList>
-        <Button
-          mt={5}
-          rounded={"full"}
-          w={"90%"}
-          mx={4}
-          color={"white"}
-          bg={"green"}
-          variant={"solid"}
-          _hover={{
-
-            borderColor: "white",
-          }}
-        >
-          Create Post
-        </Button>
+      <PostModal/>
         <Box
           mt={240}
           display={"flex"}
