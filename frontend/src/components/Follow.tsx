@@ -35,10 +35,10 @@ export default function Follow() {
     getFollowData();
   }, []);
 
-  if(profile.id === 0) return null
+  if (profile.id === 0) return null;
 
   return (
-    <Box h={"97vh"} color={"white"} mt={4}>
+    <Box h={"89vh"} color={"white"} mt={4} mr={-4}>
       <Text ml={4} fontWeight={"bold"} fontSize={"2xl"} my={2}>
         Follow
       </Text>
