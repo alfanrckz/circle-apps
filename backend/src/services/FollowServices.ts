@@ -93,7 +93,6 @@ export default new (class FollowServices {
     });
     if (!isFollow) throw new ResponseError(404, "You don't follow this user");
     const response = await this.followRepository.delete(isFollow.id);
-    console.log("response", response);
     return {
       message: "Unfollow Success",
     };

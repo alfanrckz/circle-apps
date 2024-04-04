@@ -72,8 +72,8 @@ export default new (class ReplyServices {
 
     let valid;
     if (data.image) {
-      cloudinary.upload();
-      const upFile = await cloudinary.destination(isValid.image);
+      cloudinary.config();
+      const upFile = await cloudinary.upload(isValid.image);
 
       valid = {
         content: isValid.content,

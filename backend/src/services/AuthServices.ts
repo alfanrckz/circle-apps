@@ -94,7 +94,6 @@ export default new (class Authservice {
   async check(req: Request, res: Response): Promise<Response | void> {
     try {
       const userLogin = res.locals.session.id;
-      // console.log(userLogin)
       const user = await this.AuthRepository.findOne({
         where: {
           id: userLogin,
@@ -104,7 +103,6 @@ export default new (class Authservice {
           following: true,
         }
       });
-      // console.log(user)
 
       const follower = await AppDataSource.getRepository(Follow).find({
         where: {
@@ -129,6 +127,7 @@ export default new (class Authservice {
         username: user.username,
         email: user.email,
         picture: user.picture,
+        cover_photo: user.cover_photo,
         bio: user.bio,
         followers_count: follower,
         followings_count: following

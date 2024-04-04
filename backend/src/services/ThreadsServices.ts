@@ -45,8 +45,8 @@ export default new (class ThreadsServices {
 
     let valid;
     if (data.image) {
-      cloudinary.upload();
-      const upFile = await cloudinary.destination(isValid.image);
+      cloudinary.config();
+      const upFile = await cloudinary.upload(isValid.image);
       console.log("ini upfile", upFile);
 
       valid = {
@@ -107,8 +107,8 @@ export default new (class ThreadsServices {
     const isValid = validate(updateThreadSchema, data);
     let valid;
     if (data.image && data.content) {
-      cloudinary.upload();
-      const upFile = await cloudinary.destination(isValid.image);
+      cloudinary.config();
+      const upFile = await cloudinary.upload(isValid.image);
 
       valid = {
         content: isValid.content,
@@ -121,8 +121,8 @@ export default new (class ThreadsServices {
         updated_at: isValid.updated_at,
       };
     } else if (data.image && data.content) {
-      cloudinary.upload();
-      const upFile = await cloudinary.destination(isValid.image);
+      cloudinary.config();
+      const upFile = await cloudinary.upload(isValid.image);
 
       valid = {
         image: upFile.secure_url,
