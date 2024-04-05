@@ -11,7 +11,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import { RootState } from "../stores/types/rootState";
+import { RootState } from "../../../stores/types/rootState";
 import {
   AiFillFacebook,
   AiFillGithub,
@@ -19,9 +19,10 @@ import {
   AiFillLinkedin,
 } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import { useSearch } from "../features/search/hooks/useSearch";
-import { useProfile } from "../features/profile/hooks/useProfile";
-import { useFollow } from "../features/follow/hooks/useFollow";
+import { useSearch } from "../../search/hooks/useSearch";
+import { useProfile } from "../hooks/useProfile";
+import { useFollow } from "../../follow/hooks/useFollow";
+import ModalEditUser from "../../edituser/component/ModalEditUser";
 
 export default function MyProfile() {
   const profile = useSelector((state: RootState) => state.profile);
@@ -29,7 +30,6 @@ export default function MyProfile() {
     {}
   );
   const { follow, unfollow } = useFollow();
-  // const dispatch = useDispatch();
   const { filteredUsers, users } = useSearch();
   const { check } = useProfile();
 
@@ -60,7 +60,7 @@ export default function MyProfile() {
   return (
     <Box
       pos={"fixed"}
-      h={"107vh"}
+      h={"100vh"}
       overflowY={"auto"}
       sx={{
         "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
@@ -80,7 +80,11 @@ export default function MyProfile() {
                 h={20}
                 w="100%"
                 // maxW={{ base: "100%", sm: "200px" }}
-                src="https://png.pngtree.com/background/20220724/original/pngtree-ackground-hijau-keren-dan-kosong-abstract-untuk-wallpaper-template-desain-ppt-picture-image_1741397.jpg"
+                src={
+                  profile.cover_photo
+                    ? profile.cover_photo
+                    : "/placeholder-profile.jpg"
+                }
                 alt="cover_photo"
               />
               <Center>
@@ -103,26 +107,18 @@ export default function MyProfile() {
                   alt="avatar"
                 />
               </Center>
-              <Box pt={4}>
-                <Button
-                  colorScheme="teal"
-                  size="xs"
-                  borderRadius="md"
-                  float={"right"}
-                >
-                  Edit Profile
-                </Button>
+
+              <Box pt={2} float={"right"}>
+                <ModalEditUser />
               </Box>
             </Box>
-            <Heading size="sm" mt={2} textTransform={"capitalize"}>
-              ✨{profile?.fullName}✨
+            <Heading size="sm" mt={10} textTransform={"capitalize"}>
+              {profile?.fullName}
             </Heading>
             <Text fontSize="xs" color={"gray.400"}>
               @{profile?.username}
             </Text>
             <Text fontSize="sm" py={2}>
-              Siksa kubur berat broooo maka perbuatlah kebaikan di dunia
-              walaupun engkau sedang di banned👍
               {profile?.bio}
             </Text>
             <Box>
@@ -166,7 +162,7 @@ export default function MyProfile() {
             },
           }}
         >
-          <Heading size="sm" mt={3} ml={3}>
+          <Heading size="sm" mt={3} ml={3} textColor={"green"}>
             Suggested for you
           </Heading>
           {/* Suggest */}

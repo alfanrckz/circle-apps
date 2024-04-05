@@ -33,7 +33,7 @@ export function useSearch() {
     );
     const filteredUserLogin = filtered.filter((user) => user.id !== profile.id);
     if (filtered) setFilteredUsers( filteredUserLogin);
-    // console.log(filtered);
+
   };
 
   return { filteredUsers, searchUsers, users,  };

@@ -6,6 +6,19 @@ export default new (class UserController {
     UserServices.find(req, res);
   }
 
+  async getUserByid(req: Request, res: Response) {
+    try {
+      const id = parseInt(req.params.id);
+      const response = await UserServices.getUserByid(id);
+      res.status(200).json({
+        message: response.message,
+        data: response.data,
+      });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
+
   async updateUser(req: Request, res: Response) {
     try {
       const response = await UserServices.updateUser(

@@ -11,7 +11,7 @@ const ReplyForm: React.FC<CommentFormProps> = ({ onSubmit }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(comment);
-    setComment(""); // Clear input after submitting
+    setComment(""); 
   };
 
   return (

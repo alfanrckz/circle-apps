@@ -101,6 +101,14 @@ export default function App() {
             <Route
               element={
                 <Main>
+                  <ProfileDetail />
+                </Main>
+              }
+              path="/detail-profile/:id"
+            />
+            <Route
+              element={
+                <Main>
                   <ThreadDetail />
                 </Main>
               }

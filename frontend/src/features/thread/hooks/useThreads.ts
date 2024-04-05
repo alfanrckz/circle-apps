@@ -5,12 +5,15 @@ import { IThreadCard, IThreadPost } from "../../../interface/thread";
 import { API } from "../../../libs/api";
 import { GET_THREADS } from "../../../stores/rootReducer";
 import { useParams } from "react-router-dom";
+import useToast from "../../../utils/useToast";
 
 export function useThreads() {
+  const profile = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch();
   const threads = useSelector((state: RootState) => state.thread.threads);
   const [thread, setThread] = useState<IThreadCard>();
   const { id } = useParams();
+  const toast = useToast()
 
   const [form, setForm] = useState<IThreadPost>({
     content: "",
@@ -33,11 +36,15 @@ export function useThreads() {
       const formData = new FormData();
       formData.append("content", form.content);
       formData.append("image", form.image as File);
-      await API.post("/thread", formData, {
+     const response = await API.post("/thread", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      if(response){
+        toast("Thread added successfully", "Thread added", "success");
+      }
+
       setForm({
         content: "",
         image: "",
@@ -45,13 +52,21 @@ export function useThreads() {
     } catch (error) {
       console.log(error);
     }
-    // console.log("Thread added successfully", response);
     getThreads();
   }
 
   useEffect(() => {
     getThreads();
   }, []);
+
+  function deleteThread(id: number) {
+   const response = API.delete(`/thread/${profile.id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }
+    });
+    console.log(response);
+  }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value, files } = e.target;

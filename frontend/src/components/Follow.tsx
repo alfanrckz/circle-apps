@@ -27,7 +27,6 @@ export default function Follow() {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log(response.data);
     dispatch(GET_FOLLOW(response.data));
   }
 
@@ -38,25 +37,20 @@ export default function Follow() {
   if (profile.id === 0) return null;
 
   return (
-    <Box h={"89vh"} color={"white"} mt={4} mr={-4}>
+    <Box h={"89vh"} color={"white"} mt={4} mr={-4} >
       <Text ml={4} fontWeight={"bold"} fontSize={"2xl"} my={2}>
         Follow
       </Text>
       <Card mx={4} mb={2} p="5px" h="100%" bg={"mainBg.200"} color={"white"}>
         <Tabs
-          px={5}
-          borderColor={"black"}
-          isFitted
-          width={"100%"}
-          marginTop={"20px"}
-          variant="enclosed"
+          size={"md"}
         >
-          <TabList mb={"1em"} borderColor={"black"}>
-            <Tab>Followers</Tab>
-            <Tab>Followings</Tab>
+          <TabList>
+            <Tab w={"50%"}>Followers</Tab>
+            <Tab w={"50%"}>Followings</Tab>
           </TabList>
           <TabPanels
-            h={"60vh"}
+            h={"80vh"}
             overflowY={"auto"}
             sx={{
               "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },

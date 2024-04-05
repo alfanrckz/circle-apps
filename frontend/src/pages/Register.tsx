@@ -1,15 +1,19 @@
 import { Box, Text } from "@chakra-ui/react";
 import { FormRegister } from "../features/auth/components/FormRegister";
 import { Link } from "react-router-dom";
+import backgroundImage from "../assets/background.jpg"
 
 export const Register = () => {
   return (
     <Box
       display={"flex"}
       flexDirection={"column"}
-      justifyContent={"center"}
       alignItems={"center"}
-      marginTop={"60px"}
+      justifyContent={"center"}
+      backgroundImage={`url(${backgroundImage})`}
+      backgroundSize="cover"
+      backgroundPosition="center"
+      minHeight="100vh"
     >
       <FormRegister />
       <Box display={"flex"} gap={2}>

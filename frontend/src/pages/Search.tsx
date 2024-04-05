@@ -1,5 +1,7 @@
 import SearchComp from "../features/search/component/SearchComp";
 
+
+
 const Search = () => {
   return (
     <>

@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IUserLogin } from "../../../interface/user";
 import { API } from "../../../libs/api";
 import { AUTH_LOGIN } from "../../../stores/rootReducer";
-import useToast from "../../../hooks/useToast";
-
+import useToast from "../../../utils/useToast";
 
 export function useLogin() {
   const navigate = useNavigate();
@@ -24,22 +23,25 @@ export function useLogin() {
   }
 
   const toast = useToast();
+
   async function handleLogin() {
     try {
       const response = await API.post("/login", form);
       dispatch(AUTH_LOGIN(response.data));
-      if (response) toast(" Login success", "Login success", "success");
-      console.log(response.data);
-      localStorage.setItem("authData", JSON.stringify(response.data.user));
-      // document.cookie = `C.id=${
-      //   response.data.token
-      // };expires=${exp.toUTCString()}`;
-
-      navigate("/");
-    } catch (error) {
-      if (error) toast(" Login error", "Login error", "error");
-      console.log(error);
+      if (response) {
+        toast("Login Success", "Login Success", "success");
+        localStorage.setItem("authData", JSON.stringify(response.data.user));
+        navigate("/");
+      }
+    } catch (error: any) {
+      let errorMessage = "An unexpected error occurred";
+      if (error.response && error.response.data && error.response.data.error) {
+        errorMessage = error.response.data.error;
+      }
+      toast(errorMessage, "Login Error", "error");
+      // console.error(error);
     }
   }
+
   return { handleChange, handleLogin };
 }

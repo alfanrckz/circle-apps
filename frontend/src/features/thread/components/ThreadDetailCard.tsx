@@ -18,8 +18,9 @@ import { BiSolidImageAdd } from "react-icons/bi";
 import { useEffect } from "react";
 import { useThreadReply } from "../hooks/useThreadReply";
 import { formatDistanceToNow, parseISO } from "date-fns";
+import { IThreadCard } from "../../../interface/thread";
 
-export const ThreadDetailCard = () => {
+export const ThreadDetailCard = (props: IThreadCard) => {
   const navigate = useNavigate();
   const { getThread, thread } = useThreads();
   const {
@@ -34,8 +35,6 @@ export const ThreadDetailCard = () => {
   useEffect(() => {
     getThread();
   }, [getReplies]);
-
-  // console.log("getReplies terbaru", getReplies);
 
   return (
     <Box
@@ -95,7 +94,7 @@ export const ThreadDetailCard = () => {
             marginLeft={4}
             marginTop={4}
             maxW={{ base: "100%", sm: "200px" }}
-            src={"/placeholder-profile.jpg"}
+            src={props.user?.picture ?? "/placeholder-profile.jpg"}
             alt="picture"
           />
           <CardBody>
@@ -164,54 +163,55 @@ export const ThreadDetailCard = () => {
             getReplies &&
             Array.isArray(getReplies) &&
             getReplies.map((reply) => (
-              <Box
+              <Card
                 key={reply.id}
-                display={"flex"}
-                width="500px"
-                borderBottom={"1px solid white"}
-                padding={"20px 0px"}
                 bg={"transparent"}
                 color={"white"}
+                marginBottom={1}
+                borderRadius={20}
+                boxShadow={"xl"}
               >
-                <Image
-                  src={
-                    reply?.user?.profile_picture ?? "/placeholder-profile.jpg"
-                  }
-                  width={"30px"}
-                  height={"30px"}
-                  objectFit={"cover"}
-                  borderRadius={"50%"}
-                  marginRight={"20px"}
-                />
-                <Box>
-                  <Box display={"flex"}>
-                    <Text textTransform={"capitalize"}>
-                      {reply?.user?.fullName}
-                    </Text>
-                    <Text ml={1} mt={1} fontSize={"sm"} color="grey">
-                      @{reply?.user?.username}
-                    </Text>
-                    <Text ml={3} color="grey">
-                      {reply.created_at &&
-                        formatDistanceToNow(parseISO(reply.created_at), {
-                          addSuffix: true,
-                          includeSeconds: true,
-                        })}
-                    </Text>
-                  </Box>
-                  {reply?.content && <Text>{reply?.content}</Text>}
+                <CardBody>
+                  <Flex alignItems={"center"} marginBottom={2}>
+                    <Image
+                      src={reply?.user?.picture ?? "/placeholder-profile.jpg"}
+                      width={"40px"}
+                      height={"40px"}
+                      objectFit={"cover"}
+                      borderRadius={"50%"}
+                      marginRight={"10px"}
+                    />
+                    <Flex alignItems={"baseline"}>
+                      <Text
+                        fontWeight={"bold"}
+                        marginRight={2}
+                        textTransform={"capitalize"}
+                      >
+                        {reply?.user?.fullName}
+                      </Text>
+                      <Text fontSize={15} color={"grey"}>
+                        {reply.created_at &&
+                          formatDistanceToNow(parseISO(reply.created_at), {
+                            addSuffix: true,
+                            includeSeconds: true,
+                          })}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                  <Text mt={-2} ml={14}>
+                    {reply?.content}
+                  </Text>
                   {reply?.image && (
                     <Image
                       mt={3}
                       src={reply?.image}
-                      width={"400px"}
-                      height={"300px"}
+                      width={"100%"}
                       objectFit={"contain"}
-                      marginRight={"20px"}
+                      borderRadius={10}
                     />
                   )}
-                </Box>
-              </Box>
+                </CardBody>
+              </Card>
             ))
           )}
         </Box>

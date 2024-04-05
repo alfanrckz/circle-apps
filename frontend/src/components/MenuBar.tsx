@@ -1,24 +1,23 @@
 import {
   Box,
-  Button,
   Center,
   Flex,
   Heading,
   ListItem,
   Spacer,
   Text,
-  UnorderedList,
+  UnorderedList
 } from "@chakra-ui/react";
 
+import { BsThreads } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
 import { GoHeartFill } from "react-icons/go";
 import { IoMdHome } from "react-icons/io";
-import { BsThreads } from "react-icons/bs";
 import { MdOutlinePersonSearch } from "react-icons/md";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { AUTH_LOGOUT } from "../stores/rootReducer";
-import { useDispatch } from "react-redux";
 import PostModal from "./PostModal";
 
 export default function MenuBar() {

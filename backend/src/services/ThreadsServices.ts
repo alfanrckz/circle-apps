@@ -132,8 +132,8 @@ export default new (class ThreadsServices {
       throw new ResponseError(400, "content or image is required");
     }
 
-    console.log("ini service", valid);
-    console.log(id);
+    // console.log("ini service", valid);
+    // console.log(id);
 
     await this.threadRepository.update({ id: id.id }, valid);
 

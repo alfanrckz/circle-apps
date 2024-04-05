@@ -9,14 +9,14 @@ import {
   InputLeftElement,
   Stack,
   Text,
-  Spacer, // Import Spacer
+  Spacer, 
 } from "@chakra-ui/react";
 import { FaUser } from "react-icons/fa";
 import { useSearch } from "../hooks/useSearch";
 import { useFollow } from "../../follow/hooks/useFollow";
 import { IFollow } from "../../../interface/follow";
 
-const SearchComp = (props: IFollow) => {
+export default function SearchComp(props: IFollow) {
   const { filteredUsers, searchUsers, users } = useSearch();
   const [searchQuery, setSearchQuery] = useState("");
   const [isFollowMap, setIsFollowMap] = useState<{ [key: string]: boolean }>(
@@ -38,9 +38,10 @@ const SearchComp = (props: IFollow) => {
   useEffect(() => {
     const newIsFollowMap: { [key: string]: boolean } = {};
     users.forEach((user) => {
-      newIsFollowMap[user.id] = isFollowMap[user.id] || false;
+      newIsFollowMap[user.id!] = isFollowMap[user.id!] || false;
     });
     setIsFollowMap(newIsFollowMap);
+    setSearchQuery("");
   }, [users]);
 
   const handleFollowToggle = (userId: number) => {
@@ -55,8 +56,11 @@ const SearchComp = (props: IFollow) => {
     }
   };
 
+  // Filter users only when there is a search query
+  const displayUsers = searchQuery ? filteredUsers : [];
+
   return (
-    <Box h={"97vh"} color={"white"} mt={4}>
+    <Box h={"89vh"} color={"white"} mt={4} mr={-4}>
       <Text ml={2} fontWeight={"bold"} fontSize={"2xl"} my={2}>
         Search
       </Text>
@@ -71,18 +75,17 @@ const SearchComp = (props: IFollow) => {
               focusBorderColor="lime"
               placeholder="look for people around you.."
               borderRadius="10px"
-              // value={searchQuery}
               onChange={handleSearchInputChange}
             />
           </InputGroup>
           <Stack
-            h={"80vh"}
+            h={"70vh"}
             overflowY={"auto"}
             sx={{
               "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
             }}
           >
-            {filteredUsers.map((user) => (
+            {displayUsers.map((user) => (
               <Box key={user.id} display="flex" gap={2} position="relative">
                 <Image
                   borderRadius="100%"
@@ -105,7 +108,7 @@ const SearchComp = (props: IFollow) => {
                 </Box>
                 <Spacer />{" "}
                 <Box mt={5} textAlign={"center"}>
-                  {!isFollowMap[user.id] ? (
+                  {!isFollowMap[user.id!] ? (
                     <Button
                       border={"1px"}
                       borderColor="grey"
@@ -114,7 +117,7 @@ const SearchComp = (props: IFollow) => {
                       textColor={"white"}
                       h={7}
                       _hover={{ bg: "main.bg.100" }}
-                      onClick={() => handleFollowToggle(user.id)}
+                      onClick={() => handleFollowToggle(user.id!)}
                     >
                       Follow
                     </Button>
@@ -127,7 +130,7 @@ const SearchComp = (props: IFollow) => {
                       textColor={"white"}
                       _hover={{ bg: "main.bg.100" }}
                       h={7}
-                      onClick={() => handleFollowToggle(user.id)}
+                      onClick={() => handleFollowToggle(user.id!)}
                     >
                       Unfollow
                     </Button>
@@ -140,6 +143,6 @@ const SearchComp = (props: IFollow) => {
       </Card>
     </Box>
   );
-};
+}
 
-export default SearchComp;
+

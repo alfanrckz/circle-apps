@@ -56,7 +56,7 @@ export default function ThreadCard(props: IThreadCard) {
                 >
                   {props.user?.fullName}
                 </Text>
-                <Text ml={2} color="gray.400">
+                <Text ml={2} color="grey" fontSize={15}>
                   {props.created_at &&
                     formatDistanceToNow(parseISO(props.created_at), {
                       addSuffix: true,
@@ -75,8 +75,6 @@ export default function ThreadCard(props: IThreadCard) {
                 fontSize={18}
                 ml={1}
                 mt={1}
-                // onClick={handleLikeClick}
-                // color={liked ? "red.500" : "brand.grey"}
               >
                 {isLiked ? (
                   <FaRegHeart

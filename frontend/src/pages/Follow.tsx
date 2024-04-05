@@ -1,6 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 
-import ProfileSuggest from "../components/MyProfile";
+import ProfileSuggest from "../features/profile/component/MyProfile";
 import SideNavbar from "../components/MenuBar";
 
 export default function Follow() {

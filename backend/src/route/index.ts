@@ -16,6 +16,20 @@ router.get("/check", authMiddleware.auth, AuthController.check);
 
 //user
 router.get("/users", UserController.find);
+router.get("/user/:id", authMiddleware.auth, UserController.getUserByid);
+router.patch("/user/:id", authMiddleware.auth, UserController.updateUser);
+router.patch(
+  "/upload/picture/:id",
+  authMiddleware.auth,
+  uploadFile.upload("picture"),
+  UserController.uploadPicture
+);
+router.patch(
+  "/upload/cover/:id",
+  authMiddleware.auth,
+  uploadFile.upload("cover_photo"),
+  UserController.uploadCover
+);
 
 //thread
 router.get("/threads", ThreadController.getAll);
@@ -42,8 +56,6 @@ router.delete("/unfollow", authMiddleware.auth, FollowController.unfollow);
 //like
 router.get("/like", LikeController.findAll);
 router.post("/like/thread", authMiddleware.auth, LikeController.create);
-// router.post("/like", authMiddleware.auth, LikeController.create);
-// router.delete("like/thread_id", authMiddleware.auth, LikeController.delete);
 
 //reply
 router.post(

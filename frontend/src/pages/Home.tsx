@@ -27,9 +27,9 @@ export default function Home() {
     form,
   } = useThreads();
 
-  if(auth.id === 0) return null
+  if (auth.id === 0) return null;
   return (
-    <Box>
+    <Box mr={-4}>
       <Box m={4}>
         <Text fontWeight={"bold"} fontSize={"2xl"} my={2}>
           Home
@@ -51,7 +51,7 @@ export default function Home() {
             marginTop={4}
             maxW={{ base: "100%", sm: "200px" }}
             src={auth.picture ? auth.picture : "/placeholder-profile.jpg"}
-            alt="Caffe Latte"
+            alt="picture"
           />
           <CardBody>
             <form onSubmit={handleButtonClick} encType="multipart/form-data">

@@ -1,14 +1,13 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import MyProfile from "../components/MyProfile";
+import MyProfile from "../features/profile/component/MyProfile";
 import MenuBar from "../components/MenuBar";
 
 export default function Main({ children }: { children: ReactNode }) {
   return (
     <>
-      <Grid h="100%" templateColumns="repeat(10, 1fr)" >
+      <Grid h="100vh" templateColumns="repeat(10, 1fr)">
         <GridItem
-        
           w="100%"
           bg="mainBg.100"
           display={{ base: "none", md: "block" }}

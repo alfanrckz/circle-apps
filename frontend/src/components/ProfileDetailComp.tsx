@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
-// Chakra imports
-import { Box, Button, Card, Flex, Image, Text } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Box, Card, Flex, Image, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../stores/types/rootState";
 import { AUTH_CHECK } from "../stores/rootReducer";
+import { RootState } from "../stores/types/rootState";
 
 import ThreadCard from "../features/thread/components/ThreadCard";
 import { useThreads } from "../features/thread/hooks/useThreads";
+import ModalEditUser from "../features/edituser/component/ModalEditUser";
 
 const ProfileDetailComp: React.FC = () => {
   const { threads } = useThreads();
   const profile = useSelector((state: RootState) => state.profile);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,23 +21,11 @@ const ProfileDetailComp: React.FC = () => {
     }
   }, [dispatch, profile]);
 
-  const [likes, setLikes] = useState<number>(0);
-  const [liked, setLiked] = useState<boolean>(false);
-
-  const handlelike = () => {
-    if (!liked) {
-      setLikes(likes + 1);
-    } else {
-      setLikes(likes - 1);
-    }
-    setLiked(!liked);
-  };
-
   return (
     <>
       <Box
+        mr={-5}
         color={"white"}
-        m={4}
         h={"100vh"}
         overflowY={"auto"}
         sx={{
@@ -47,29 +33,42 @@ const ProfileDetailComp: React.FC = () => {
           "&::-webkit-scrollbar-thumb": { bg: "green.500" },
         }}
       >
-        <Text ml={2} fontWeight={"bold"} fontSize={"2xl"} my={2}>
+        <Text ml={4} fontWeight={"bold"} fontSize={"2xl"} my={2}>
           Profile
         </Text>
-        <Card mx={4} mb={2} p="5px" h="330px" bg={"mainBg.200"} color={"white"}>
+        <Card mx={4} mb={2} p="5px" h="430px" bg={"mainBg.200"} color={"white"}>
           <Flex direction="column" alignItems="center" mx={2}>
             <Image
-              src="https://png.pngtree.com/background/20220724/original/pngtree-ackground-hijau-keren-dan-kosong-abstract-untuk-wallpaper-template-desain-ppt-picture-image_1741397.jpg"
+              src={
+                profile.cover_photo
+                  ? profile.cover_photo
+                  : "https://png.pngtree.com/background/20220724/original/pngtree-ackground-hijau-keren-dan-kosong-abstract-untuk-wallpaper-template-desain-ppt-picture-image_1741397.jpg"
+              }
               // maxW='100%'
               w={"100%"}
-              h={"30%"}
+              h={"40%"}
+              mt={5}
               borderRadius="10px"
             />
             <Flex justify="space-between" w="full" p={3}>
               <Image
-                src={profile.picture ? profile.picture : "/placeholder-profile.jpg"}
-                width="68px"
-                height="68px"
-                mt="-38px"
+                src={
+                  profile.picture ? profile.picture : "/placeholder-profile.jpg"
+                }
+                width="100px"
+                height="100px"
+                mt="-58px"
                 borderRadius="50%"
+                borderWidth={2}
+                borderColor={"white"}
               />
               <Text textAlign={"center"}>
-                {" "}
-                0<Text>Thread</Text>
+                {
+                  threads?.filter(
+                    (item) => item.user?.username === profile.username
+                  ).length
+                }
+                <Text>Thread</Text>
               </Text>
               <Text textAlign={"center"}>
                 {profile.followers_count?.length}
@@ -79,28 +78,17 @@ const ProfileDetailComp: React.FC = () => {
                 {profile.followings_count?.length}
                 <Text>Following</Text>
               </Text>
-              <NavLink to={"/edit-profile"}>
-                <Button
-                  boxSize={"fit-content"}
-                  fontSize={15}
-                  rounded={5}
-                  border="2px"
-                  borderColor={"black"}
-                  bg={"white"}
-                  mt={1}
-                  alignItems={"end"}
-                >
-                  Edit Profile
-                </Button>
-              </NavLink>
+
+              <ModalEditUser />
             </Flex>
             <Box ml={10} mb={1} textAlign={"left"} w={"100%"}>
               <Text
                 textAlign={"left"}
                 fontWeight="700"
                 textTransform={"capitalize"}
+                fontSize={20}
               >
-                ✨{profile.fullName}✨
+                {profile.fullName}
               </Text>
               <Text
                 color={"gray.400"}
@@ -110,16 +98,18 @@ const ProfileDetailComp: React.FC = () => {
               >
                 @{profile.username}
               </Text>
+ 
+
               <Text
                 color={"gray.300"}
-                textAlign={"left"}
+                textAlign={"justify"}
                 fontSize="15px"
                 fontWeight="600"
-              >
-                Siksa kubur berat broooo maka perbuatlah kebaikan di dunia
-                walaupun engkau sedang di banned👍
+                paddingRight={"40px"}
+                >
                 {profile.bio}
               </Text>
+       
             </Box>
           </Flex>
         </Card>
@@ -137,61 +127,10 @@ const ProfileDetailComp: React.FC = () => {
                 image={item.image}
                 likes={item.likes}
                 replies={item.replies}
-                is_liked={item.is_liked}
+                profile={profile.id}
               />
             );
           })}
-
-        {/* <Card
-          direction={{ base: "column", sm: "row" }}
-          overflow="hidden"
-          variant="outline"
-          bg="mainBg.200"
-          borderColor="mainBg.200"
-          border="5px"
-          color="grey.200"
-          mx={2}
-          mb={2}
-          p="5px"
-        >
-          <Image
-            borderRadius="100%"
-            objectFit="cover"
-            h={14}
-            w={14}
-            marginLeft={4}
-            marginTop={4}
-            maxW={{ base: "100%", sm: "200px" }}
-            alt="picture"
-          />
-          <Stack>
-            <CardBody>
-              <Box>
-                <Flex>
-                  <Text textTransform={"capitalize"} size="md"></Text>
-                  <Text ml={2} color="gray.400"></Text>
-                </Flex>
-                <Text pt="1" color="gray.400"></Text>
-              </Box>
-              <Text py="2"></Text>
-              <Image borderRadius={10} />
-              <Flex pt="2">
-                <Icon
-                  as={FaHeart}
-                  cursor="pointer"
-                  // onClick={switchLike}
-                  color={liked ? "red.500" : "inherit"}
-                />
-
-                <Text fontSize="10" ml="1" mr="2"></Text>
-
-                <LiaCommentSolid cursor="pointer" />
-
-                <Text fontSize="10"></Text>
-              </Flex>
-            </CardBody>
-          </Stack>
-        </Card> */}
       </Box>
     </>
   );

@@ -4,6 +4,7 @@ export interface IUser {
   fullName?: string;
   username?: string;
   picture?: string;
+  cover_photo: string;
   bio?: string;
   followers_count?: any[];
   followings_count?: any[];
