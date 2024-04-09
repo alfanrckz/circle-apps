@@ -15,13 +15,16 @@ import { CiLogout } from "react-icons/ci";
 import { GoHeartFill } from "react-icons/go";
 import { IoMdHome } from "react-icons/io";
 import { MdOutlinePersonSearch } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { AUTH_LOGOUT } from "../stores/rootReducer";
 import PostModal from "./PostModal";
+import { RootState } from "../stores/types/rootState";
 
 export default function MenuBar() {
-  const dispatch = useDispatch();
+  const profile = useSelector((state: RootState) => state.profile);
+  // console.log("current Profile :",profile);
+  const dispatch = useDispatch(); 
   const handleLogout = () => {
     localStorage.removeItem("authData");
     dispatch(AUTH_LOGOUT());
@@ -142,7 +145,8 @@ export default function MenuBar() {
                   <CgProfile />
                 </Text>
                 <NavLink
-                  to={"/detail-profile"}
+                  onClick={() => localStorage.setItem ("id", JSON.stringify(profile.id))}
+                  to={`/detail-profile/${profile.id}`}
                   style={({ isActive, isTransitioning }) => {
                     return {
                       fontWeight: isActive ? "bold" : "",
