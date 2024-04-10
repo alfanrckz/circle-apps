@@ -41,7 +41,7 @@ export default function PostModal() {
         w={"100%"}
         rounded={"full"}
         onClick={onOpen}
-        _hover={{ borderColor: "white" }}
+        _hover={{ borderColor: "white", borderWidth: 2 }}
       >
         Create Post
       </Button>
@@ -91,8 +91,10 @@ export default function PostModal() {
                   />
                 </label>
                 <Button
-                  colorScheme="green"
+                  bg="green"
                   mr={3}
+                  _hover={{ bg: "green.500" }}
+                  textColor={"white"}
                   onClick={(e: any) => handlePost(e)}
                 >
                   Post
