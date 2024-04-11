@@ -1,25 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Card, Flex, Image, Text } from "@chakra-ui/react";
+import { NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useProfile } from "../features/profile/hooks/useProfile";
+import { useThreads } from "../features/thread/hooks/useThreads";
 import { AUTH_CHECK } from "../stores/rootReducer";
 import { RootState } from "../stores/types/rootState";
-
+import { IUser } from "../interface/user";
 import ThreadCard from "../features/thread/components/ThreadCard";
-import { useThreads } from "../features/thread/hooks/useThreads";
 import ModalEditUser from "../features/edituser/component/ModalEditUser";
 
 const ProfileDetailComp: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const { threads } = useThreads();
   const profile = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch();
-
+  const { getProfileById } = useProfile();
+  const profileById = useSelector((state: RootState) => state.profileId);
+  const [dataProfile, setDataProfile] = useState<IUser | null>(null);
+  // console.log("ini data profile cokk",profileById)
   useEffect(() => {
     const storeAuthData = localStorage.getItem("authData");
     if (storeAuthData) {
       const parsedAuthData = JSON.parse(storeAuthData);
       dispatch(AUTH_CHECK({ user: parsedAuthData }));
     }
-  }, [dispatch, profile]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    getProfileById();
+    if (profileById) {
+      setDataProfile(profileById);
+    }
+  }, [profileById]);
 
   return (
     <>
@@ -36,15 +49,21 @@ const ProfileDetailComp: React.FC = () => {
         <Text ml={4} fontWeight={"bold"} fontSize={"2xl"} my={2}>
           Profile
         </Text>
-        <Card mx={4} mb={2} p="5px" h="430px" bg={"mainBg.200"} color={"white"}>
+        <Card
+          mx={4}
+          mb={2}
+          p="5px"
+          h="490px"
+          bg={"mainBg.200"}
+          color={"white"}
+        >
           <Flex direction="column" alignItems="center" mx={2}>
             <Image
               src={
-                profile.cover_photo
-                  ? profile.cover_photo
+                dataProfile?.cover_photo
+                  ? dataProfile.cover_photo
                   : "https://png.pngtree.com/background/20220724/original/pngtree-ackground-hijau-keren-dan-kosong-abstract-untuk-wallpaper-template-desain-ppt-picture-image_1741397.jpg"
               }
-              // maxW='100%'
               w={"100%"}
               h={"40%"}
               mt={5}
@@ -53,7 +72,9 @@ const ProfileDetailComp: React.FC = () => {
             <Flex justify="space-between" w="full" p={3}>
               <Image
                 src={
-                  profile.picture ? profile.picture : "/placeholder-profile.jpg"
+                  dataProfile?.picture
+                    ? dataProfile.picture
+                    : "/placeholder-profile.jpg"
                 }
                 width="100px"
                 height="100px"
@@ -65,20 +86,19 @@ const ProfileDetailComp: React.FC = () => {
               <Text textAlign={"center"}>
                 {
                   threads?.filter(
-                    (item) => item.user?.username === profile.username
+                    (item) => item.user?.username === dataProfile?.username
                   ).length
                 }
                 <Text>Thread</Text>
               </Text>
               <Text textAlign={"center"}>
-                {profile.followers_count?.length}
+                {profileById?.followers_count}
                 <Text>Follower</Text>
               </Text>
               <Text textAlign={"center"}>
-                {profile.followings_count?.length}
+                {profileById?.followings_count}
                 <Text>Following</Text>
               </Text>
-
               <ModalEditUser />
             </Flex>
             <Box ml={10} mb={1} textAlign={"left"} w={"100%"}>
@@ -88,7 +108,7 @@ const ProfileDetailComp: React.FC = () => {
                 textTransform={"capitalize"}
                 fontSize={20}
               >
-                {profile.fullName}
+                {dataProfile?.fullName}
               </Text>
               <Text
                 color={"gray.400"}
@@ -96,26 +116,22 @@ const ProfileDetailComp: React.FC = () => {
                 fontSize="12px"
                 fontWeight={"500"}
               >
-                @{profile.username}
+                @{dataProfile?.username}
               </Text>
- 
-
               <Text
                 color={"gray.300"}
                 textAlign={"justify"}
                 fontSize="15px"
                 fontWeight="600"
                 paddingRight={"40px"}
-                >
-                {profile.bio}
+              >
+                {dataProfile?.bio}
               </Text>
-       
             </Box>
           </Flex>
         </Card>
-
         {threads
-          ?.filter((item) => item.user?.username === profile.username)
+          ?.filter((item) => item.user?.username === dataProfile?.username)
           .map((item) => {
             return (
               <ThreadCard
