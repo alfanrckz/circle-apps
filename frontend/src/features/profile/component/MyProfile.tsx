@@ -1,28 +1,30 @@
 import {
   Box,
+  Button,
   Card,
+  CardBody,
   Center,
+  Flex,
   Heading,
   Image,
-  Text,
-  Flex,
-  Button,
-  CardBody,
   Spacer,
+  Text,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../stores/types/rootState";
+import { useEffect, useState } from "react";
 import {
   AiFillFacebook,
   AiFillGithub,
   AiFillInstagram,
   AiFillLinkedin,
 } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../stores/types/rootState";
+import ModalEditUser from "../../edituser/component/ModalEditUser";
+import { useFollow } from "../../follow/hooks/useFollow";
 import { useSearch } from "../../search/hooks/useSearch";
 import { useProfile } from "../hooks/useProfile";
-import { useFollow } from "../../follow/hooks/useFollow";
-import ModalEditUser from "../../edituser/component/ModalEditUser";
+import { useNavigate } from "react-router-dom";
+
 
 export default function MyProfile() {
   const profile = useSelector((state: RootState) => state.profile);
@@ -31,7 +33,8 @@ export default function MyProfile() {
   );
   const { follow, unfollow } = useFollow();
   const { filteredUsers, users } = useSearch();
-  const { check } = useProfile();
+  const { check, getProfileById } = useProfile();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const newIsFollowMap: { [key: string]: boolean } = {};
@@ -40,6 +43,7 @@ export default function MyProfile() {
     });
     setIsFollowMap(newIsFollowMap);
   }, [users]);
+
 
   useEffect(() => {
     check();
@@ -55,6 +59,12 @@ export default function MyProfile() {
     } else {
       unfollow(userId);
     }
+  };
+
+  const setItem = (id: any) => {
+    localStorage.setItem("id", id);
+    getProfileById()
+    navigate(`/detail-profile/${id}`)   
   };
 
   return (
@@ -79,7 +89,6 @@ export default function MyProfile() {
                 borderRadius="2xl"
                 h={20}
                 w="100%"
-                // maxW={{ base: "100%", sm: "200px" }}
                 src={
                   profile.cover_photo
                     ? profile.cover_photo
@@ -167,19 +176,21 @@ export default function MyProfile() {
           </Heading>
           {/* Suggest */}
 
-          {filteredUsers.map((user) => (
+          {filteredUsers.map((user: any) => (
             <Box key={user.id} display="flex" gap={2} position="relative">
-              <Image
-                borderRadius="100%"
-                objectFit="cover"
-                h={8}
-                w={8}
-                marginLeft={4}
-                marginTop={2}
-                maxW={{ base: "100%", sm: "200px" }}
-                src={user.picture ? user.picture : "/placeholder-profile.jpg"}
-                alt="picture"
-              />
+              <Box onClick={() => setItem(user.id!)}>
+                <Image
+                  borderRadius="100%"
+                  objectFit="cover"
+                  h={8}
+                  w={8}
+                  marginLeft={4}
+                  marginTop={2}
+                  maxW={{ base: "100%", sm: "200px" }}
+                  src={user.picture ? user.picture : "/placeholder-profile.jpg"}
+                  alt="picture"
+                />
+              </Box>
               <Box marginTop={2} ml={2}>
                 <Text
                   textTransform={"capitalize"}
@@ -193,7 +204,7 @@ export default function MyProfile() {
                 </Text>
               </Box>
               <Spacer />{" "}
-              <Box mt={3} textAlign={"center"}>
+              <Box mt={3} ml={2} textAlign={"center"}>
                 {!isFollowMap[user.id!] ? (
                   <Button
                     border={"1px"}
