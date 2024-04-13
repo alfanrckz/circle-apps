@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
 import { GET_PROFILE } from "../../../stores/slices/profileSlice";
 import { API } from "../../../libs/api";
+import { GET_PROFILE_ID } from "../../../stores/slices/profileById";
 
 export const useProfile = () => {
-
   const dispatch = useDispatch();
   async function check() {
     const response = await API.get("/check", {
@@ -11,20 +11,23 @@ export const useProfile = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    // console.log(response.data.data);
+
     dispatch(GET_PROFILE(response.data.data));
   }
-  return {
-    check,
-  };
 
   async function getProfileById() {
-    const response = await API.get(`/user/`, {
+    const userId = localStorage.getItem("id");
+    
+    const response = await API.get(`/user/${userId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    // console.log(response.data.data);
-    dispatch(GET_PROFILE(response.data.data));
+
+    dispatch(GET_PROFILE_ID(response.data.data));
   }
+  return {
+    check,
+    getProfileById
+  };
 };
