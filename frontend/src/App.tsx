@@ -90,14 +90,7 @@ export default function App() {
               path="/search"
             />
 
-            <Route
-              element={
-                <Main>
-                  <ProfileDetail />
-                </Main>
-              }
-              path="/detail-profile"
-            />
+            
             <Route
               element={
                 <Main>
