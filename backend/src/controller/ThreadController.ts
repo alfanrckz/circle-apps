@@ -31,14 +31,14 @@ export default new (class ThreadController {
           user: loginSession.id,
         };
       } else {
-        console.log(loginSession);
+        // console.log(loginSession);
         data = {
           content: req.body.content,
           image: req.file.filename,
           user: loginSession.id,
         };
       }
-      console.log(data);
+      // console.log(data);
 
       const response = await ThreadsServices.createThread(data);
       res.status(201).json({
