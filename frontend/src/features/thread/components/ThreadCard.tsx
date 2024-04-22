@@ -1,28 +1,39 @@
 import {
+
   Box,
+  Button,
   Card,
   CardBody,
   Flex,
   Icon,
   Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { FaShare } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
-import { BiCommentDetail } from "react-icons/bi";
-import { IThreadCard } from "../../../interface/thread";
 import { formatDistanceToNow, parseISO } from "date-fns";
-import { useNavigate } from "react-router-dom";
-import { useThreadCard } from "../hooks/useThreadCard";
 import { useState } from "react";
+import { BiCommentDetail } from "react-icons/bi";
+import { FaRegHeart, FaShare } from "react-icons/fa";
+import { SlOptions } from "react-icons/sl";
+import { useNavigate } from "react-router-dom";
+import { IThreadCard } from "../../../interface/thread";
+import { useThreadCard } from "../hooks/useThreadCard";
+import { useThreads } from "../hooks/useThreads";
+import AlertDialogThread from "./AlertDialog";
+import { useProfile } from "../../profile/hooks/useProfile";
 
 export default function ThreadCard(props: IThreadCard) {
   const navigate = useNavigate();
   const isTrue = props.likes?.some((val) => val.user.id === props.profile);
   const { handlePostLike } = useThreadCard();
-  const [isLiked, setIsLike] = useState(isTrue);
+  const {deleteThread} = useThreads();
+  const [isLiked, setIsLike] = useState(isTrue);  
   const [likeCount, setLikeCount] = useState(props.likes?.length);
+ 
   return (
     <Box m={4}>
       <Card
@@ -34,7 +45,40 @@ export default function ThreadCard(props: IThreadCard) {
         border="px"
         color="grey.200"
       >
+        <Menu>
+          <MenuButton
+            bgColor={"transparent"}
+            position="absolute"
+            top={2}
+            right={2}
+            as={Button}
+            rightIcon={<SlOptions />}
+            colorScheme="transparent"
+            _hover={{ bg: "transparent", borderColor: "transparent" }}
+          />
+          <MenuList
+            h={10}
+            mt={-2}
+            bg={"mainBg.200"}
+            border={"none"}
+            w={10}
+            // minWidth={20}
+            // maxW={20}
+          >
+            <MenuItem
+              borderRadius={5}
+              // borderWidth={2}
+              borderColor={"grey"}
+              mt={-2}
+              bg={"mainBg.200"}
+              _hover={{ borderColor: "red " }}
+            >
+              {/* <AlertDialogThread threadId={props.id} userId={props.user.id}/> */}
+            </MenuItem>
+          </MenuList>
+        </Menu>
         <Image
+        
           borderRadius="100%"
           objectFit="cover"
           h={8}
@@ -71,11 +115,7 @@ export default function ThreadCard(props: IThreadCard) {
             <Text py="2">{props.content}</Text>
             <Image src={props.image} borderRadius={10} />
             <Flex pt="2">
-              <Text
-                fontSize={18}
-                ml={1}
-                mt={1}
-              >
+              <Text fontSize={18} ml={1} mt={1}>
                 {isLiked ? (
                   <FaRegHeart
                     color="red"
