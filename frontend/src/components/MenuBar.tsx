@@ -8,7 +8,6 @@ import {
   Text,
   UnorderedList
 } from "@chakra-ui/react";
-
 import { BsThreads } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
@@ -18,12 +17,11 @@ import { MdOutlinePersonSearch } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { AUTH_LOGOUT } from "../stores/rootReducer";
-import PostModal from "./PostModal";
 import { RootState } from "../stores/types/rootState";
+import PostModal from "./PostModal";
 
 export default function MenuBar() {
   const profile = useSelector((state: RootState) => state.profile);
-  // console.log("current Profile :",profile);
   const dispatch = useDispatch(); 
   const handleLogout = () => {
     localStorage.removeItem("authData");
@@ -184,7 +182,6 @@ export default function MenuBar() {
         >
           <Box ml={2}>
             {" "}
-
             <CiLogout />
           </Box>
           <Text>Logout</Text>
