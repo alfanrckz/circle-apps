@@ -37,12 +37,12 @@ export default function ThreadCard(props: IThreadCard) {
   return (
     <Box m={4}>
       <Card
-        direction={{ base: "column", sm: "row" }}
+        direction={{ base: "row", sm: "row"}}
         overflow="hidden"
         variant="outline"
         bg="mainBg.200"
         borderColor="mainBg.200"
-        border="px"
+  
         color="grey.200"
       >
         <Menu>
@@ -80,7 +80,7 @@ export default function ThreadCard(props: IThreadCard) {
         <Image
         
           borderRadius="100%"
-          objectFit="cover"
+          // objectFit="cover"
           h={8}
           w={8}
           marginLeft={4}
