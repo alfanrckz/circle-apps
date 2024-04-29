@@ -1,7 +1,8 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import MyProfile from "../features/profile/component/MyProfile";
 import MenuBar from "../components/MenuBar";
+import MyProfile from "../features/profile/component/MyProfile";
+import { BottomBar } from "../components/BottomBar";
 
 export default function Main({ children }: { children: ReactNode }) {
   return (
@@ -15,7 +16,6 @@ export default function Main({ children }: { children: ReactNode }) {
         >
           <MenuBar />
         </GridItem>
-
         <GridItem
           w="100%"
           h="100vh"
@@ -34,6 +34,9 @@ export default function Main({ children }: { children: ReactNode }) {
         >
           {/* <Profile /> */}
           <MyProfile />
+        </GridItem >
+        <GridItem display={{ base: "block", md: "none" }} w={"100%"} h={"10vh"} pos={"fixed"} bottom={0}>
+          <BottomBar/>
         </GridItem>
       </Grid>
     </>
