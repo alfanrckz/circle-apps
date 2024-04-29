@@ -35,7 +35,7 @@ export default function Home() {
           Home
         </Text>
         <Card
-          direction={{ base: "column", sm: "row" }}
+          direction={{ base: "row", sm: "row" }}
           overflow="hidden"
           variant="outline"
           bg="mainBg.200"
@@ -95,6 +95,8 @@ export default function Home() {
                     // fontWeight: "bold",
                     // bg: "green.900",
                     borderColor: "white",
+                    borderWidth: "1",
+
                   }}
                   onClick={(e: any) => handlePost(e)}
                 >
