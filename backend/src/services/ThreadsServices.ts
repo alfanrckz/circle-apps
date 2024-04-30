@@ -47,7 +47,7 @@ export default new (class ThreadsServices {
     if (data.image) {
       cloudinary.config();
       const upFile = await cloudinary.upload(isValid.image);
-      console.log("ini upfile", upFile);
+      // console.log("ini upfile", upFile);
 
       valid = {
         content: isValid.content,
@@ -60,7 +60,7 @@ export default new (class ThreadsServices {
         user: isValid.user,
       };
     }
-    console.log({ message: "ini servise", valid });
+    // console.log({ message: "ini servise", valid });
 
     const response = await this.threadRepository.save(valid);
     return {
@@ -102,7 +102,7 @@ export default new (class ThreadsServices {
   }
 
   async updateThread(data, id) {
-    console.log(data);
+    // console.log(data);
 
     const isValid = validate(updateThreadSchema, data);
     let valid;
