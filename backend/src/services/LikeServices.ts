@@ -30,10 +30,8 @@ export default new (class LikeServices {
       const data = req.body;
       const { error, value } = createLikeSchema.validate(data);
       if (error) return res.status(400).json(error.details[0].message);
-      // console.log("value", value);
 
       const loginSession = res.locals.session;
-      // console.log("loginSession", loginSession);
       const likeSelected = await this.likeRepository.findOne({
         where: {
           user: {
