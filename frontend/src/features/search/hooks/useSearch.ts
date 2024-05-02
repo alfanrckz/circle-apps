@@ -8,7 +8,6 @@ export async function getUsers(dispatch : any) {
   try {
     const response = await API.get("/users");
     dispatch(GET_USERS(response.data));
-    console.log(response.data);
   } catch (error) {
     console.log(error);
   }
@@ -19,7 +18,6 @@ export function useSearch() {
   const users = useSelector((state: RootState) => state.user.user);
   const [filteredUsers, setFilteredUsers] = useState(users);
   const profile = useSelector((state: RootState) => state.profile);
-
 
   useEffect(() => {
     getUsers(dispatch); 
