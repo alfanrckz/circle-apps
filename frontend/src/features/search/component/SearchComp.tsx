@@ -9,20 +9,24 @@ import {
   InputLeftElement,
   Stack,
   Text,
-  Spacer, 
+  Spacer,
 } from "@chakra-ui/react";
 import { FaUser } from "react-icons/fa";
 import { useSearch } from "../hooks/useSearch";
 import { useFollow } from "../../follow/hooks/useFollow";
 import { IFollow } from "../../../interface/follow";
+import { useProfile } from "../../profile/hooks/useProfile";
+import { useNavigate } from "react-router-dom";
 
-export default function SearchComp(props: IFollow) {
+export default function SearchComp(_: IFollow) {
   const { filteredUsers, searchUsers, users } = useSearch();
   const [searchQuery, setSearchQuery] = useState("");
   const [isFollowMap, setIsFollowMap] = useState<{ [key: string]: boolean }>(
     {}
   );
   const { follow, unfollow } = useFollow();
+  const { getProfileById } = useProfile();
+  const navigate = useNavigate();
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -59,6 +63,12 @@ export default function SearchComp(props: IFollow) {
   // Filter users only when there is a search query
   const displayUsers = searchQuery ? filteredUsers : [];
 
+  const setItem = (id: any) => {
+    localStorage.setItem("id", id);
+    getProfileById();
+    navigate(`/detail-profile/${id}`);
+  };
+
   return (
     <Box h={"89vh"} color={"white"} mt={4} mr={-4}>
       <Text ml={2} fontWeight={"bold"} fontSize={"2xl"} my={2}>
@@ -88,6 +98,8 @@ export default function SearchComp(props: IFollow) {
             {displayUsers.map((user) => (
               <Box key={user.id} display="flex" gap={2} position="relative">
                 <Image
+                  onClick={() => setItem(user.id!)}
+                  cursor="pointer"
                   borderRadius="100%"
                   objectFit="cover"
                   h={10}
@@ -144,5 +156,3 @@ export default function SearchComp(props: IFollow) {
     </Box>
   );
 }
-
-
