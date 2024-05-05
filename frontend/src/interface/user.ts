@@ -6,8 +6,8 @@ export interface IUser {
   picture?: string;
   cover_photo: string;
   bio?: string;
-  followers_count?: any[];
-  followings_count?: any[];
+  followers_count?: number;
+  followings_count?: number;
 }
 
 export interface IUserRegister {
