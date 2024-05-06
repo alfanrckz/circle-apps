@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const profileSlice = createSlice({
-    name: "profile",
+const profileById = createSlice({
+    name: "profileByid",
     initialState: {
         id: 0,
         username: "",
@@ -10,12 +10,13 @@ const profileSlice = createSlice({
         bio: "",
         picture: "",
         cover_photo: "",
-        followers_count: [{id: 0, following: {id: 0} }],
-        followings_count: [{id: 0, follower: {id: 0} }],
-      
+        // followers_count: [{id: 0, following: {id: 0} }],
+        // followings_count: [{id: 0, follower: {id: 0} }],
+        followers_count: 0,
+        followings_count: 0,
     },
     reducers: {
-        GET_PROFILE: (state, action) => {
+        GET_PROFILE_ID: (state, action) => {
             state.id = action.payload.id;
             state.email = action.payload.email;
             state.fullName = action.payload.fullName;
@@ -23,12 +24,14 @@ const profileSlice = createSlice({
             state.bio = action.payload.bio;
             state.picture = action.payload.picture;
             state.cover_photo = action.payload.cover_photo;
-            state.followers_count = action.payload.followers_count;
-            state.followings_count = action.payload.followings_count;
+            state.followers_count = action.payload.followerCount;
+            state.followings_count = action.payload.followingCount;
+            // console.log("ini action", action.payload)
 }
-
 
 }})
 
-export const {GET_PROFILE} = profileSlice.actions
-export default profileSlice.reducer
+
+
+export const {GET_PROFILE_ID} = profileById.actions
+export default profileById.reducer

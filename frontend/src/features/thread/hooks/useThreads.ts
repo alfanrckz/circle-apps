@@ -9,6 +9,7 @@ import useToast from "../../../utils/useToast";
 
 export function useThreads() {
   const profile = useSelector((state: RootState) => state.profile);
+
   const dispatch = useDispatch();
   const threads = useSelector((state: RootState) => state.thread.threads);
   const [thread, setThread] = useState<IThreadCard>();
@@ -59,13 +60,20 @@ export function useThreads() {
     getThreads();
   }, []);
 
-  function deleteThread(id: number) {
-   const response = API.delete(`/thread/${profile.id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      }
-    });
-    console.log(response);
+  async function deleteThread(id : number) {
+    try {
+      
+      const response = await API.delete(`/thread/${id}`, {
+         headers: {
+           Authorization: `Bearer ${localStorage.getItem("token")}`,
+         }
+       });
+       console.log(response.data)
+    } catch (error) {
+      console.log(error);
+      
+    }
+
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -97,5 +105,6 @@ export function useThreads() {
     thread,
     getThreads,
     form,
+    deleteThread
   };
 }

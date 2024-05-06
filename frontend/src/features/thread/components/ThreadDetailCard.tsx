@@ -79,7 +79,7 @@ export const ThreadDetailCard = (props: IThreadCard) => {
       <Box mx={4}>
         <Card
           h={70}
-          direction={{ base: "column", sm: "row" }}
+          direction={{ base: "row", sm: "row" }}
           overflowX="hidden"
           variant="outline"
           bg="mainBg.200"
@@ -99,7 +99,7 @@ export const ThreadDetailCard = (props: IThreadCard) => {
           />
           <CardBody>
             <form onSubmit={handlePostReply} encType="multipart/form-data">
-              <Flex color="white">
+              <Flex color="white" >
                 <Input
                   mt={-1}
                   placeholder="type your reply"
