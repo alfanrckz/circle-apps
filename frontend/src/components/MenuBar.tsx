@@ -33,7 +33,7 @@ export default function MenuBar() {
     <Box bg={"mainBg.200"} rounded={"lg"} ml={2}>
       <Box h={"94vh"} m={4} pt={2}>
         <Flex gap={3} ml={4}>
-          <Heading color="green">Circle</Heading>
+          <Heading color="green">Circle Talk</Heading>
           <Heading color="green" mt={1}>
             <BsThreads />
           </Heading>

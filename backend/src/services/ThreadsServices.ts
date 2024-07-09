@@ -7,7 +7,6 @@ import {
 import { validate } from "../utils/validator/validation";
 import { Threads } from "../entity/Threads";
 import { AppDataSource } from "../data-source";
-import { any } from "joi";
 import ResponseError from "../error/responseError";
 
 export default new (class ThreadsServices {

@@ -30,7 +30,7 @@ export default function ThreadCard(props: IThreadCard) {
   const navigate = useNavigate();
   const isTrue = props.likes?.some((val) => val.user.id === props.profile);
   const { handlePostLike } = useThreadCard();
-  const {deleteThread} = useThreads();
+  // const {deleteThread} = useThreads();
   const [isLiked, setIsLike] = useState(isTrue);  
   const [likeCount, setLikeCount] = useState(props.likes?.length);
  
