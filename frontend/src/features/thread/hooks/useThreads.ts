@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import useToast from "../../../utils/useToast";
 
 export function useThreads() {
-  const profile = useSelector((state: RootState) => state.profile);
+  // const profile = useSelector((state: RootState) => state.profile);
 
   const dispatch = useDispatch();
   const threads = useSelector((state: RootState) => state.thread.threads);

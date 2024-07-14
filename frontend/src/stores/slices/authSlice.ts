@@ -9,8 +9,9 @@ const initialAuthState: IUser = {
   username: "",
   bio: "",
   picture: "",
-  followers_count: [],
-  followings_count: [],
+  cover_photo: "",
+  followers_count: 0,
+  followings_count: 0 ,
 };
 
 export const authSlice = createSlice({

@@ -14,11 +14,11 @@ import {
 import { FaUser } from "react-icons/fa";
 import { useSearch } from "../hooks/useSearch";
 import { useFollow } from "../../follow/hooks/useFollow";
-import { IFollow } from "../../../interface/follow";
+// import { IFollow } from "../../../interface/follow";
 import { useProfile } from "../../profile/hooks/useProfile";
 import { useNavigate } from "react-router-dom";
 
-export default function SearchComp(_: IFollow) {
+export default function SearchComp() {
   const { filteredUsers, searchUsers, users } = useSearch();
   const [searchQuery, setSearchQuery] = useState("");
   const [isFollowMap, setIsFollowMap] = useState<{ [key: string]: boolean }>(

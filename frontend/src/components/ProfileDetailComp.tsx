@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
 import { Box, Card, Flex, Image, Text } from "@chakra-ui/react";
-import { NavLink, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import ModalEditUser from "../features/edituser/component/ModalEditUser";
 import { useProfile } from "../features/profile/hooks/useProfile";
+import ThreadCard from "../features/thread/components/ThreadCard";
 import { useThreads } from "../features/thread/hooks/useThreads";
+import { IUser } from "../interface/user";
 import { AUTH_CHECK } from "../stores/rootReducer";
 import { RootState } from "../stores/types/rootState";
-import { IUser } from "../interface/user";
-import ThreadCard from "../features/thread/components/ThreadCard";
-import ModalEditUser from "../features/edituser/component/ModalEditUser";
 
 const ProfileDetailComp: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  // const { id } = useParams<{ id: string }>();
   const { threads } = useThreads();
   const profile = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch();

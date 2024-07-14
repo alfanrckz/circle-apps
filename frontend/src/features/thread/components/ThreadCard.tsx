@@ -1,5 +1,4 @@
 import {
-
   Box,
   Button,
   Card,
@@ -22,9 +21,6 @@ import { SlOptions } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import { IThreadCard } from "../../../interface/thread";
 import { useThreadCard } from "../hooks/useThreadCard";
-import { useThreads } from "../hooks/useThreads";
-import AlertDialogThread from "./AlertDialog";
-import { useProfile } from "../../profile/hooks/useProfile";
 
 export default function ThreadCard(props: IThreadCard) {
   const navigate = useNavigate();

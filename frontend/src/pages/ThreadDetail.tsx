@@ -1,9 +1,10 @@
-import { ThreadDetailCard } from "../features/thread/components/ThreadDetailCard";
+// import { ThreadDetailCard } from "../features/thread/components/ThreadDetailCard";
 
 export const ThreadDetail = () => {
   return (
     <>
-      <ThreadDetailCard />
+    
+      {/* <ThreadDetailCard /> */}
     </>
   );
 };
