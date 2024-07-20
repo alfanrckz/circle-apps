@@ -49,6 +49,7 @@ export default function MyProfile() {
     check();
   }, []);
 
+
   const handleFollowToggle = (userId: number) => {
     const newIsFollowMap = { ...isFollowMap };
     newIsFollowMap[userId] = !newIsFollowMap[userId];
@@ -67,10 +68,13 @@ export default function MyProfile() {
     navigate(`/detail-profile/${id}`)   
   };
 
+  const suggestedUsers = filteredUsers.filter((user) => user.id !== profile.id);
+
   return (
     <Box
       pos={"fixed"}
       h={"100vh"}
+      w={"30%"}
       overflowY={"auto"}
       sx={{
         "&::-webkit-scrollbar": { width: "5px", borderRadius: "full" },
@@ -176,7 +180,7 @@ export default function MyProfile() {
           </Heading>
           {/* Suggest */}
 
-          {filteredUsers.map((user: any) => (
+          {suggestedUsers.map((user: any) => (
             <Box key={user.id} display="flex" gap={2} position="relative">
               <Box onClick={() => setItem(user.id!)}>
                 <Image
