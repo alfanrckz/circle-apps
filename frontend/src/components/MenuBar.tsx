@@ -30,7 +30,7 @@ export default function MenuBar() {
   };
 
   return (
-    <Box bg={"mainBg.200"} rounded={"lg"} ml={2}>
+    <Box bg={"mainBg.200"} rounded={"lg"} ml={2} position="relative">
       <Box h={"94vh"} m={4} pt={2}>
         <Flex gap={3} ml={4}>
           <Heading color="green">Circle Talk</Heading>
@@ -170,25 +170,25 @@ export default function MenuBar() {
             </Flex>
           </ListItem>
         </UnorderedList>
-      <PostModal/>
+        <PostModal/>
         <Box
-          mt={240}
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"} 
+          position="absolute"
+          bottom="0"
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center" 
           onClick={handleLogout}
           cursor="pointer"
           _hover={{ fontWeight: "bold", color: "red" }}
         >
-          <Box ml={2}>
+          <Box>
             {" "}
             <CiLogout />
           </Box>
           <Text>Logout</Text>
         </Box>
       </Box>
-
-      <Spacer />
     </Box>
   );
 }
