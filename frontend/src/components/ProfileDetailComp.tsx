@@ -10,14 +10,13 @@ import { AUTH_CHECK } from "../stores/rootReducer";
 import { RootState } from "../stores/types/rootState";
 
 const ProfileDetailComp: React.FC = () => {
-  // const { id } = useParams<{ id: string }>();
   const { threads } = useThreads();
   const profile = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch();
   const { getProfileById } = useProfile();
   const profileById = useSelector((state: RootState) => state.profileId);
   const [dataProfile, setDataProfile] = useState<IUser | null>(null);
-  // console.log("ini data profile cokk",profileById)
+
   useEffect(() => {
     const storeAuthData = localStorage.getItem("authData");
     if (storeAuthData) {
@@ -61,7 +60,7 @@ const ProfileDetailComp: React.FC = () => {
               src={
                 dataProfile?.cover_photo
                   ? dataProfile.cover_photo
-                  : "https://png.pngtree.com/background/20220724/original/pngtree-ackground-hijau-keren-dan-kosong-abstract-untuk-wallpaper-template-desain-ppt-picture-image_1741397.jpg"
+                  : "/placeholder-profile.jpg"
               }
               w={"100%"}
               h={"40%"}
@@ -82,22 +81,24 @@ const ProfileDetailComp: React.FC = () => {
                 borderWidth={2}
                 borderColor={"white"}
               />
-              <Text textAlign={"center"}>
-                {
-                  threads?.filter(
-                    (item) => item.user?.username === dataProfile?.username
-                  ).length
-                }
+              <Box textAlign={"center"}>
+                <Text fontWeight={"bold"}>
+                  {
+                    threads?.filter(
+                      (item: any) => item.user?.username === dataProfile?.username
+                    ).length
+                  }
+                </Text>
                 <Text>Thread</Text>
-              </Text>
-              <Text textAlign={"center"}>
-                {profileById?.followers_count}
+              </Box>
+              <Box textAlign={"center"}>
+                <Text fontWeight={"bold"}>{profileById?.followers_count}</Text>
                 <Text>Follower</Text>
-              </Text>
-              <Text textAlign={"center"}>
-                {profileById?.followings_count}
+              </Box>
+              <Box textAlign={"center"}>
+                <Text fontWeight={"bold"}>{profileById?.followings_count}</Text>
                 <Text>Following</Text>
-              </Text>
+              </Box>
               <ModalEditUser />
             </Flex>
             <Box ml={10} mb={1} textAlign={"left"} w={"100%"}>

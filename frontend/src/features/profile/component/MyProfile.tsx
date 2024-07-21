@@ -32,9 +32,13 @@ export default function MyProfile() {
     {}
   );
   const { follow, unfollow } = useFollow();
-  const { filteredUsers, users } = useSearch();
+  const { filteredUsers, users, searchUsers } = useSearch();
   const { check, getProfileById } = useProfile();
   const navigate = useNavigate()
+
+  useEffect(() => {
+    searchUsers("");
+  },[searchUsers]);
 
   useEffect(() => {
     const newIsFollowMap: { [key: string]: boolean } = {};

@@ -2,10 +2,14 @@ import { Grid, GridItem } from "@chakra-ui/react";
 
 import ProfileSuggest from "../features/profile/component/MyProfile";
 import SideNavbar from "../components/MenuBar";
-
+import {motion} from "framer-motion"
 export default function Follow() {
   return (
-    <div>
+    <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    >
       <Grid h="100%" templateColumns="repeat(10, 1fr)">
         <GridItem
           w="100%"
@@ -32,6 +36,6 @@ export default function Follow() {
           <ProfileSuggest />
         </GridItem>
       </Grid>
-    </div>
+    </motion.div>
   );
 }
