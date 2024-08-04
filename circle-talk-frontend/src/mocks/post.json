@@ -1,0 +1,53 @@
+ [
+    {
+      "profile_name": "John Doe",
+      "profile_picture": "https://img.freepik.com/free-photo/young-man-looking-up_155003-10420.jpg?w=740&t=st=1707186762~exp=1707187362~hmac=c2c08ab69d11900d2a1ee9baf1a48e0402a45058e878a29b45cbf1dfbc012a62",
+      "username": "jhondoe",
+      "count_post": "3h",
+      "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "",
+      "count_like" : 10,
+      "count_replies": 123  
+    },
+    {
+      "profile_name": "Bezewma",
+      "profile_picture": "https://img.freepik.com/premium-photo/close-up-photo-man-playing-electric-violinconcept_253401-4436.jpg",
+      "username": "bezewma",
+      "count_post": "6h",
+      "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "",
+      "count_like" : 112,
+      "count_replies": 193  
+    },
+    {
+      "profile_name": "Pogba",
+      "profile_picture": "https://img.freepik.com/free-photo/african-american-handsome-jazz-musician-playing-tambourine-singing_155003-27767.jpg?w=740&t=st=1707189712~exp=1707190312~hmac=c2f604f1af0d94f43bf91f56b7d1ebe2a41f80c401dde8908f8aca518ea62d8b",
+      "username": "pogba12",
+      "count_post": "6h",
+      "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "https://img.freepik.com/free-photo/young-man-looking-up_155003-10420.jpg?w=740&t=st=1707186762~exp=1707187362~hmac=c2c08ab69d11900d2a1ee9baf1a48e0402a45058e878a29b45cbf1dfbc012a62",
+      "count_like" : 112,
+      "count_replies": 193  
+    },
+    {
+      "profile_name": "Brahim",
+      "profile_picture": "https://img.freepik.com/free-photo/man-filming-with-professional-camera_23-2149066324.jpg?size=626&ext=jpg",
+      "username": "brahim77",
+      "count_post": "6h",
+      "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "",
+      "count_like" : 152,
+      "count_replies": 193  
+    },
+    {
+      "profile_name": "Mancheaster",
+      "profile_picture": "https://img.freepik.com/free-photo/close-up-talented-woman-singing-microphone_23-2149199998.jpg?size=626&ext=jpg",
+      "username": "ggmu32",
+      "count_post": "6h",
+      "content": "Pernah ga kalian merasa sangat aneh di pagi hari karena baru saja mengalami sebuah mimpi buruk yaitu bertemu dengan Megawati",
+      "image_content": "",
+      "count_like" : 62,
+      "count_replies": 193  
+    }
+  ]
+  
