@@ -18,15 +18,15 @@ export const FormLogin = () => {
           p={4}
         >
           <Flex gap={1}>
-            <Text color={"green"} fontSize={"2xl"} fontWeight={"bold"}>
+            <Text color={"#478CCF"} fontSize={"2xl"} fontWeight={"bold"}>
               Circle
             </Text>
-            <Text fontSize={20} color={"green"} mt={2}>
+            <Text fontSize={20} color={"#478CCF"} mt={2}>
               <BsThreads />
             </Text>
           </Flex>
 
-          <Text mt={-3} fontSize={"2xl"} fontWeight={"bold"} color={"green"}>
+          <Text mt={-3} fontSize={"2xl"} fontWeight={"bold"} color={"#478CCF"}>
             Login Circle
           </Text>
           <Input placeholder="Email" name="email" onChange={handleChange} />
@@ -40,8 +40,8 @@ export const FormLogin = () => {
             <Text>Forgot password?</Text>
           </Box>
           <Button
-            backgroundColor={"green"}
-            colorScheme="green"
+            backgroundColor={"#478CCF"}
+            colorScheme="#478CCF"
             color={"white"}
             onClick={handleLogin}
           >
@@ -51,7 +51,7 @@ export const FormLogin = () => {
         <Box display={"flex"} gap={2} fontSize={"sm"} justifyContent={"center"}>
           <Text>Don't have an account yet?</Text>
           <Link to={"/register"}>
-            <Text color={"brand.green"} cursor={"pointer"}>
+            <Text color={"brand.#478CCF"} cursor={"pointer"}>
               Create account
             </Text>
           </Link>
